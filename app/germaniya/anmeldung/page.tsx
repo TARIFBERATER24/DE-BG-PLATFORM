@@ -1,4 +1,11 @@
 import Link from "next/link";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Какво е Anmeldung",
+  description:
+    "Адресна регистрация в Германия — какви документи ви трябват и защо е първата стъпка след нанасяне. Обяснено на български.",
+};
 
 export default function AnmeldungPage() {
   return (

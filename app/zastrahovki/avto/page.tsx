@@ -1,4 +1,11 @@
+import type { Metadata } from "next";
 import CategoryGuidePage from "@/components/CategoryGuidePage";
+
+export const metadata: Metadata = {
+  title: "Автомобилна застраховка в Германия (Kfz-Versicherung)",
+  description:
+    "Kfz-Haftpflicht, Teilkasko и Vollkasko обяснени на български — какво покрива всяко ниво и от какво зависи цената.",
+};
 
 export default function AvtoPage() {
   return (

@@ -1,4 +1,11 @@
+import type { Metadata } from "next";
 import CategoryGuidePage from "@/components/CategoryGuidePage";
+
+export const metadata: Metadata = {
+  title: "Банкова сметка в Германия (Girokonto)",
+  description:
+    "Как да отворите Girokonto в Германия, какви документи ви трябват и разликата с Kreditkarte — обяснено на български.",
+};
 
 export default function BankovaSmetkaPage() {
   return (

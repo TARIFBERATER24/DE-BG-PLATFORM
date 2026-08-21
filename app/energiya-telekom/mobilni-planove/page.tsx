@@ -1,4 +1,11 @@
+import type { Metadata } from "next";
 import CategoryComparisonPage from "@/components/CategoryComparisonPage";
+
+export const metadata: Metadata = {
+  title: "Сравнение на мобилни планове",
+  description:
+    "Предплатени и абонаментни мобилни тарифи в Германия — сравнете данни, минути и цена на български.",
+};
 
 export default function MobilniPlanovePage() {
   return (

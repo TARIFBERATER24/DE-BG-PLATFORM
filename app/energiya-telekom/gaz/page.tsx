@@ -1,4 +1,11 @@
+import type { Metadata } from "next";
 import CategoryComparisonPage from "@/components/CategoryComparisonPage";
+
+export const metadata: Metadata = {
+  title: "Сравнение на доставчици на газ",
+  description:
+    "Как да смените доставчика си на природен газ в Германия — обяснено на български.",
+};
 
 export default function GazPage() {
   return (

@@ -1,4 +1,11 @@
 import Link from "next/link";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Финансови продукти в Германия",
+  description:
+    "Банкова сметка, потребителски кредит и кредитна карта в Германия — обяснено на български.",
+};
 
 const categories = [
   {

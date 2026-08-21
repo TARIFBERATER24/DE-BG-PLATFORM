@@ -1,3 +1,10 @@
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Impressum",
+  robots: { index: false, follow: false },
+};
+
 export default function ImpressumPage() {
   return (
     <div className="mx-auto max-w-3xl px-6 py-16">

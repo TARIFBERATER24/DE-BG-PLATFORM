@@ -1,4 +1,11 @@
 import Link from "next/link";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Какво е SCHUFA",
+  description:
+    "Как работи кредитният рейтинг SCHUFA в Германия и как влияе на банкова сметка, наем и мобилен договор. Обяснено на български.",
+};
 
 export default function SchufaPage() {
   return (

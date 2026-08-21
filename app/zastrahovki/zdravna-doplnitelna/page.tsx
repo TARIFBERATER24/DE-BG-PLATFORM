@@ -1,4 +1,11 @@
+import type { Metadata } from "next";
 import CategoryGuidePage from "@/components/CategoryGuidePage";
+
+export const metadata: Metadata = {
+  title: "Допълнителна здравна застраховка в Германия (Krankenzusatz)",
+  description:
+    "Какво добавя Zusatzversicherung към задължителната здравна осигуровка в Германия — обяснено на български.",
+};
 
 export default function ZdravnaDoplnitelnaPage() {
   return (

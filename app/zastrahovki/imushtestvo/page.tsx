@@ -1,4 +1,11 @@
+import type { Metadata } from "next";
 import CategoryGuidePage from "@/components/CategoryGuidePage";
+
+export const metadata: Metadata = {
+  title: "Застраховка на домашно имущество в Германия (Hausrat)",
+  description:
+    "Какво покрива Hausratversicherung и защо е важна и за наематели, не само за собственици — обяснено на български.",
+};
 
 export default function ImushtestvoPage() {
   return (

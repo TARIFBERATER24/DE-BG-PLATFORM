@@ -1,4 +1,11 @@
+import type { Metadata } from "next";
 import CategoryGuidePage from "@/components/CategoryGuidePage";
+
+export const metadata: Metadata = {
+  title: "Потребителски кредит в Германия (Ratenkredit)",
+  description:
+    "Какво е effektiver Jahreszins и как SCHUFA рейтингът влияе на одобрението за кредит в Германия — обяснено на български.",
+};
 
 export default function KreditiPage() {
   return (

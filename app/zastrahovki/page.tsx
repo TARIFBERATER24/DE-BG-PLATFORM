@@ -1,4 +1,11 @@
 import Link from "next/link";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Застраховки в Германия",
+  description:
+    "Гражданска отговорност, автомобилна, домашно имущество и допълнителна здравна застраховка в Германия — обяснено на български.",
+};
 
 const categories = [
   {

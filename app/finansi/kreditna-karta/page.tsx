@@ -1,4 +1,11 @@
+import type { Metadata } from "next";
 import CategoryGuidePage from "@/components/CategoryGuidePage";
+
+export const metadata: Metadata = {
+  title: "Кредитна карта в Германия (Kreditkarte)",
+  description:
+    "Charge card срещу revolving кредитна линия, и разликата с дебитната Girocard — обяснено на български.",
+};
 
 export default function KreditnaKartaPage() {
   return (

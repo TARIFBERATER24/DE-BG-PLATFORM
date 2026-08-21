@@ -1,4 +1,11 @@
 import Link from "next/link";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Енергия и телеком в Германия",
+  description:
+    "Сравнение на ток, газ, интернет и мобилни планове в Германия — обяснено на български.",
+};
 
 const categories = [
   { slug: "tok", title: "Ток", description: "Сравнение на доставчици на електроенергия." },

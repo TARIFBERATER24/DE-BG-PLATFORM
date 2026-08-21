@@ -1,3 +1,11 @@
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "За нас",
+  description:
+    "Сравни.де помага на българи в Германия да сравняват доставчици разбираемо и прозрачно — как работим и как печелим пари.",
+};
+
 export default function ZaNasPage() {
   return (
     <div className="mx-auto max-w-3xl px-6 py-16">

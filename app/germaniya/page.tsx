@@ -1,4 +1,11 @@
 import Link from "next/link";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Германия от А до Я",
+  description:
+    "Anmeldung, банкова сметка, SCHUFA, застраховки, комунални услуги — водач стъпка по стъпка за българи, новодошли в Германия.",
+};
 
 const steps = [
   {

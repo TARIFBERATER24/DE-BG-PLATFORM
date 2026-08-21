@@ -1,4 +1,11 @@
+import type { Metadata } from "next";
 import CategoryGuidePage from "@/components/CategoryGuidePage";
+
+export const metadata: Metadata = {
+  title: "Гражданска отговорност в Германия (Privathaftpflicht)",
+  description:
+    "Защо Privathaftpflichtversicherung се смята за първата застраховка, която всеки в Германия трябва да има — обяснено на български.",
+};
 
 export default function GrazhdanskaOtgovornostPage() {
   return (

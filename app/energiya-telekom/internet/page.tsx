@@ -1,4 +1,11 @@
+import type { Metadata } from "next";
 import CategoryComparisonPage from "@/components/CategoryComparisonPage";
+
+export const metadata: Metadata = {
+  title: "Сравнение на интернет доставчици",
+  description:
+    "DSL, кабел и оптика в Германия — сравнете тарифи и покритие по адрес, обяснено на български.",
+};
 
 export default function InternetPage() {
   return (
