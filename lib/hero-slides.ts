@@ -50,6 +50,8 @@ export const heroSlides: HeroSlide[] = [
     subtitle:
       "Първата стъпка след Anmeldung — с видео-легитимация, без ходене до клон.",
     ctaLabel: "Сравни сметки",
-    href: "/finansi/bankova-smetka",
+    href: "/go/check24/n26",
+    image: "/hero/bankova-smetka.png",
+    imageAlt: "Илюстрация на мобилно банкиране: телефон с приложение, карта и икона за 0 евро месечна такса",
   },
 ];

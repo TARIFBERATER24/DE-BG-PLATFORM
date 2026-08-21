@@ -111,6 +111,15 @@ const programs: AffiliateProgram[] = [
   },
   {
     network: "check24",
+    slug: "n26",
+    label: "N26 банкова сметка",
+    vertical: "finansi",
+    target: "https://www.c24.de/",
+    trackingUrl:
+      "https://www.c24.de/?source=tarifcheck&cid=1174585_18_stromvergleich",
+  },
+  {
+    network: "check24",
     slug: "kreditkartevergleich",
     label: "Сравнение на кредитни карти",
     vertical: "finansi",
