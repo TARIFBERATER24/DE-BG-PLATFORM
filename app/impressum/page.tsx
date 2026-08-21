@@ -28,7 +28,7 @@ export default function ImpressumPage() {
         </div>
         <div>
           <dt className="font-semibold">Адрес</dt>
-          <dd>[Улица и номер], 66798 Wallerfangen, Deutschland</dd>
+          <dd>Hospitalstr. 30, 66798 Wallerfangen, Deutschland</dd>
         </div>
         <div>
           <dt className="font-semibold">Контакт</dt>
