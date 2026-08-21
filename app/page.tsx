@@ -7,7 +7,7 @@ import { heroPills } from "@/lib/categories";
 export default function Home() {
   return (
     <div>
-      <section className="bg-brand-deep">
+      <section className="hero-3d-bg overflow-hidden">
         <div className="mx-auto max-w-6xl px-6 pb-16 pt-8 sm:pb-20">
           <nav className="flex flex-wrap justify-center gap-2">
             {heroPills.map((category) => (

@@ -68,14 +68,14 @@ export default function HeroCarousel() {
         </div>
 
         {slide.image ? (
-          <div className="relative hidden lg:block">
+          <div className="relative hidden lg:block lg:-mr-24 xl:-mr-40">
             <Image
               src={slide.image}
               alt={slide.imageAlt ?? ""}
               width={1195}
               height={724}
               priority={index === 0}
-              className="h-auto w-full"
+              className="hero-render h-auto w-full scale-110"
             />
           </div>
         ) : null}
