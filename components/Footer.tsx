@@ -10,6 +10,7 @@ export default function Footer() {
           комисионна — това не оскъпява офертата за вас.
         </p>
         <nav className="mt-4 flex flex-wrap gap-4">
+          <Link href="/germaniya">Германия от А до Я</Link>
           <Link href="/impressum">Impressum</Link>
           <Link href="/poveritelnost">Поверителност</Link>
           <Link href="/za-nas">За нас</Link>

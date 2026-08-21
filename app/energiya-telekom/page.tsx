@@ -2,6 +2,13 @@ import Link from "next/link";
 
 const categories = [
   { slug: "tok", title: "Ток", description: "Сравнение на доставчици на електроенергия." },
+  { slug: "gaz", title: "Газ", description: "Сравнение на доставчици на природен газ." },
+  { slug: "internet", title: "Интернет", description: "DSL, кабел и оптика по адрес." },
+  {
+    slug: "mobilni-planove",
+    title: "Мобилни планове",
+    description: "Предплатени и абонаментни тарифи.",
+  },
 ];
 
 export default function EnergiyaTelekomPage() {
@@ -19,7 +26,7 @@ export default function EnergiyaTelekomPage() {
           <Link
             key={category.slug}
             href={`/energiya-telekom/${category.slug}`}
-            className="rounded-lg border border-black/10 p-6 transition-colors hover:border-blue-600"
+            className="rounded-xl border border-black/10 p-6 transition-colors hover:border-blue-600 hover:shadow-sm"
           >
             <h2 className="font-semibold">{category.title}</h2>
             <p className="mt-2 text-sm text-zinc-600">{category.description}</p>

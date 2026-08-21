@@ -16,6 +16,27 @@ const programs: AffiliateProgram[] = [
     vertical: "energiya-telekom",
     trackingUrl: null,
   },
+  {
+    network: "financeads",
+    slug: "gasvergleich",
+    label: "Сравнение на газ",
+    vertical: "energiya-telekom",
+    trackingUrl: null,
+  },
+  {
+    network: "awin",
+    slug: "internetvergleich",
+    label: "Сравнение на интернет",
+    vertical: "energiya-telekom",
+    trackingUrl: null,
+  },
+  {
+    network: "awin",
+    slug: "handyvergleich",
+    label: "Сравнение на мобилни планове",
+    vertical: "energiya-telekom",
+    trackingUrl: null,
+  },
 ];
 
 export function getAffiliateProgram(
