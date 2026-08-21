@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { heroSlides } from "@/lib/hero-slides";
 
 const ROTATE_MS = 7000;
@@ -50,18 +51,34 @@ export default function HeroCarousel() {
 
       <div
         aria-live="polite"
-        className="mx-auto flex min-h-[13rem] max-w-2xl flex-col items-center justify-center px-4 text-center sm:px-14"
+        className="grid min-h-[16rem] items-center gap-8 px-4 sm:px-14 lg:grid-cols-[1.05fr_1fr] lg:gap-10"
       >
-        <h1 className="text-3xl font-bold leading-[1.15] tracking-tight text-white sm:text-4xl">
-          {slide.title}
-        </h1>
-        <p className="mt-3 max-w-xl text-white/70">{slide.subtitle}</p>
-        <Link
-          href={slide.href}
-          className="mt-6 rounded-full bg-brand px-7 py-3 text-sm font-bold text-on-brand transition-colors hover:bg-brand-hover"
-        >
-          {slide.ctaLabel}
-        </Link>
+        <div className="text-center lg:text-left">
+          <h1 className="text-3xl font-bold leading-[1.15] tracking-tight text-white sm:text-4xl">
+            {slide.title}
+          </h1>
+          <p className="mt-4 text-lg leading-7 text-white/70">{slide.subtitle}</p>
+          <Link
+            href={slide.href}
+            className="mt-6 inline-flex items-center gap-2 rounded-full bg-brand px-7 py-3 text-sm font-bold text-on-brand transition-colors hover:bg-brand-hover"
+          >
+            {slide.ctaLabel}
+            <span aria-hidden="true">&rarr;</span>
+          </Link>
+        </div>
+
+        {slide.image ? (
+          <div className="relative hidden lg:block">
+            <Image
+              src={slide.image}
+              alt={slide.imageAlt ?? ""}
+              width={1195}
+              height={724}
+              priority={index === 0}
+              className="h-auto w-full"
+            />
+          </div>
+        ) : null}
       </div>
 
       <div className="mt-6 flex justify-center gap-2">

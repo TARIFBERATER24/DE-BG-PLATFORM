@@ -4,6 +4,9 @@ export type HeroSlide = {
   subtitle: string;
   ctaLabel: string;
   href: string;
+  /** Optional 3D render shown beside the copy. Lives in public/hero/. */
+  image?: string;
+  imageAlt?: string;
 };
 
 /**
@@ -17,11 +20,13 @@ export type HeroSlide = {
 export const heroSlides: HeroSlide[] = [
   {
     id: "tok-gaz",
-    title: "Обновихте ли тарифите си след ценовата гаранция?",
+    title: "Обновихте ли тарифите си след изтичането на ценовата гаранция?",
     subtitle:
-      "При Grundversorgung разликата до изгоден договор често е около 30% от годишната сметка.",
+      "Направете го сега и намалете годишните си разходи с до 30%.",
     ctaLabel: "Сравни тарифите",
     href: "/energiya-telekom/tok",
+    image: "/hero/tok-gaz.png",
+    imageAlt: "Електромер и газомер до знак за евро, зелена стрелка надолу и символ -30%",
   },
   {
     id: "internet",
