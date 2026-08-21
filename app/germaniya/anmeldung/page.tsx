@@ -46,14 +46,15 @@ export default function AnmeldungPage() {
       <div className="mt-10 rounded-lg border border-line p-6">
         <h2 className="font-semibold text-ink">Следваща стъпка</h2>
         <p className="mt-2 text-sm text-ink-muted">
-          След Anmeldung обикновено следва отваряне на банкова сметка и проверка
-          на SCHUFA рейтинга.
+          След Anmeldung следва отваряне на банкова сметка — а за да разберете
+          как ще плащате договорите си там, е добре първо да знаете какво е
+          IBAN и SEPA.
         </p>
         <Link
-          href="/germaniya/schufa"
+          href="/germaniya/iban-sepa"
           className="mt-3 inline-block text-sm font-medium text-brand hover:text-brand-hover"
         >
-          Какво е SCHUFA →
+          Какво е IBAN и SEPA →
         </Link>
       </div>
     </div>

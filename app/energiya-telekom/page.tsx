@@ -25,7 +25,11 @@ export default function EnergiyaTelekomPage() {
       <p className="mt-4 max-w-2xl text-ink-muted">
         Смяната на доставчик на ток, газ, интернет или мобилен план в Германия
         не изисква разрешение или лиценз — можете да го направите сами, а ние
-        обясняваме процеса на български.
+        обясняваме процеса на български. Преди да смените доставчик, проверете{" "}
+        <Link href="/germaniya/kundigungsfrist" className="font-medium text-brand hover:text-brand-hover">
+          какъв е срокът ви за прекратяване
+        </Link>
+        .
       </p>
 
       <div className="mt-10 grid gap-6 sm:grid-cols-2">

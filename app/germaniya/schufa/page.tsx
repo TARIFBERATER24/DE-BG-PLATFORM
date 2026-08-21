@@ -14,7 +14,7 @@ export default function SchufaPage() {
         <Link href="/germaniya" className="hover:text-brand">
           Германия от А до Я
         </Link>{" "}
-        · Стъпка 3
+        · Стъпка 4
       </p>
       <h1 className="mt-2 text-3xl font-semibold tracking-tight text-ink">
         Какво е SCHUFA

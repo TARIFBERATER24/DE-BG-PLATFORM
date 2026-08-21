@@ -45,6 +45,10 @@ export default function ZastrahovkiPage() {
         <Link href="/germaniya" className="font-medium text-brand hover:text-brand-hover">
           вижте и целия водач Германия от А до Я
         </Link>
+        . Планирате смяна на застраховател?{" "}
+        <Link href="/germaniya/kundigungsfrist" className="font-medium text-brand hover:text-brand-hover">
+          Проверете срока си за прекратяване
+        </Link>
         .
       </p>
 
