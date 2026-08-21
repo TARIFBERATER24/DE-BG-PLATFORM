@@ -14,8 +14,8 @@ const categories = [
 export default function EnergiyaTelekomPage() {
   return (
     <div className="mx-auto max-w-5xl px-6 py-16">
-      <h1 className="text-3xl font-semibold tracking-tight">Енергия и телеком</h1>
-      <p className="mt-4 max-w-2xl text-zinc-600">
+      <h1 className="text-3xl font-semibold tracking-tight text-ink">Енергия и телеком</h1>
+      <p className="mt-4 max-w-2xl text-ink-muted">
         Смяната на доставчик на ток, газ, интернет или мобилен план в Германия
         не изисква разрешение или лиценз — можете да го направите сами, а ние
         обясняваме процеса на български.
@@ -26,10 +26,10 @@ export default function EnergiyaTelekomPage() {
           <Link
             key={category.slug}
             href={`/energiya-telekom/${category.slug}`}
-            className="rounded-xl border border-black/10 p-6 transition-colors hover:border-blue-600 hover:shadow-sm"
+            className="rounded-lg border border-line p-6 transition-colors hover:border-brand hover:shadow-sm"
           >
-            <h2 className="font-semibold">{category.title}</h2>
-            <p className="mt-2 text-sm text-zinc-600">{category.description}</p>
+            <h2 className="font-semibold text-ink">{category.title}</h2>
+            <p className="mt-2 text-sm text-ink-muted">{category.description}</p>
           </Link>
         ))}
       </div>

@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <footer className="border-t border-black/10 text-sm text-zinc-600">
+    <footer className="border-t border-line text-sm text-ink-muted">
       <div className="mx-auto max-w-5xl px-6 py-8">
         <p className="max-w-2xl">
           Сравни.де препоръчва оферти на партньори и пренасочва към официалните
@@ -10,10 +10,18 @@ export default function Footer() {
           комисионна — това не оскъпява офертата за вас.
         </p>
         <nav className="mt-4 flex flex-wrap gap-4">
-          <Link href="/germaniya">Германия от А до Я</Link>
-          <Link href="/impressum">Impressum</Link>
-          <Link href="/poveritelnost">Поверителност</Link>
-          <Link href="/za-nas">За нас</Link>
+          <Link href="/germaniya" className="hover:text-brand">
+            Германия от А до Я
+          </Link>
+          <Link href="/impressum" className="hover:text-brand">
+            Impressum
+          </Link>
+          <Link href="/poveritelnost" className="hover:text-brand">
+            Поверителност
+          </Link>
+          <Link href="/za-nas" className="hover:text-brand">
+            За нас
+          </Link>
         </nav>
       </div>
     </footer>

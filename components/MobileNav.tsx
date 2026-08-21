@@ -15,19 +15,19 @@ export default function MobileNav() {
         onClick={() => setOpen((v) => !v)}
         aria-label={open ? "Затвори менюто" : "Отвори менюто"}
         aria-expanded={open}
-        className="rounded-md p-2 text-zinc-700 hover:bg-zinc-100"
+        className="rounded-md p-2 text-ink hover:bg-surface"
       >
         {open ? <CloseIcon className="h-6 w-6" /> : <MenuIcon className="h-6 w-6" />}
       </button>
 
       {open && (
-        <nav className="absolute inset-x-0 top-full flex flex-col gap-1 border-b border-black/10 bg-white px-6 py-4 text-sm font-medium shadow-sm">
+        <nav className="absolute inset-x-0 top-full flex flex-col gap-1 border-b border-line bg-canvas px-6 py-4 text-sm font-medium text-ink shadow-sm">
           {verticals.map((vertical) => (
             <Link
               key={vertical.slug}
               href={`/${vertical.slug}`}
               onClick={() => setOpen(false)}
-              className="rounded-md px-2 py-2 hover:bg-zinc-50"
+              className="rounded-md px-2 py-2 hover:bg-surface"
             >
               {vertical.title}
             </Link>
@@ -35,14 +35,14 @@ export default function MobileNav() {
           <Link
             href="/germaniya"
             onClick={() => setOpen(false)}
-            className="rounded-md px-2 py-2 hover:bg-zinc-50"
+            className="rounded-md px-2 py-2 hover:bg-surface"
           >
             Германия от А до Я
           </Link>
           <Link
             href="/za-nas"
             onClick={() => setOpen(false)}
-            className="rounded-md px-2 py-2 hover:bg-zinc-50"
+            className="rounded-md px-2 py-2 hover:bg-surface"
           >
             За нас
           </Link>

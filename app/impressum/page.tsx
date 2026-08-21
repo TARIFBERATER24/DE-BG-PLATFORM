@@ -1,16 +1,16 @@
 export default function ImpressumPage() {
   return (
     <div className="mx-auto max-w-3xl px-6 py-16">
-      <h1 className="text-3xl font-semibold tracking-tight">Impressum</h1>
+      <h1 className="text-3xl font-semibold tracking-tight text-ink">Impressum</h1>
 
-      <div className="mt-6 rounded-lg border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900">
+      <div className="mt-6 rounded-lg border border-alert-line bg-alert-bg p-4 text-sm text-alert-ink">
         Тази страница е плейсхолдър и не е готова за реална експлоатация.
         Съдържанието по-долу трябва да се попълни с реални данни след
         Gewerbeanmeldung и да се провери от адвокат, преди сайтът да приема
         реален трафик или да кандидатства пред affiliate мрежи.
       </div>
 
-      <dl className="mt-8 space-y-4 text-sm text-zinc-700">
+      <dl className="mt-8 space-y-4 text-sm text-ink">
         <div>
           <dt className="font-semibold">Ангажирано лице / фирма (§5 DDG)</dt>
           <dd>[Име и правна форма]</dd>

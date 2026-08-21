@@ -18,24 +18,28 @@ export default function CategoryComparisonPage({
 }: CategoryComparisonPageProps) {
   return (
     <div className="mx-auto max-w-3xl px-6 py-16">
-      <h1 className="text-3xl font-semibold tracking-tight">{title}</h1>
-      <p className="mt-4 text-zinc-600">{intro}</p>
+      <h1 className="text-3xl font-semibold tracking-tight text-ink">{title}</h1>
+      <p className="mt-4 text-ink-muted">{intro}</p>
 
-      <div className="mt-10 rounded-xl border border-black/10 p-6">
-        <h2 className="font-semibold">{ctaLabel}</h2>
-        <p className="mt-2 text-sm text-zinc-600">
+      <div className="mt-10 rounded-lg border border-line p-6">
+        <h2 className="font-semibold text-ink">{ctaLabel}</h2>
+        <p className="mt-1.5 text-sm text-ink-muted">
           Ще бъдете пренасочени към официалния сравнителен инструмент на нашия
           партньор.
         </p>
-        <div className="mt-4">
+        <div className="mt-5">
           <AffiliateLink
             network={network}
             slug={programSlug}
-            className="inline-flex rounded-full bg-blue-600 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-blue-700"
+            className="inline-flex rounded-full bg-brand px-5 py-2.5 text-sm font-medium text-on-brand transition-colors hover:bg-brand-hover"
           >
             {ctaLabel} →
           </AffiliateLink>
         </div>
+        <p className="mt-4 border-t border-line pt-4 text-xs text-ink-subtle">
+          Безплатно за вас — партньорът ни плаща комисионна само при сключен
+          договор.
+        </p>
       </div>
     </div>
   );

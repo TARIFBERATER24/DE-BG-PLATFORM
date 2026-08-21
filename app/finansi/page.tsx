@@ -21,18 +21,18 @@ const categories = [
 export default function FinansiPage() {
   return (
     <div className="mx-auto max-w-5xl px-6 py-16">
-      <h1 className="text-3xl font-semibold tracking-tight">
+      <h1 className="text-3xl font-semibold tracking-tight text-ink">
         Финансови продукти
       </h1>
 
-      <div className="mt-6 rounded-xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900">
+      <div className="mt-6 rounded-lg border border-alert-line bg-alert-bg p-4 text-sm text-alert-ink">
         Съдържанието по-долу е подготвено предварително. Тази секция очаква
         правен преглед (§34c GewO), преди да пуснем реални оферти на живо.
       </div>
 
-      <p className="mt-6 max-w-2xl text-zinc-600">
+      <p className="mt-6 max-w-2xl text-ink-muted">
         Вижте и{" "}
-        <Link href="/germaniya/schufa" className="font-medium text-blue-600">
+        <Link href="/germaniya/schufa" className="font-medium text-brand hover:text-brand-hover">
           какво е SCHUFA
         </Link>{" "}
         — тя влияе на одобрението за почти всеки продукт тук.
@@ -43,10 +43,10 @@ export default function FinansiPage() {
           <Link
             key={category.slug}
             href={`/finansi/${category.slug}`}
-            className="rounded-xl border border-black/10 p-6 transition-colors hover:border-blue-600 hover:shadow-sm"
+            className="rounded-lg border border-line p-6 transition-colors hover:border-brand hover:shadow-sm"
           >
-            <h2 className="font-semibold">{category.title}</h2>
-            <p className="mt-2 text-sm text-zinc-600">{category.description}</p>
+            <h2 className="font-semibold text-ink">{category.title}</h2>
+            <p className="mt-2 text-sm text-ink-muted">{category.description}</p>
           </Link>
         ))}
       </div>

@@ -14,11 +14,11 @@ export default function AffiliateLink({
   className,
 }: AffiliateLinkProps) {
   return (
-    <span className="inline-flex flex-col items-start gap-1">
+    <span className="inline-flex flex-col items-start gap-1.5">
       <Link href={`/go/${network}/${slug}`} className={className}>
         {children}
       </Link>
-      <span className="text-xs text-zinc-500">Реклама</span>
+      <span className="text-xs tracking-wide text-ink-subtle">Реклама</span>
     </span>
   );
 }

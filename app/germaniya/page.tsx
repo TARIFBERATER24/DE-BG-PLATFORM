@@ -39,10 +39,10 @@ const steps = [
 export default function GermaniyaGuidePage() {
   return (
     <div className="mx-auto max-w-3xl px-6 py-16">
-      <h1 className="text-3xl font-semibold tracking-tight">
+      <h1 className="text-3xl font-semibold tracking-tight text-ink">
         Германия от А до Я
       </h1>
-      <p className="mt-4 text-zinc-600">
+      <p className="mt-4 text-ink-muted">
         Реалният ред, в който новодошъл в Германия обикновено урежда нещата —
         всяка стъпка отваря вратата към следващата.
       </p>
@@ -51,17 +51,17 @@ export default function GermaniyaGuidePage() {
         {steps.map((step, index) => (
           <li
             key={step.href}
-            className="flex gap-4 rounded-xl border border-black/10 p-6"
+            className="flex gap-4 rounded-lg border border-line p-6"
           >
-            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-blue-600 text-sm font-semibold text-white">
+            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-brand text-sm font-semibold text-on-brand">
               {index + 1}
             </span>
             <div>
-              <h2 className="font-semibold">{step.title}</h2>
-              <p className="mt-1 text-sm text-zinc-600">{step.description}</p>
+              <h2 className="font-semibold text-ink">{step.title}</h2>
+              <p className="mt-1 text-sm text-ink-muted">{step.description}</p>
               <Link
                 href={step.href}
-                className="mt-3 inline-block text-sm font-medium text-blue-600"
+                className="mt-3 inline-block text-sm font-medium text-brand hover:text-brand-hover"
               >
                 {step.cta} →
               </Link>

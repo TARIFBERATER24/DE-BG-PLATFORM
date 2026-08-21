@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -13,6 +13,11 @@ export const metadata: Metadata = {
   title: "Сравни.де — сравнение на доставчици в Германия за българи",
   description:
     "Сравнявайте застраховки, енергия, телеком и финансови продукти в Германия — на български език.",
+};
+
+export const viewport: Viewport = {
+  themeColor: "#ffffff",
+  colorScheme: "light",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

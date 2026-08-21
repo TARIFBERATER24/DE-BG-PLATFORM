@@ -1,17 +1,100 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: light;
+
+  /* Neutrals — cool, restrained (Tailwind zinc-derived) */
+  --canvas: #ffffff;
+  --surface: #fafafa;
+  --surface-strong: #f4f4f5;
+  --line: #e4e4e7;
+  --line-strong: #d4d4d8;
+
+  /* Text — never pure black, 3 levels only */
+  --ink: #18181b;
+  --ink-muted: rgba(24, 24, 27, 0.65);
+  --ink-subtle: rgba(24, 24, 27, 0.45);
+
+  /* Brand accent — blue, never indigo/violet */
+  --brand: #2563eb;
+  --brand-hover: #1d4ed8;
+  --brand-active: #1e40af;
+  --brand-tint: #eff6ff;
+  --on-brand: #ffffff;
+
+  /* Alert / legal-notice semantic (amber) — reserved for real callouts */
+  --alert-bg: #fffbeb;
+  --alert-line: #fcd34d;
+  --alert-ink: #78350f;
+
+  /* Type scale — Minor Third (1.2), 16px base */
+  --text-xs: 0.6875rem;   /* 11px */
+  --text-sm: 0.8125rem;   /* 13px */
+  --text-base: 1rem;      /* 16px */
+  --text-lg: 1.1875rem;   /* 19px */
+  --text-xl: 1.4375rem;   /* 23px */
+  --text-2xl: 1.75rem;    /* 28px */
+  --text-3xl: 2.0625rem;  /* 33px */
+  --text-4xl: 2.5rem;     /* 40px */
+  --text-5xl: 3rem;       /* 48px */
+
+  /* Spacing — derived from 24px body line-height */
+  --space-xs: 0.75rem;  /* 12px */
+  --space-sm: 1.5rem;   /* 24px */
+  --space-md: 3rem;     /* 48px */
+  --space-lg: 4.5rem;   /* 72px */
+
+  /* Radius — one scale, used consistently */
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-canvas: var(--canvas);
+  --color-surface: var(--surface);
+  --color-surface-strong: var(--surface-strong);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-ink-subtle: var(--ink-subtle);
+
+  --color-brand: var(--brand);
+  --color-brand-hover: var(--brand-hover);
+  --color-brand-active: var(--brand-active);
+  --color-brand-tint: var(--brand-tint);
+  --color-on-brand: var(--on-brand);
+
+  --color-alert-bg: var(--alert-bg);
+  --color-alert-line: var(--alert-line);
+  --color-alert-ink: var(--alert-ink);
+
   --font-sans: var(--font-inter);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--canvas);
+  color: var(--ink);
+}
+
+h1,
+h2,
+h3,
+h4 {
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+}
+
+* {
+  touch-action: manipulation;
 }

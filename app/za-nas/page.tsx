@@ -1,13 +1,13 @@
 export default function ZaNasPage() {
   return (
     <div className="mx-auto max-w-3xl px-6 py-16">
-      <h1 className="text-3xl font-semibold tracking-tight">За нас</h1>
-      <p className="mt-4 text-zinc-600">
+      <h1 className="text-3xl font-semibold tracking-tight text-ink">За нас</h1>
+      <p className="mt-4 text-ink-muted">
         Сравни.де помага на българи, живеещи в Германия, да разберат и сравнят
         оферти за ток, интернет, застраховки и банкови продукти — на разбираем
         български език.
       </p>
-      <p className="mt-4 text-zinc-600">
+      <p className="mt-4 text-ink-muted">
         Ние не сме застрахователен или кредитен посредник. Сравни.де е
         рекламна платформа: пренасочваме ви към официалния сайт на доставчика,
         а договорът се сключва директно между вас и него. Ако решите да

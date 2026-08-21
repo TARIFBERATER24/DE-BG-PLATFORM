@@ -3,14 +3,17 @@ import Link from "next/link";
 export default function SchufaPage() {
   return (
     <div className="mx-auto max-w-3xl px-6 py-16">
-      <p className="text-sm text-zinc-500">
-        <Link href="/germaniya">Германия от А до Я</Link> · Стъпка 3
+      <p className="text-sm text-ink-subtle">
+        <Link href="/germaniya" className="hover:text-brand">
+          Германия от А до Я
+        </Link>{" "}
+        · Стъпка 3
       </p>
-      <h1 className="mt-2 text-3xl font-semibold tracking-tight">
+      <h1 className="mt-2 text-3xl font-semibold tracking-tight text-ink">
         Какво е SCHUFA
       </h1>
 
-      <div className="mt-6 space-y-4 text-zinc-700">
+      <div className="mt-6 space-y-4 text-ink">
         <p>
           SCHUFA е най-голямата кредитна агенция в Германия. Тя събира данни
           за финансовото ви поведение — банкови сметки, договори за мобилен
@@ -34,15 +37,15 @@ export default function SchufaPage() {
         </p>
       </div>
 
-      <div className="mt-10 rounded-xl border border-black/10 p-6">
-        <h2 className="font-semibold">Следваща стъпка</h2>
-        <p className="mt-2 text-sm text-zinc-600">
+      <div className="mt-10 rounded-lg border border-line p-6">
+        <h2 className="font-semibold text-ink">Следваща стъпка</h2>
+        <p className="mt-2 text-sm text-ink-muted">
           След банкова сметка идва ред на застраховките — и особено на
           Haftpflichtversicherung.
         </p>
         <Link
           href="/zastrahovki"
-          className="mt-3 inline-block text-sm font-medium text-blue-600"
+          className="mt-3 inline-block text-sm font-medium text-brand hover:text-brand-hover"
         >
           Виж застраховки →
         </Link>
