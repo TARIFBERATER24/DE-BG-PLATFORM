@@ -32,7 +32,8 @@ const programs: AffiliateProgram[] = [
     label: "Сравнение на ток",
     vertical: "energiya-telekom",
     target: "https://www.check24.de/strom/",
-    trackingUrl: null,
+    trackingUrl:
+      "https://a.check24.net/misc/click.php?pid=1174585&aid=18&deep=stromanbieter-wechseln&cat=1&tid=stromvergleich",
   },
   {
     network: "check24",
@@ -40,7 +41,8 @@ const programs: AffiliateProgram[] = [
     label: "Сравнение на газ",
     vertical: "energiya-telekom",
     target: "https://www.check24.de/gas/",
-    trackingUrl: null,
+    trackingUrl:
+      "https://a.check24.net/misc/click.php?pid=1174585&aid=18&deep=gasanbieter-wechseln&cat=3&tid=gasvergleich",
   },
   {
     network: "check24",
@@ -48,7 +50,8 @@ const programs: AffiliateProgram[] = [
     label: "Сравнение на интернет",
     vertical: "energiya-telekom",
     target: "https://www.check24.de/dsl/",
-    trackingUrl: null,
+    trackingUrl:
+      "https://a.check24.net/misc/click.php?pid=1174585&aid=18&deep=dsl-anbieterwechsel&cat=4&tid=internetvergleich",
   },
   {
     network: "check24",
@@ -56,7 +59,8 @@ const programs: AffiliateProgram[] = [
     label: "Сравнение на мобилни планове",
     vertical: "energiya-telekom",
     target: "https://www.check24.de/handytarife/",
-    trackingUrl: null,
+    trackingUrl:
+      "https://a.check24.net/misc/click.php?pid=1174585&aid=18&deep=handytarife&cat=7&tid=handyvergleich",
   },
 
   // --- Insurance: TarifCheck24 specialises here. These pages are still behind
