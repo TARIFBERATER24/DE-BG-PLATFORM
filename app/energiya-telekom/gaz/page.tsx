@@ -13,7 +13,7 @@ export default function GazPage() {
       title="Сравнение на доставчици на газ"
       intro="Ако жилището ви е с газово отопление, доставчикът на газ също може да се смени свободно — често с осезаема разлика в годишната сметка."
       ctaLabel="Сравни оферти за газ"
-      network="financeads"
+      network="check24"
       programSlug="gasvergleich"
     />
   );

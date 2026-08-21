@@ -13,7 +13,7 @@ export default function TokPage() {
       title="Сравнение на доставчици на ток"
       intro="В Германия можете свободно да смените доставчика си на електроенергия по всяко време — цената зависи от район, потребление и оператор."
       ctaLabel="Сравни оферти за ток"
-      network="financeads"
+      network="check24"
       programSlug="stromvergleich"
     />
   );
