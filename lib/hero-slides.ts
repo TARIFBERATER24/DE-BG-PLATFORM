@@ -24,7 +24,7 @@ export const heroSlides: HeroSlide[] = [
     subtitle:
       "Направете го сега и намалете годишните си разходи с до 30%.",
     ctaLabel: "Сравни тарифите",
-    href: "/energiya-telekom/tok",
+    href: "/energiya-telekom/tok#power-iframe-widget",
     image: "/hero/tok-gaz.png",
     imageAlt: "Електромер и газомер до знак за евро, зелена стрелка надолу и символ -30%",
   },

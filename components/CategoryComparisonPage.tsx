@@ -10,6 +10,9 @@ type CategoryComparisonPageProps = {
   /** Rendered between the intro and the partner CTA -- used for the paid
    *  consultation offer, so the personal path is seen before the self-serve one. */
   children?: React.ReactNode;
+  /** Replaces the plain outbound-link box with a real embedded Tier-B
+   *  calculator (e.g. PowerIframeWidget) where the partner provides one. */
+  widget?: React.ReactNode;
 };
 
 export default function CategoryComparisonPage({
@@ -19,6 +22,7 @@ export default function CategoryComparisonPage({
   network,
   programSlug,
   children,
+  widget,
 }: CategoryComparisonPageProps) {
   return (
     <div className="mx-auto max-w-3xl px-6 py-16">
@@ -27,28 +31,30 @@ export default function CategoryComparisonPage({
 
       {children}
 
-      <div className="mt-10 rounded-lg border border-line p-6">
-        <h2 className="font-semibold text-ink">
-          {children ? "Или сравнете сами" : ctaLabel}
-        </h2>
-        <p className="mt-1.5 text-sm text-ink-muted">
-          Ще бъдете пренасочени към официалния сравнителен инструмент на нашия
-          партньор.
-        </p>
-        <div className="mt-5">
-          <AffiliateLink
-            network={network}
-            slug={programSlug}
-            className="inline-flex rounded-md bg-brand px-5 py-2.5 text-sm font-medium text-on-brand transition-colors hover:bg-brand-hover"
-          >
-            {ctaLabel} →
-          </AffiliateLink>
+      {widget ?? (
+        <div className="mt-10 rounded-lg border border-line p-6">
+          <h2 className="font-semibold text-ink">
+            {children ? "Или сравнете сами" : ctaLabel}
+          </h2>
+          <p className="mt-1.5 text-sm text-ink-muted">
+            Ще бъдете пренасочени към официалния сравнителен инструмент на
+            нашия партньор.
+          </p>
+          <div className="mt-5">
+            <AffiliateLink
+              network={network}
+              slug={programSlug}
+              className="inline-flex rounded-md bg-brand px-5 py-2.5 text-sm font-medium text-on-brand transition-colors hover:bg-brand-hover"
+            >
+              {ctaLabel} →
+            </AffiliateLink>
+          </div>
+          <p className="mt-4 border-t border-line pt-4 text-xs text-ink-subtle">
+            Безплатно за вас — партньорът ни плаща комисионна само при
+            сключен договор.
+          </p>
         </div>
-        <p className="mt-4 border-t border-line pt-4 text-xs text-ink-subtle">
-          Безплатно за вас — партньорът ни плаща комисионна само при сключен
-          договор.
-        </p>
-      </div>
+      )}
     </div>
   );
 }

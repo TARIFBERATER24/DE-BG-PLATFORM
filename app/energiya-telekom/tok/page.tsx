@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import CategoryComparisonPage from "@/components/CategoryComparisonPage";
 import ConsultationOffer from "@/components/ConsultationOffer";
+import PowerIframeWidget from "@/components/PowerIframeWidget";
 
 export const metadata: Metadata = {
   title: "Сравнение на доставчици на ток",
@@ -16,6 +17,7 @@ export default function TokPage() {
       ctaLabel="Сравни оферти за ток"
       network="check24"
       programSlug="stromvergleich"
+      widget={<PowerIframeWidget />}
     >
       <ConsultationOffer utility="ток" />
     </CategoryComparisonPage>
