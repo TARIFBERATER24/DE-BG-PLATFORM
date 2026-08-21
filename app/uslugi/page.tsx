@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import { services } from "@/lib/services";
+import { visibleServices } from "@/lib/services";
 
 export const metadata: Metadata = {
   title: "Платени услуги",
@@ -20,7 +20,7 @@ export default function UslugiPage() {
       </p>
 
       <div className="mt-10 grid gap-6 sm:grid-cols-2">
-        {services.map((service) => (
+        {visibleServices.map((service) => (
           <Link
             key={service.slug}
             href={`/uslugi/${service.slug}`}

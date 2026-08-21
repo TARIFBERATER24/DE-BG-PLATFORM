@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { featureFlags } from "@/lib/feature-flags";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://example.com";
 
@@ -24,6 +25,8 @@ const routes = [
   "/uslugi",
   "/uslugi/tarifna-konsultaciya",
   "/uslugi/termini",
+  ...(featureFlags.autoInsuranceFinder ? ["/uslugi/avtozastrahovka"] : []),
+  ...(featureFlags.billCorrection ? ["/uslugi/korekciya-smetki"] : []),
   "/za-nas",
 ];
 
