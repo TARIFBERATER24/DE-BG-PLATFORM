@@ -21,6 +21,9 @@ const routes = [
   "/germaniya",
   "/germaniya/anmeldung",
   "/germaniya/schufa",
+  "/uslugi",
+  "/uslugi/tarifna-konsultaciya",
+  "/uslugi/termini",
   "/za-nas",
 ];
 

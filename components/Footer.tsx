@@ -13,6 +13,9 @@ export default function Footer() {
           <Link href="/germaniya" className="hover:text-brand">
             Германия от А до Я
           </Link>
+          <Link href="/uslugi" className="hover:text-brand">
+            Услуги
+          </Link>
           <Link href="/impressum" className="hover:text-brand">
             Impressum
           </Link>
