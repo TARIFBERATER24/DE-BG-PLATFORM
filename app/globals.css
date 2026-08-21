@@ -3,23 +3,22 @@
 :root {
   color-scheme: light;
 
-  --canvas: #f7f8ff;
+  --canvas: #f6f8fb;
   --surface: #ffffff;
-  --surface-strong: #eef1ff;
-  --line: #e2e5f2;
-  --line-strong: #cfd4e7;
+  --surface-strong: #eef2f8;
+  --line: #dce3ee;
+  --line-strong: #c5cedd;
 
-  --ink: #15182b;
-  --ink-muted: #60657b;
-  --ink-subtle: #8c91a5;
+  --ink: #101828;
+  --ink-muted: #5c6579;
+  --ink-subtle: #8a92a3;
 
-  --brand: #5b4df5;
-  --brand-hover: #4939e8;
-  --brand-active: #382bc7;
-  --brand-tint: #eeecff;
+  --brand: #1d4ed8;
+  --brand-hover: #1e40af;
+  --brand-active: #1e3a8a;
+  --brand-tint: #eaf1fd;
   --on-brand: #ffffff;
-  --brand-deep: #17133f;
-  --brand-secondary: #2563eb;
+  --brand-deep: #0b1f4d;
 
   --alert-bg: #fff8e6;
   --alert-line: #f5cf70;
@@ -48,9 +47,9 @@
   --space-md: 3rem;
   --space-lg: 5rem;
 
-  --radius-sm: 0.75rem;
-  --radius-md: 1rem;
-  --radius-lg: 1.5rem;
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
 }
 
 @theme inline {
@@ -67,6 +66,7 @@
   --color-brand-active: var(--brand-active);
   --color-brand-tint: var(--brand-tint);
   --color-on-brand: var(--on-brand);
+  --color-brand-deep: var(--brand-deep);
   --color-alert-bg: var(--alert-bg);
   --color-alert-line: var(--alert-line);
   --color-alert-ink: var(--alert-ink);
@@ -90,7 +90,7 @@ h1, h2, h3, h4 { text-wrap: balance; }
 p { text-wrap: pretty; }
 
 :focus-visible {
-  outline: 3px solid rgba(91, 77, 245, .28);
+  outline: 3px solid rgba(29, 78, 216, .3);
   outline-offset: 3px;
 }
 
@@ -101,21 +101,18 @@ p { text-wrap: pretty; }
 }
 
 .premium-card {
-  background: rgba(255,255,255,.92);
-  border: 1px solid rgba(226,229,242,.95);
-  box-shadow: 0 14px 40px rgba(37, 31, 91, .07), 0 2px 8px rgba(37, 31, 91, .04);
+  background: rgba(255,255,255,.96);
+  border: 1px solid rgba(220,227,238,.95);
+  box-shadow: 0 10px 30px rgba(16, 24, 40, .06), 0 2px 6px rgba(16, 24, 40, .03);
 }
 
 .premium-card:hover {
-  border-color: rgba(91,77,245,.34);
-  box-shadow: 0 22px 55px rgba(37,31,91,.12), 0 4px 12px rgba(37,31,91,.05);
+  border-color: rgba(29,78,216,.28);
+  box-shadow: 0 16px 40px rgba(16,24,40,.09), 0 3px 8px rgba(16,24,40,.04);
 }
 
 .hero-glow {
-  background:
-    radial-gradient(circle at 78% 18%, rgba(91,77,245,.18), transparent 28%),
-    radial-gradient(circle at 14% 10%, rgba(37,99,235,.10), transparent 24%),
-    linear-gradient(180deg, #f1f0ff 0%, #f7f8ff 72%, #f7f8ff 100%);
+  background: linear-gradient(180deg, #eef3fb 0%, #f6f8fb 72%, #f6f8fb 100%);
 }
 
 * { touch-action: manipulation; }

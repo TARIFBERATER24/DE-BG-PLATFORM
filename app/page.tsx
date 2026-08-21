@@ -19,10 +19,10 @@ export default function Home() {
               Ток, интернет, застраховки и финансови продукти в Германия — обяснени ясно на български, за да вземеш по-добро решение без излишно объркване.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <Link href="/energiya-telekom" className="rounded-xl bg-brand px-6 py-3.5 text-sm font-bold text-white shadow-[0_10px_28px_rgba(91,77,245,.25)] transition hover:-translate-y-0.5 hover:bg-brand-hover">
+              <Link href="/energiya-telekom" className="rounded-md bg-brand px-6 py-3.5 text-sm font-bold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-brand-hover">
                 Започни сравнение →
               </Link>
-              <Link href="/germaniya" className="rounded-xl border border-line-strong bg-white px-6 py-3.5 text-sm font-semibold text-ink transition hover:border-brand/30 hover:bg-brand-tint">
+              <Link href="/germaniya" className="rounded-md border border-line-strong bg-white px-6 py-3.5 text-sm font-semibold text-ink transition hover:border-brand/30 hover:bg-brand-tint">
                 Германия от А до Я
               </Link>
             </div>
@@ -31,8 +31,8 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="premium-card relative rounded-[2rem] p-5 sm:p-7">
-            <div className="rounded-2xl bg-brand-deep p-6 text-white">
+          <div className="premium-card relative rounded-lg p-5 sm:p-7">
+            <div className="rounded-md bg-brand-deep p-6 text-white">
               <p className="text-sm font-medium text-white/65">Твоят потенциал за спестяване</p>
               <div className="mt-3 flex items-end gap-2">
                 <span className="text-5xl font-bold tracking-tight">420 €</span>
@@ -41,8 +41,8 @@ export default function Home() {
               <div className="mt-6 h-2 overflow-hidden rounded-full bg-white/10"><div className="h-full w-3/4 rounded-full bg-white" /></div>
             </div>
             <div className="mt-4 grid grid-cols-2 gap-3">
-              <div className="rounded-2xl bg-surface-strong p-4"><p className="text-xs font-semibold uppercase tracking-wide text-ink-subtle">Сега</p><p className="financial-number mt-1 text-xl text-ink">118 € / мес.</p></div>
-              <div className="rounded-2xl bg-positive-bg p-4"><p className="text-xs font-semibold uppercase tracking-wide text-positive">Нова оферта</p><p className="financial-number mt-1 text-xl text-positive">83 € / мес.</p></div>
+              <div className="rounded-md bg-surface-strong p-4"><p className="text-xs font-semibold uppercase tracking-wide text-ink-subtle">Сега</p><p className="financial-number mt-1 text-xl text-ink">118 € / мес.</p></div>
+              <div className="rounded-md bg-positive-bg p-4"><p className="text-xs font-semibold uppercase tracking-wide text-positive">Нова оферта</p><p className="financial-number mt-1 text-xl text-positive">83 € / мес.</p></div>
             </div>
             <p className="mt-4 text-xs leading-5 text-ink-subtle">Илюстративен пример. Реалните резултати зависят от доставчик, адрес и потребление.</p>
           </div>
@@ -58,8 +58,8 @@ export default function Home() {
 
         <section className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {verticals.map((vertical) => (
-            <Link key={vertical.slug} href={`/${vertical.slug}`} className="premium-card group rounded-2xl p-6 transition duration-300 hover:-translate-y-1">
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-tint transition group-hover:bg-brand group-hover:text-white">
+            <Link key={vertical.slug} href={`/${vertical.slug}`} className="premium-card group rounded-lg p-6 transition duration-300 hover:-translate-y-1">
+              <div className="flex h-12 w-12 items-center justify-center rounded-md bg-brand-tint transition group-hover:bg-brand group-hover:text-white">
                 <VerticalIcon icon={vertical.icon} className="h-6 w-6 text-brand transition group-hover:text-white" />
               </div>
               <h3 className="mt-5 text-lg font-bold text-ink">{vertical.title}</h3>
@@ -72,15 +72,15 @@ export default function Home() {
           ))}
         </section>
 
-        <Link href="/germaniya" className="mt-8 flex flex-col gap-5 rounded-3xl bg-brand-deep p-7 text-white shadow-[0_18px_50px_rgba(23,19,63,.16)] transition hover:-translate-y-0.5 sm:flex-row sm:items-center sm:justify-between sm:p-9">
+        <Link href="/germaniya" className="mt-8 flex flex-col gap-5 rounded-lg bg-brand-deep p-7 text-white shadow-sm transition hover:-translate-y-0.5 sm:flex-row sm:items-center sm:justify-between sm:p-9">
           <div className="flex items-start gap-4">
-            <div className="rounded-2xl bg-white/10 p-3"><CompassIcon className="h-7 w-7 text-white" /></div>
+            <div className="rounded-md bg-white/10 p-3"><CompassIcon className="h-7 w-7 text-white" /></div>
             <div><p className="text-sm font-semibold text-white/55">ПРАКТИЧЕН ВОДАЧ</p><h2 className="mt-1 text-xl font-bold">Германия от А до Я</h2><p className="mt-2 max-w-xl text-sm leading-6 text-white/65">Anmeldung, SCHUFA, банкова сметка и важните първи стъпки — обяснени разбираемо на български.</p></div>
           </div>
-          <span className="shrink-0 rounded-xl bg-white px-4 py-2.5 text-sm font-bold text-brand-deep">Отвори водача →</span>
+          <span className="shrink-0 rounded-md bg-white px-4 py-2.5 text-sm font-bold text-brand-deep">Отвори водача →</span>
         </Link>
 
-        <section className="mt-16 rounded-2xl border border-line bg-white p-6 sm:p-8">
+        <section className="mt-16 rounded-lg border border-line bg-white p-6 sm:p-8">
           <h2 className="font-bold text-ink">Прозрачен модел</h2>
           <p className="mt-2 max-w-3xl text-sm leading-6 text-ink-muted">Сравни.де е рекламна платформа. При определени партньорски предложения можем да получим комисионна, когато сключиш договор през наш линк. Това не променя цената за теб.</p>
         </section>
