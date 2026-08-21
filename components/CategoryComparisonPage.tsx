@@ -7,6 +7,9 @@ type CategoryComparisonPageProps = {
   ctaLabel: string;
   network: AffiliateNetwork;
   programSlug: string;
+  /** Rendered between the intro and the partner CTA -- used for the paid
+   *  consultation offer, so the personal path is seen before the self-serve one. */
+  children?: React.ReactNode;
 };
 
 export default function CategoryComparisonPage({
@@ -15,14 +18,19 @@ export default function CategoryComparisonPage({
   ctaLabel,
   network,
   programSlug,
+  children,
 }: CategoryComparisonPageProps) {
   return (
     <div className="mx-auto max-w-3xl px-6 py-16">
       <h1 className="text-3xl font-semibold tracking-tight text-ink">{title}</h1>
       <p className="mt-4 text-ink-muted">{intro}</p>
 
+      {children}
+
       <div className="mt-10 rounded-lg border border-line p-6">
-        <h2 className="font-semibold text-ink">{ctaLabel}</h2>
+        <h2 className="font-semibold text-ink">
+          {children ? "Или сравнете сами" : ctaLabel}
+        </h2>
         <p className="mt-1.5 text-sm text-ink-muted">
           Ще бъдете пренасочени към официалния сравнителен инструмент на нашия
           партньор.
