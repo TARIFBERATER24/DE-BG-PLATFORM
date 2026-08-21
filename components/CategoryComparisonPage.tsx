@@ -31,7 +31,7 @@ export default function CategoryComparisonPage({
           <AffiliateLink
             network={network}
             slug={programSlug}
-            className="inline-flex rounded-full bg-brand px-5 py-2.5 text-sm font-medium text-on-brand transition-colors hover:bg-brand-hover"
+            className="inline-flex rounded-md bg-brand px-5 py-2.5 text-sm font-medium text-on-brand transition-colors hover:bg-brand-hover"
           >
             {ctaLabel} →
           </AffiliateLink>

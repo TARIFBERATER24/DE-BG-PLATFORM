@@ -27,6 +27,16 @@
   --alert-line: #fcd34d;
   --alert-ink: #78350f;
 
+  /* Positive / savings semantic (green) — reserved for savings figures only */
+  --positive: #15803d;
+  --positive-bg: #f0fdf4;
+  --positive-line: #86efac;
+
+  /* Error semantic (red) — reserved for real errors */
+  --danger: #dc2626;
+  --danger-bg: #fef2f2;
+  --danger-line: #fca5a5;
+
   /* Type scale — Minor Third (1.2), 16px base */
   --text-xs: 0.6875rem;   /* 11px */
   --text-sm: 0.8125rem;   /* 13px */
@@ -71,6 +81,14 @@
   --color-alert-line: var(--alert-line);
   --color-alert-ink: var(--alert-ink);
 
+  --color-positive: var(--positive);
+  --color-positive-bg: var(--positive-bg);
+  --color-positive-line: var(--positive-line);
+
+  --color-danger: var(--danger);
+  --color-danger-bg: var(--danger-bg);
+  --color-danger-line: var(--danger-line);
+
   --font-sans: var(--font-inter);
 }
 
@@ -93,6 +111,12 @@ p {
 :focus-visible {
   outline: 2px solid var(--brand);
   outline-offset: 2px;
+}
+
+.financial-number {
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  letter-spacing: -0.01em;
 }
 
 * {
