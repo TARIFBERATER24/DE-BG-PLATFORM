@@ -90,21 +90,31 @@ const programs: AffiliateProgram[] = [
     trackingUrl: null,
   },
 
-  // --- Finance: same gate as insurance.
+  // --- Finance: CHECK24 covers Konto & Kredit directly. CTA stays behind
+  // featureFlags.finansiLive until a real tracking link + legal sign-off
+  // both land -- see components/FinanceProductPage.tsx.
   {
-    network: "tarifcheck",
+    network: "check24",
     slug: "girokontovergleich",
     label: "Сравнение на банкови сметки",
     vertical: "finansi",
-    target: "https://www.tarifcheck.de/girokonto/",
+    target: "https://www.check24.de/girokonto/",
     trackingUrl: null,
   },
   {
-    network: "tarifcheck",
+    network: "check24",
     slug: "kreditvergleich",
     label: "Сравнение на кредити",
     vertical: "finansi",
-    target: "https://www.tarifcheck.de/kredit/",
+    target: "https://www.check24.de/kredit/",
+    trackingUrl: null,
+  },
+  {
+    network: "check24",
+    slug: "kreditkartevergleich",
+    label: "Сравнение на кредитни карти",
+    vertical: "finansi",
+    target: "https://www.check24.de/kreditkarte/",
     trackingUrl: null,
   },
 ];

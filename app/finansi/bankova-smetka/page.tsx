@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import CategoryGuidePage from "@/components/CategoryGuidePage";
+import FinanceProductPage from "@/components/FinanceProductPage";
 
 export const metadata: Metadata = {
   title: "Банкова сметка в Германия (Girokonto)",
@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function BankovaSmetkaPage() {
   return (
-    <CategoryGuidePage
+    <FinanceProductPage
       title="Банкова сметка (Girokonto)"
       intro="Girokonto е обикновената разплащателна сметка, през която минават заплата, наем и повечето абонаментни договори в Германия."
       paragraphs={[
@@ -17,6 +17,20 @@ export default function BankovaSmetkaPage() {
         "Повечето директни/онлайн банки предлагат безплатна основна сметка без месечна такса, докато класическите филиални банки по-често таксуват поддръжка.",
         "Girocard (дебитна карта) е основното платежно средство в Германия — не бива да се бърка с кредитна карта, която е отделен продукт с различен модел на разплащане.",
       ]}
+      helps={[
+        "Без Girokonto не можете да получавате заплата или да плащате наем в Германия",
+        "Повечето доставчици (ток, интернет, застраховки) изискват IBAN за директен дебит — виж § IBAN и SEPA",
+        "Сравняваме опции без месечна такса вместо да ви водим към първата попаднала банка",
+      ]}
+      registrationSteps={[
+        "Избирате банка и попълвате онлайн формуляра с личните си данни",
+        "Легитимирате самоличността си — видео разговор с представител на банката или чрез PostIdent на пощата, в зависимост от банката",
+        "Изпращате копие на Meldebescheinigung и лична карта/паспорт",
+        "Получавате IBAN обикновено в рамките на няколко работни дни, а Girocard идва по пощата отделно",
+      ]}
+      network="check24"
+      programSlug="girokontovergleich"
+      ctaLabel="Сравни банкови сметки"
       backHref="/finansi"
       backLabel="Всички финансови продукти"
     />

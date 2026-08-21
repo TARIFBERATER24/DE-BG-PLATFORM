@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import CategoryGuidePage from "@/components/CategoryGuidePage";
+import FinanceProductPage from "@/components/FinanceProductPage";
 
 export const metadata: Metadata = {
   title: "Кредитна карта в Германия (Kreditkarte)",
@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function KreditnaKartaPage() {
   return (
-    <CategoryGuidePage
+    <FinanceProductPage
       title="Кредитна карта (Kreditkarte)"
       intro="За разлика от много други държави, в Германия дебитната Girocard е по-разпространена от кредитната карта в ежедневието — но кредитна карта остава полезна за онлайн покупки и пътувания."
       paragraphs={[
@@ -17,6 +17,20 @@ export default function KreditnaKartaPage() {
         "Много карти без такса за обслужване съществуват при онлайн банките, докато премиум карти с бонус програми обичайно имат годишна такса.",
         "Одобрението често изисква доказан доход и добра SCHUFA история — затова тази категория логично идва след отваряне на банкова сметка.",
       ]}
+      helps={[
+        "Помагаме ви да изберете Charge card или revolving линия според това как реално ще я ползвате",
+        "Сравняваме карти без годишна такса вместо да ви водим директно към премиум продукт с такса",
+        "Обясняваме условията на български, включително валутните такси при пътуване извън еврозоната",
+      ]}
+      registrationSteps={[
+        "Попълвате онлайн кандидатура с данни за доход и текуща банкова сметка",
+        "Легитимация на самоличността — видео-легитимация или чрез вече верифицирана банкова сметка",
+        "Проверка на SCHUFA и доход от издателя на картата",
+        "При одобрение картата пристига по пощата в рамките на около седмица",
+      ]}
+      network="check24"
+      programSlug="kreditkartevergleich"
+      ctaLabel="Сравни кредитни карти"
       backHref="/finansi"
       backLabel="Всички финансови продукти"
     />

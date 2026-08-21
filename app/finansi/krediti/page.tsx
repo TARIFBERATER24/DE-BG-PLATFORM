@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import CategoryGuidePage from "@/components/CategoryGuidePage";
+import FinanceProductPage from "@/components/FinanceProductPage";
 
 export const metadata: Metadata = {
   title: "Потребителски кредит в Германия (Ratenkredit)",
@@ -9,13 +9,27 @@ export const metadata: Metadata = {
 
 export default function KreditiPage() {
   return (
-    <CategoryGuidePage
+    <FinanceProductPage
       title="Потребителски кредит (Ratenkredit)"
       intro="Стандартен вноски кредит за по-голяма покупка или консолидация на разходи, изплащан на равни месечни вноски за фиксиран срок."
       paragraphs={[
         "Ключовият показател за сравнение е effektiver Jahreszins (реален годишен лихвен процент) — той включва всички такси, за разлика от номиналната лихва.",
         "Одобрението и лихвата зависят силно от вашия SCHUFA рейтинг и доказан стабилен доход в Германия.",
       ]}
+      helps={[
+        "Сравнявате реалния лихвен процент (effektiver Jahreszins), не рекламната номинална ставка",
+        "Виждате конкретно каква вноска и общ разход ви очаква, преди да кандидатствате",
+        "Проверка на условията не се отразява на SCHUFA рейтинга ви — само реалната кандидатура го прави",
+      ]}
+      registrationSteps={[
+        "Въвеждате желаната сума и срок в сравнителния инструмент",
+        "Получавате няколко конкретни оферти с реалния лихвен процент за всяка",
+        "Избирате оферта и попълвате кандидатура с доказателство за доход (фишове за заплата)",
+        "Банката прави SCHUFA проверка; при одобрение подписвате договора онлайн или чрез видео-легитимация",
+      ]}
+      network="check24"
+      programSlug="kreditvergleich"
+      ctaLabel="Сравни кредити"
       backHref="/finansi"
       backLabel="Всички финансови продукти"
     />
