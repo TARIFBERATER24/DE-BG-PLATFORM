@@ -20,25 +20,29 @@ export default function ImpressumPage() {
       <dl className="mt-8 space-y-4 text-sm text-ink">
         <div>
           <dt className="font-semibold">Ангажирано лице / фирма (§5 DDG)</dt>
-          <dd>[Име и правна форма]</dd>
+          <dd>Tarifberater24</dd>
+        </div>
+        <div>
+          <dt className="font-semibold">Представлявано от</dt>
+          <dd>Svetlozar Gitsov</dd>
         </div>
         <div>
           <dt className="font-semibold">Адрес</dt>
-          <dd>[Улица, номер, пощенски код, град, Германия]</dd>
+          <dd>[Улица и номер], 66798 Wallerfangen, Deutschland</dd>
         </div>
         <div>
           <dt className="font-semibold">Контакт</dt>
-          <dd>[Имейл] · [Телефон]</dd>
+          <dd>tarifberatung24@gmail.com · +49 157 50171967</dd>
         </div>
         <div>
           <dt className="font-semibold">Данъчен номер / ДДС номер</dt>
-          <dd>[Steuernummer / USt-IdNr.]</dd>
+          <dd>USt-IdNr. (§27a UStG): DE460450930</dd>
         </div>
         <div>
           <dt className="font-semibold">
             Отговорен за съдържанието (§18 MStV)
           </dt>
-          <dd>[Име]</dd>
+          <dd>Svetlozar Gitsov</dd>
         </div>
       </dl>
     </div>
