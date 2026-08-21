@@ -52,6 +52,23 @@ export function CompassIcon({ className }: IconProps) {
   );
 }
 
+export function WhatsAppIcon({ className }: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden="true">
+      <path
+        d="M12 3a9 9 0 0 0-7.75 13.6L3 21l4.55-1.2A9 9 0 1 0 12 3Z"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M8.6 8.4c-.3.6-.4 1.4.4 2.7.9 1.5 2.2 2.6 3.6 3.2 1 .4 1.6.3 2 .1.4-.2.9-.8 1-1.1.1-.3 0-.5-.2-.6l-1.6-.8c-.2-.1-.4-.1-.5.1l-.5.7c-.1.2-.3.2-.5.1-.6-.3-1.3-.8-1.8-1.3s-.9-1.1-1.2-1.7c-.1-.2 0-.4.1-.5l.6-.6c.1-.1.2-.3.1-.5l-.7-1.6c-.1-.2-.3-.3-.6-.3-.4 0-.9.3-1.2.9Z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+}
+
 export function MenuIcon({ className }: IconProps) {
   return (
     <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden="true">
