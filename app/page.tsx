@@ -1,8 +1,8 @@
 import Link from "next/link";
-import VerticalIcon from "@/components/VerticalIcon";
 import HeroCarousel from "@/components/HeroCarousel";
+import CategoryShowcase3D from "@/components/CategoryShowcase3D";
 import { CompassIcon } from "@/components/icons";
-import { homeCategories, heroPills } from "@/lib/categories";
+import { heroPills } from "@/lib/categories";
 
 export default function Home() {
   return (
@@ -36,23 +36,7 @@ export default function Home() {
           Какво искаш да сравниш?
         </h2>
 
-        <section className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {homeCategories.map((category) => (
-            <Link
-              key={category.href}
-              href={category.href}
-              className="premium-card group flex items-center gap-3 rounded-lg p-4 transition duration-200 hover:-translate-y-0.5"
-            >
-              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-brand-tint transition group-hover:bg-brand">
-                <VerticalIcon
-                  icon={category.icon}
-                  className="h-5 w-5 text-brand transition group-hover:text-white"
-                />
-              </span>
-              <span className="font-semibold text-ink">{category.title}</span>
-            </Link>
-          ))}
-        </section>
+        <CategoryShowcase3D />
 
         <div className="premium-card mt-10 grid gap-6 rounded-lg p-6 sm:grid-cols-[1fr_auto] sm:items-center">
           <div>

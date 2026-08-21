@@ -115,4 +115,49 @@ p { text-wrap: pretty; }
   background: linear-gradient(180deg, #eef3fb 0%, #f6f8fb 72%, #f6f8fb 100%);
 }
 
+/* --- 3D category showcase ------------------------------------------------ */
+
+.scene-3d {
+  perspective: 1500px;
+  perspective-origin: 50% 25%;
+}
+
+.plane-3d {
+  transform: rotateX(var(--rx, 16deg)) rotateY(var(--ry, 0deg)) rotateZ(-7deg);
+  transform-style: preserve-3d;
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.card-3d {
+  transform: translateZ(var(--z, 0px));
+  transform-style: preserve-3d;
+  transition:
+    transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow 0.3s ease;
+}
+
+.card-3d:hover,
+.card-3d:focus-visible {
+  transform: translateZ(calc(var(--z, 0px) + 70px)) scale(1.03);
+  box-shadow: 0 30px 60px rgba(16, 24, 40, 0.18);
+  z-index: 1;
+}
+
+/* Flat, static fallback: small screens have no room for the tilt, and
+   reduced-motion users shouldn't get parallax at all. */
+@media (max-width: 640px) {
+  .scene-3d { perspective: none; }
+  .plane-3d,
+  .card-3d,
+  .card-3d:hover,
+  .card-3d:focus-visible { transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .plane-3d,
+  .card-3d { transform: none; transition: none; }
+  .card-3d:hover,
+  .card-3d:focus-visible { transform: none; box-shadow: 0 8px 20px rgba(16, 24, 40, 0.1); }
+}
+
 * { touch-action: manipulation; }
