@@ -5,10 +5,13 @@ import Link from "next/link";
 import VerticalIcon from "@/components/VerticalIcon";
 import { homeCategories } from "@/lib/categories";
 
-/** Staggered depth so the grid reads as layered planes, not one flat sheet. */
-const DEPTHS = [0, 26, 52, 26, 52, 0, 26, 52, 0, 26, 52];
+/**
+ * Depth by column, not by index -- same shape repeats every row, so the
+ * grid reads as symmetric layered planes instead of a random cascade.
+ */
+const COLUMN_DEPTHS = [0, 30, 30, 0];
 
-const BASE_RX = 16;
+const BASE_RX = 10;
 
 export default function CategoryShowcase3D() {
   const planeRef = useRef<HTMLDivElement>(null);
@@ -48,7 +51,7 @@ export default function CategoryShowcase3D() {
           <Link
             key={category.href}
             href={category.href}
-            style={{ "--z": `${DEPTHS[index % DEPTHS.length]}px` } as React.CSSProperties}
+            style={{ "--z": `${COLUMN_DEPTHS[index % COLUMN_DEPTHS.length]}px` } as React.CSSProperties}
             className="card-3d flex items-center gap-3 rounded-lg border border-line bg-surface p-4 shadow-[0_10px_30px_rgba(16,24,40,0.07)]"
           >
             <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-brand-tint">

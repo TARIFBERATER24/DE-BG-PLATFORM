@@ -22,20 +22,10 @@ export default function Home() {
           </nav>
 
           <HeroCarousel />
-
-          <div className="mt-8 flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-white/60">
-            <span>✓ На български</span>
-            <span>✓ Безплатно</span>
-            <span>✓ Прозрачно</span>
-          </div>
         </div>
       </section>
 
       <div className="mx-auto max-w-6xl px-6 py-14">
-        <h2 className="text-2xl font-bold tracking-tight text-ink">
-          Какво искаш да сравниш?
-        </h2>
-
         <CategoryShowcase3D />
 
         <div className="premium-card mt-10 grid gap-6 rounded-lg p-6 sm:grid-cols-[1fr_auto] sm:items-center">

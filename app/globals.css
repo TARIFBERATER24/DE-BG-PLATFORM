@@ -160,7 +160,7 @@ p { text-wrap: pretty; }
 }
 
 .plane-3d {
-  transform: rotateX(var(--rx, 16deg)) rotateY(var(--ry, 0deg)) rotateZ(-7deg);
+  transform: rotateX(var(--rx, 10deg)) rotateY(var(--ry, 0deg));
   transform-style: preserve-3d;
   transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
