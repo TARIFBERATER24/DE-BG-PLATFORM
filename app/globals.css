@@ -3,61 +3,54 @@
 :root {
   color-scheme: light;
 
-  /* Neutrals — cool, restrained (Tailwind zinc-derived) */
-  --canvas: #ffffff;
-  --surface: #fafafa;
-  --surface-strong: #f4f4f5;
-  --line: #e4e4e7;
-  --line-strong: #d4d4d8;
+  --canvas: #f7f8ff;
+  --surface: #ffffff;
+  --surface-strong: #eef1ff;
+  --line: #e2e5f2;
+  --line-strong: #cfd4e7;
 
-  /* Text — never pure black, 3 levels only */
-  --ink: #18181b;
-  --ink-muted: rgba(24, 24, 27, 0.65);
-  --ink-subtle: rgba(24, 24, 27, 0.45);
+  --ink: #15182b;
+  --ink-muted: #60657b;
+  --ink-subtle: #8c91a5;
 
-  /* Brand accent — blue, never indigo/violet */
-  --brand: #2563eb;
-  --brand-hover: #1d4ed8;
-  --brand-active: #1e40af;
-  --brand-tint: #eff6ff;
+  --brand: #5b4df5;
+  --brand-hover: #4939e8;
+  --brand-active: #382bc7;
+  --brand-tint: #eeecff;
   --on-brand: #ffffff;
+  --brand-deep: #17133f;
+  --brand-secondary: #2563eb;
 
-  /* Alert / legal-notice semantic (amber) — reserved for real callouts */
-  --alert-bg: #fffbeb;
-  --alert-line: #fcd34d;
-  --alert-ink: #78350f;
+  --alert-bg: #fff8e6;
+  --alert-line: #f5cf70;
+  --alert-ink: #7a4b00;
 
-  /* Positive / savings semantic (green) — reserved for savings figures only */
-  --positive: #15803d;
-  --positive-bg: #f0fdf4;
-  --positive-line: #86efac;
+  --positive: #15966a;
+  --positive-bg: #eafaf4;
+  --positive-line: #9ce0c7;
 
-  /* Error semantic (red) — reserved for real errors */
-  --danger: #dc2626;
-  --danger-bg: #fef2f2;
-  --danger-line: #fca5a5;
+  --danger: #dc3d5a;
+  --danger-bg: #fff0f3;
+  --danger-line: #f6b1bd;
 
-  /* Type scale — Minor Third (1.2), 16px base */
-  --text-xs: 0.6875rem;   /* 11px */
-  --text-sm: 0.8125rem;   /* 13px */
-  --text-base: 1rem;      /* 16px */
-  --text-lg: 1.1875rem;   /* 19px */
-  --text-xl: 1.4375rem;   /* 23px */
-  --text-2xl: 1.75rem;    /* 28px */
-  --text-3xl: 2.0625rem;  /* 33px */
-  --text-4xl: 2.5rem;     /* 40px */
-  --text-5xl: 3rem;       /* 48px */
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.375rem;
+  --text-2xl: 1.75rem;
+  --text-3xl: 2.125rem;
+  --text-4xl: 2.75rem;
+  --text-5xl: 3.5rem;
 
-  /* Spacing — derived from 24px body line-height */
-  --space-xs: 0.75rem;  /* 12px */
-  --space-sm: 1.5rem;   /* 24px */
-  --space-md: 3rem;     /* 48px */
-  --space-lg: 4.5rem;   /* 72px */
+  --space-xs: 0.75rem;
+  --space-sm: 1.5rem;
+  --space-md: 3rem;
+  --space-lg: 5rem;
 
-  /* Radius — one scale, used consistently */
-  --radius-sm: 0.5rem;
-  --radius-md: 0.75rem;
-  --radius-lg: 1rem;
+  --radius-sm: 0.75rem;
+  --radius-md: 1rem;
+  --radius-lg: 1.5rem;
 }
 
 @theme inline {
@@ -66,59 +59,63 @@
   --color-surface-strong: var(--surface-strong);
   --color-line: var(--line);
   --color-line-strong: var(--line-strong);
-
   --color-ink: var(--ink);
   --color-ink-muted: var(--ink-muted);
   --color-ink-subtle: var(--ink-subtle);
-
   --color-brand: var(--brand);
   --color-brand-hover: var(--brand-hover);
   --color-brand-active: var(--brand-active);
   --color-brand-tint: var(--brand-tint);
   --color-on-brand: var(--on-brand);
-
   --color-alert-bg: var(--alert-bg);
   --color-alert-line: var(--alert-line);
   --color-alert-ink: var(--alert-ink);
-
   --color-positive: var(--positive);
   --color-positive-bg: var(--positive-bg);
   --color-positive-line: var(--positive-line);
-
   --color-danger: var(--danger);
   --color-danger-bg: var(--danger-bg);
   --color-danger-line: var(--danger-line);
-
   --font-sans: var(--font-inter);
 }
+
+html { scroll-behavior: smooth; }
 
 body {
   background: var(--canvas);
   color: var(--ink);
 }
 
-h1,
-h2,
-h3,
-h4 {
-  text-wrap: balance;
-}
-
-p {
-  text-wrap: pretty;
-}
+h1, h2, h3, h4 { text-wrap: balance; }
+p { text-wrap: pretty; }
 
 :focus-visible {
-  outline: 2px solid var(--brand);
-  outline-offset: 2px;
+  outline: 3px solid rgba(91, 77, 245, .28);
+  outline-offset: 3px;
 }
 
 .financial-number {
   font-variant-numeric: tabular-nums;
-  font-weight: 600;
-  letter-spacing: -0.01em;
+  font-weight: 700;
+  letter-spacing: -0.02em;
 }
 
-* {
-  touch-action: manipulation;
+.premium-card {
+  background: rgba(255,255,255,.92);
+  border: 1px solid rgba(226,229,242,.95);
+  box-shadow: 0 14px 40px rgba(37, 31, 91, .07), 0 2px 8px rgba(37, 31, 91, .04);
 }
+
+.premium-card:hover {
+  border-color: rgba(91,77,245,.34);
+  box-shadow: 0 22px 55px rgba(37,31,91,.12), 0 4px 12px rgba(37,31,91,.05);
+}
+
+.hero-glow {
+  background:
+    radial-gradient(circle at 78% 18%, rgba(91,77,245,.18), transparent 28%),
+    radial-gradient(circle at 14% 10%, rgba(37,99,235,.10), transparent 24%),
+    linear-gradient(180deg, #f1f0ff 0%, #f7f8ff 72%, #f7f8ff 100%);
+}
+
+* { touch-action: manipulation; }
