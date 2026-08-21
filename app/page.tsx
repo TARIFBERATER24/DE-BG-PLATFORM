@@ -1,5 +1,6 @@
 import Link from "next/link";
 import VerticalIcon from "@/components/VerticalIcon";
+import HeroCarousel from "@/components/HeroCarousel";
 import { CompassIcon } from "@/components/icons";
 import { homeCategories, heroPills } from "@/lib/categories";
 
@@ -20,24 +21,7 @@ export default function Home() {
             ))}
           </nav>
 
-          <h1 className="mx-auto mt-12 max-w-2xl text-center text-4xl font-bold leading-[1.1] tracking-tight text-white sm:text-5xl">
-            Сравнявай в Германия. На български.
-          </h1>
-          <p className="mx-auto mt-4 max-w-lg text-center text-white/70">
-            Ток, интернет, застраховки и финанси — обяснени ясно.
-          </p>
-
-          <div className="mx-auto mt-8 flex max-w-xl items-center gap-2 rounded-full bg-white p-2 pl-6 shadow-lg">
-            <span className="flex-1 text-left text-sm text-ink-muted">
-              Избери какво да сравниш
-            </span>
-            <Link
-              href="/energiya-telekom"
-              className="ml-auto rounded-full bg-brand px-6 py-3 text-sm font-bold text-on-brand transition-colors hover:bg-brand-hover"
-            >
-              Сравни сега
-            </Link>
-          </div>
+          <HeroCarousel />
 
           <div className="mt-8 flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-white/60">
             <span>✓ На български</span>
