@@ -57,7 +57,6 @@ export default function HeroCarousel() {
           <h1 className="text-3xl font-bold leading-[1.15] tracking-tight text-white sm:text-4xl">
             {slide.title}
           </h1>
-          <p className="mt-4 text-lg leading-7 text-white/70">{slide.subtitle}</p>
           <Link
             href={slide.href}
             className="mt-6 inline-flex items-center gap-2 rounded-full bg-brand px-7 py-3 text-sm font-bold text-on-brand transition-colors hover:bg-brand-hover"
@@ -87,11 +86,11 @@ export default function HeroCarousel() {
             key={s.id}
             type="button"
             onClick={() => setIndex(i)}
-            aria-label={`Оферта ${i + 1}: ${s.title}`}
+            aria-label={"Оферта " + (i + 1) + ": " + s.title}
             aria-current={i === index}
-            className={`h-2 rounded-full transition-all ${
+            className={"h-2 rounded-full transition-all " + (
               i === index ? "w-6 bg-white" : "w-2 bg-white/35 hover:bg-white/60"
-            }`}
+            )}
           />
         ))}
       </div>
