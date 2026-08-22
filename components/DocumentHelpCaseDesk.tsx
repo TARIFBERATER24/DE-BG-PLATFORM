@@ -98,9 +98,18 @@ export default function DocumentHelpCaseDesk({ cases, aiConfigured }: { cases: D
                   <div className={`rounded border p-3 ${item.analysis ? "border-brand/30 bg-brand-tint" : "border-line"}`}><p className="font-medium text-ink">1. Qwen 3.6 27B</p><p className="mt-1 text-ink-muted">OCR / extraction</p></div>
                   <div className={`rounded border p-3 ${item.pipeline ? "border-brand/30 bg-brand-tint" : "border-line"}`}><p className="font-medium text-ink">2. GPT OSS 120B</p><p className="mt-1 text-ink-muted">Проверка / класификация</p></div>
                   <div className={`rounded border p-3 ${item.pipeline ? "border-brand/30 bg-brand-tint" : "border-line"}`}><p className="font-medium text-ink">3. GPT OSS 20B</p><p className="mt-1 text-ink-muted">Tool decision</p></div>
-                  <div className="rounded border border-dashed border-line p-3"><p className="font-medium text-ink">4. n8n → CRM</p><p className="mt-1 text-ink-muted">{item.pipeline?.handoff.note ?? "Изключено до човек + настройка"}</p></div>
+                  <div className="rounded border border-dashed border-line p-3"><p className="font-medium text-ink">4. Човешко одобрение</p><p className="mt-1 text-ink-muted">Преди всяка външна стъпка</p></div>
                 </div>
                 {item.pipeline && <div className="mt-3 grid gap-2 text-xs text-ink-muted sm:grid-cols-3"><p><span className="font-medium text-ink">Класификация:</span> {item.pipeline.review.classification}</p><p><span className="font-medium text-ink">Увереност:</span> {item.pipeline.review.confidence}</p><p><span className="font-medium text-ink">Решение:</span> {item.pipeline.decision.decision}</p></div>}
+                <div className="mt-3 grid gap-2 text-xs sm:grid-cols-2 lg:grid-cols-5" aria-label="Изключени външни направления">
+                  {[
+                    ["n8n webhook", item.pipeline?.handoff.note ?? "Изключено до настройка"],
+                    ["HubSpot", "CRM запис не е изпращан"],
+                    ["Pipedrive", "CRM запис не е изпращан"],
+                    ["Salesforce", "CRM запис не е изпращан"],
+                    ["Airtable", "CRM запис не е изпращан"],
+                  ].map(([name, note]) => <div key={name} className="rounded border border-dashed border-line bg-surface p-2.5 text-ink-muted"><p className="font-medium text-ink">{name}</p><p className="mt-1 leading-4">{note}</p></div>)}
+                </div>
               </section>
 
               <div className="mt-5 flex flex-wrap items-center justify-between gap-3 border-t border-line pt-5">

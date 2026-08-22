@@ -29,7 +29,7 @@ import {
 const reviewSteps = [
   "Документът се съхранява в защитено demo хранилище.",
   "Отбелязваме заявката за ръчен преглед.",
-  "AI анализ, n8n и външно изпращане остават изключени.",
+  "Само операторът може при нужда да създаде частна AI чернова; няма автоматично изпращане.",
 ];
 
 type SubmittedCase = { caseId: string; fileName: string };
@@ -131,7 +131,7 @@ export default function DocumentHelpDemo() {
         <div className="max-w-3xl">
           <p className="text-xs font-medium tracking-[0.12em] text-brand">ПОМОЩ С ДОКУМЕНТИ</p>
           <h1 className="mt-3 text-3xl font-semibold tracking-tight text-ink sm:text-4xl">Получили сте писмо, сметка или предупреждение от доставчик?</h1>
-          <p className="mt-5 max-w-2xl text-lg leading-8 text-ink-muted">Качете PDF или ясна снимка. Документът ще се съхрани за ръчен преглед; AI анализ и външно изпращане не са активни.</p>
+          <p className="mt-5 max-w-2xl text-lg leading-8 text-ink-muted">Качете PDF или ясна снимка. Документът остава в частно хранилище за човешки преглед; при нужда оператор може изрично да създаде вътрешна AI чернова. Няма автоматично външно изпращане.</p>
         </div>
 
         <div className="mt-8 grid gap-4 border-y border-line py-5 text-sm text-ink-muted sm:grid-cols-3">
@@ -162,7 +162,7 @@ export default function DocumentHelpDemo() {
                 <input ref={fileInputRef} type="file" accept="application/pdf,image/jpeg,image/png" onChange={handleFileChange} className="sr-only" aria-describedby="file-guidance" />
               </label>
             )}
-            <p id="file-guidance" className="mt-3 text-xs leading-5 text-ink-subtle">Файлът се качва само в частно demo хранилище за човешки преглед. Не се публикува, не се анализира от AI и не се изпраща към доставчик.</p>
+            <p id="file-guidance" className="mt-3 text-xs leading-5 text-ink-subtle">Файлът се качва само в частно demo хранилище. Не се публикува и не се изпраща към доставчик. Анализ от AI се стартира единствено от оператор след отделен преглед.</p>
             {uploadError && <p className="mt-3 text-sm text-danger" role="alert">{uploadError}</p>}
             {uploadProgress !== null && <p className="mt-3 text-sm text-ink-muted" aria-live="polite">Качване: {uploadProgress}%</p>}
           </div>
@@ -201,7 +201,7 @@ export default function DocumentHelpDemo() {
 
           <label className="mt-5 flex cursor-pointer items-start gap-3 text-sm leading-6 text-ink-muted">
             <input type="checkbox" checked={consent} onChange={(event) => setConsent(event.target.checked)} required className="mt-1 h-4 w-4 rounded border-line text-brand accent-brand" />
-            <span>Съгласен/съгласна съм документът и посочените данни да бъдат съхранени единствено за първоначален ръчен преглед и отговор на моето запитване.</span>
+            <span>Съгласен/съгласна съм документът и посочените данни да бъдат съхранени за първоначален човешки преглед и отговор на моето запитване. Разбирам, че при нужда оператор може изрично да използва частна AI чернова за вътрешна проверка, без автоматично изпращане към външни системи.</span>
           </label>
 
           <button type="submit" disabled={!consent || !selectedFile || isUploading} className="mt-6 inline-flex items-center gap-2 rounded-md bg-brand px-5 py-3 text-sm font-medium text-on-brand transition-colors hover:bg-brand-hover disabled:cursor-not-allowed disabled:opacity-50">
@@ -224,7 +224,7 @@ export default function DocumentHelpDemo() {
             <CheckCircle2 className="h-8 w-8 text-positive" aria-hidden="true" />
             <h2 id="demo-success-title" className="mt-4 text-xl font-semibold text-ink">Документът е получен</h2>
             <p className="mt-2 text-sm leading-6 text-ink-muted">Номер на заявка: <span className="font-semibold text-ink">{submittedCase.caseId.slice(0, 8).toUpperCase()}</span>. Статус: <span className="font-semibold text-ink">{documentHelpStatusLabels["waiting-review"]}</span>.</p>
-            <p className="mt-3 text-sm leading-6 text-ink-muted">{submittedCase.fileName} е в частно demo хранилище. Не е изпратен към външна платформа и не е обработен от AI.</p>
+            <p className="mt-3 text-sm leading-6 text-ink-muted">{submittedCase.fileName} е в частно demo хранилище. Не е изпратен към външна платформа. Евентуална AI чернова се стартира само от оператор след отделен преглед.</p>
             <button type="button" onClick={() => setSubmittedCase(null)} className="mt-6 rounded-md bg-brand px-4 py-2.5 text-sm font-medium text-on-brand transition-colors hover:bg-brand-hover">Готово</button>
           </div>
         </div>
