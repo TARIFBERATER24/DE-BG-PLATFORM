@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { verticals } from "@/lib/verticals";
+import NavDropdown from "@/components/NavDropdown";
 import MobileNav from "@/components/MobileNav";
 
 export default function Header() {
@@ -14,14 +14,7 @@ export default function Header() {
           </span>
         </Link>
         <nav className="hidden items-center gap-1 text-sm font-medium text-ink-muted lg:flex">
-          {verticals.map((vertical) => (
-            <Link key={vertical.slug} href={`/${vertical.slug}`} className="rounded-lg px-3 py-2 transition hover:bg-brand-tint hover:text-brand">
-              {vertical.title}
-            </Link>
-          ))}
-          <Link href="/germaniya" className="rounded-lg px-3 py-2 transition hover:bg-brand-tint hover:text-brand">Германия от А до Я</Link>
-          <Link href="/uslugi" className="rounded-lg px-3 py-2 transition hover:bg-brand-tint hover:text-brand">Услуги</Link>
-          <Link href="/za-nas" className="ml-1 rounded-md bg-brand px-4 py-2.5 font-semibold text-white shadow-sm transition hover:bg-brand-hover">За нас</Link>
+          <NavDropdown />
         </nav>
         <MobileNav />
       </div>

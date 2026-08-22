@@ -46,13 +46,6 @@ export default function MobileNav() {
           >
             Услуги
           </Link>
-          <Link
-            href="/za-nas"
-            onClick={() => setOpen(false)}
-            className="rounded-md px-2 py-2 hover:bg-surface"
-          >
-            За нас
-          </Link>
         </nav>
       )}
     </div>
