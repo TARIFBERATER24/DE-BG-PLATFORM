@@ -5,6 +5,8 @@ const WHATSAPP_URL = "https://wa.me/message/JXXTA3JHKDX3L1";
 
 type HelpButtonProps = {
   topic: string;
+  /** Button text. Defaults to the generic "help" wording. */
+  label?: string;
 };
 
 /**
@@ -13,7 +15,7 @@ type HelpButtonProps = {
  * stays the same. `topic` is unused by the link itself (wa.me doesn't take a
  * prefill message for this link type) but kept so callers stay unchanged.
  */
-export default function HelpButton({ topic: _topic }: HelpButtonProps) {
+export default function HelpButton({ topic: _topic, label }: HelpButtonProps) {
   return (
     <div className="mt-6 flex flex-wrap items-center gap-3 rounded-lg border border-line bg-surface p-4">
       <p className="text-sm text-ink-muted">
@@ -26,7 +28,7 @@ export default function HelpButton({ topic: _topic }: HelpButtonProps) {
         className="ml-auto inline-flex items-center gap-2 rounded-md border border-brand px-4 py-2 text-sm font-medium text-brand transition-colors hover:bg-brand-tint"
       >
         <WhatsAppIcon className="h-4 w-4" />
-        Безплатна помощ в WhatsApp
+        {label ?? "Безплатна помощ в WhatsApp"}
       </a>
       <a
         href={`tel:${CONTACT_PHONE.replace(/\s/g, "")}`}

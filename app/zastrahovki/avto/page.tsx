@@ -1,12 +1,21 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import KfzEstimator from "@/components/KfzEstimator";
+import TarifCheckKfzWidget from "@/components/TarifCheckKfzWidget";
+import HelpButton from "@/components/HelpButton";
 
 export const metadata: Metadata = {
   title: "Автомобилна застраховка в Германия (Kfz-Versicherung)",
   description:
-    "Kfz-Haftpflicht, Teilkasko и Vollkasko обяснени на български — и ориентировъчен калкулатор за цената.",
+    "Kfz-Haftpflicht, Teilkasko и Vollkasko обяснени на български — стъпки за сключване и ориентировъчен калкулатор.",
 };
+
+const steps = [
+  "Попълвате данните за колата и адреса си в сравнителния инструмент",
+  "Получавате няколко реални оферти от различни немски застрахователи",
+  "Избирате оферта и подавате заявлението онлайн, без хартия",
+  "Получавате eVB номер — той е нужен, за да регистрирате колата в Zulassungsstelle",
+];
 
 export default function AvtoPage() {
   return (
@@ -38,18 +47,42 @@ export default function AvtoPage() {
         </p>
       </div>
 
+      <div className="mt-10 rounded-lg border border-line p-6">
+        <h2 className="font-semibold text-ink">Как става стъпка по стъпка</h2>
+        <ol className="mt-3 space-y-3 text-sm text-ink-muted">
+          {steps.map((step, index) => (
+            <li key={step.slice(0, 24)} className="flex gap-3">
+              <span
+                aria-hidden="true"
+                className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-tint text-xs font-semibold text-brand"
+              >
+                {index + 1}
+              </span>
+              {step}
+            </li>
+          ))}
+        </ol>
+      </div>
+
+      <TarifCheckKfzWidget />
+
       <div id="kfz-estimator" className="mt-10 scroll-mt-20">
         <h2 className="text-xl font-semibold text-ink">
           Ориентировъчен калкулатор
         </h2>
         <p className="mt-1.5 text-sm text-ink-muted">
-          Отговорете на няколко въпроса, за да видите ориентировъчен ценови
-          диапазон — не е конкретна оферта.
+          Искате само груба представа, без да въвеждате адрес? Отговорете
+          на няколко въпроса тук.
         </p>
         <div className="mt-4">
           <KfzEstimator />
         </div>
       </div>
+
+      <HelpButton
+        topic="Автомобилна застраховка"
+        label="Получете безплатна консултация"
+      />
 
       <Link
         href="/zastrahovki"
