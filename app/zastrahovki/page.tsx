@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Застраховки в Германия",
   description:
-    "Гражданска отговорност, автомобилна, домашно имущество и допълнителна здравна застраховка в Германия — обяснено на български.",
+    "Гражданска отговорност, автомобилна, домашно имущество, здравна и правна защита в Германия — обяснено на български.",
 };
 
 const categories = [
@@ -20,13 +20,18 @@ const categories = [
   },
   {
     slug: "imushtestvo",
-    title: "Домашно имущество",
+    title: "Застраховайте дома си",
     description: "Hausrat — за наематели и собственици.",
   },
   {
     slug: "zdravna-doplnitelna",
-    title: "Допълнителна здравна",
+    title: "Здравни застраховки",
     description: "Zusatzversicherung върху основната осигуровка.",
+  },
+  {
+    slug: "pravna-zashtita",
+    title: "Адвокатски разходи",
+    description: "Rechtsschutzversicherung — проверете модулите и условията.",
   },
 ];
 

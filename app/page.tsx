@@ -2,25 +2,12 @@ import Link from "next/link";
 import HeroCarousel from "@/components/HeroCarousel";
 import CategoryCardGrid from "@/components/CategoryCardGrid";
 import { CompassIcon } from "@/components/icons";
-import { heroPills } from "@/lib/categories";
 
 export default function Home() {
   return (
     <div>
       <section className="hero-3d-bg overflow-hidden">
         <div className="mx-auto max-w-6xl px-6 pb-16 pt-8 sm:pb-20">
-          <nav className="flex flex-wrap justify-center gap-2">
-            {heroPills.map((category) => (
-              <Link
-                key={category.href}
-                href={category.href}
-                className="rounded-full border border-white/25 px-4 py-1.5 text-sm font-medium text-white transition-colors hover:bg-white/10"
-              >
-                {category.title}
-              </Link>
-            ))}
-          </nav>
-
           <HeroCarousel />
         </div>
       </section>
