@@ -109,7 +109,7 @@ const decisionSchema = {
 } as const;
 
 function extractionPrompt() {
-  return "Ти си Qwen в частен операторски пилот за българска платформа в Германия. Извлечи само проверими факти от документа и въпроса на клиента. Пиши на български. Не давай правен, финансов, договорен или потребителски съвет; не препоръчвай действие; не измисляй данни; не повтаряй имена, email, адреси, банкови данни или целия документ. Маркирай рискови думи и неясноти. Върни единствено JSON по схемата.";
+  return "Ти си Qwen в частен операторски пилот за българска платформа в Германия. Извлечи само проверими факти от документа и въпроса на клиента. Пиши на български. Не давай правен, финансов, договорен или потребителски съвет; не препоръчвай действие; не измисляй данни; не повтаряй имена, email, адреси, банкови данни или целия документ. Маркирай рискови думи и неясноти. Върни точно един валиден JSON object, без Markdown, без обяснение и без мисловен процес. Задължителни ключове: summaryBg, documentKind, providerName, serviceType, amounts, dates, urgency, riskFlags, uncertainties. За липсваща стойност използвай празен string, null, празен array или unknown според ключа.";
 }
 
 function reviewPrompt() {
@@ -133,9 +133,10 @@ async function requestGroq(model: string, system: string, user: unknown, schema:
   const responseFormat = outputMode === "json-object"
     ? { type: "json_object" }
     : { type: "json_schema", json_schema: { name: schemaName, strict: true, schema } };
+  const qwenControls = outputMode === "json-object" ? { reasoning_effort: "none", reasoning_format: "hidden", temperature: 0.2 } : {};
   const response = await fetch(GROQ_CHAT_COMPLETIONS_URL, {
     method: "POST", headers: { "Content-Type": "application/json", Authorization: `Bearer ${process.env.GROQ_API_KEY!}` },
-    body: JSON.stringify({ model, messages: [{ role: "system", content: system }, { role: "user", content: user }], response_format: responseFormat }), cache: "no-store",
+    body: JSON.stringify({ model, messages: [{ role: "system", content: system }, { role: "user", content: user }], response_format: responseFormat, ...qwenControls }), cache: "no-store",
   });
   if (!response.ok) {
     const responseText = await response.text();
