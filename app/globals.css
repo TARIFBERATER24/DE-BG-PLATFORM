@@ -1,3 +1,4 @@
+/* Modern 3D direction: calm physical depth for hero media and interactive product tiles; Inter, neutral-led surfaces, and blue action affordances remain unchanged. */
 @import "tailwindcss";
 
 :root {
@@ -128,6 +129,69 @@ p { text-wrap: pretty; }
     linear-gradient(180deg, #04102b 0%, #050f28 55%, #030b1f 100%);
 }
 
+.hero-stage {
+  position: relative;
+  isolation: isolate;
+}
+
+.hero-stage::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: 10%;
+  right: 10%;
+  bottom: -1px;
+  height: 10rem;
+  background: radial-gradient(50% 50% at 50% 100%, rgba(57, 126, 255, .18), transparent 72%);
+  filter: blur(10px);
+  pointer-events: none;
+}
+
+.hero-carousel-stage {
+  perspective: 1600px;
+  perspective-origin: 56% 42%;
+}
+
+.hero-copy-layer {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-render-stage {
+  transform: rotateX(2deg) rotateY(-4deg) translateZ(24px);
+  transform-style: preserve-3d;
+  transition: transform .45s cubic-bezier(.23, 1, .32, 1);
+}
+
+.hero-render-stage::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 14% 5% 3%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(95, 155, 255, .23), rgba(16, 47, 110, .08) 48%, transparent 72%);
+  filter: blur(22px);
+  transform: translateZ(-36px) scale(.92);
+}
+
+.hero-render-stage::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: 20%;
+  right: 8%;
+  bottom: 2%;
+  height: 12%;
+  border-radius: 50%;
+  background: rgba(0, 4, 13, .48);
+  filter: blur(14px);
+  transform: translateZ(-44px);
+}
+
+.hero-carousel-stage:hover .hero-render-stage {
+  transform: rotateX(0deg) rotateY(-1deg) translate3d(-8px, -6px, 38px);
+}
+
 /* Feathers all four edges so the render melts into .hero-3d-bg instead of
    sitting in a visible rectangle, and grounds it with a cast shadow. */
 .hero-render {
@@ -143,6 +207,109 @@ p { text-wrap: pretty; }
   animation: hero-float 7s ease-in-out infinite;
 }
 
+/* --- Dimensional category entry points ----------------------------------- */
+
+.category-3d-stage {
+  perspective: 1300px;
+  perspective-origin: 50% 25%;
+}
+
+.category-lift-card {
+  position: relative;
+  isolation: isolate;
+  transform: translateZ(0);
+  transform-style: preserve-3d;
+  transition:
+    transform .28s cubic-bezier(.23, 1, .32, 1),
+    border-color .28s ease,
+    box-shadow .28s ease;
+}
+
+.category-lift-card::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 5px -1px -7px;
+  border: 1px solid rgba(197, 206, 221, .72);
+  border-top: 0;
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+  background: linear-gradient(180deg, rgba(222, 229, 241, .9), rgba(246, 248, 251, .55));
+  transform: translateZ(-12px);
+}
+
+.category-lift-card::after {
+  content: "";
+  position: absolute;
+  z-index: -2;
+  inset: 20% 10% -15px;
+  border-radius: 50%;
+  background: rgba(16, 24, 40, .16);
+  filter: blur(12px);
+  opacity: .42;
+  transform: translateZ(-28px);
+  transition: opacity .28s ease, filter .28s ease;
+}
+
+.category-lift-card:hover,
+.category-lift-card:focus-visible {
+  z-index: 1;
+  border-color: rgba(29, 78, 216, .36);
+  box-shadow: 0 20px 30px rgba(16, 24, 40, .12), 0 4px 8px rgba(16, 24, 40, .04);
+  transform: translateY(-7px) rotateX(2deg) rotateY(-1deg) translateZ(24px);
+}
+
+.category-lift-card:hover::after,
+.category-lift-card:focus-visible::after {
+  filter: blur(15px);
+  opacity: .68;
+}
+
+.category-lift-card:nth-child(4n + 2):hover,
+.category-lift-card:nth-child(4n + 2):focus-visible,
+.category-lift-card:nth-child(4n + 3):hover,
+.category-lift-card:nth-child(4n + 3):focus-visible {
+  transform: translateY(-7px) rotateX(2deg) rotateY(1deg) translateZ(24px);
+}
+
+.category-lift-card > * {
+  transform: translateZ(18px);
+}
+
+/* --- Honest data panels --------------------------------------------------- */
+
+.savings-plinth,
+.guide-shelf {
+  position: relative;
+  isolation: isolate;
+  transform-style: preserve-3d;
+  transition: transform .25s cubic-bezier(.23, 1, .32, 1);
+}
+
+.savings-plinth::after,
+.guide-shelf::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 7px 2px -8px;
+  border-radius: inherit;
+  background: rgba(16, 24, 40, .16);
+  filter: blur(12px);
+  opacity: .34;
+  transform: translateZ(-18px);
+  transition: opacity .25s ease, transform .25s cubic-bezier(.23, 1, .32, 1);
+}
+
+.savings-plinth:hover,
+.guide-shelf:hover {
+  transform: translateY(-3px);
+}
+
+.savings-plinth:hover::after,
+.guide-shelf:hover::after {
+  opacity: .52;
+  transform: translate3d(0, 4px, -24px);
+}
+
 @keyframes hero-float {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-10px); }
@@ -150,6 +317,19 @@ p { text-wrap: pretty; }
 
 @media (prefers-reduced-motion: reduce) {
   .hero-render { animation: none; }
+  .hero-render-stage,
+  .hero-carousel-stage:hover .hero-render-stage,
+  .category-lift-card,
+  .category-lift-card:hover,
+  .category-lift-card:focus-visible,
+  .category-lift-card:nth-child(4n + 2):hover,
+  .category-lift-card:nth-child(4n + 2):focus-visible,
+  .category-lift-card:nth-child(4n + 3):hover,
+  .category-lift-card:nth-child(4n + 3):focus-visible,
+  .savings-plinth,
+  .guide-shelf,
+  .savings-plinth:hover,
+  .guide-shelf:hover { transform: none; transition: none; }
 }
 
 /* --- 3D category showcase ------------------------------------------------ */
@@ -188,6 +368,23 @@ p { text-wrap: pretty; }
   .card-3d,
   .card-3d:hover,
   .card-3d:focus-visible { transform: none; }
+  .hero-render-stage,
+  .hero-carousel-stage:hover .hero-render-stage,
+  .category-lift-card,
+  .category-lift-card:hover,
+  .category-lift-card:focus-visible,
+  .category-lift-card:nth-child(4n + 2):hover,
+  .category-lift-card:nth-child(4n + 2):focus-visible,
+  .category-lift-card:nth-child(4n + 3):hover,
+  .category-lift-card:nth-child(4n + 3):focus-visible,
+  .savings-plinth,
+  .guide-shelf,
+  .savings-plinth:hover,
+  .guide-shelf:hover { transform: none; }
+  .category-lift-card::before,
+  .category-lift-card::after,
+  .savings-plinth::after,
+  .guide-shelf::after { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {

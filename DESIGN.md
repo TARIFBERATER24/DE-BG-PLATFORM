@@ -276,3 +276,17 @@ flagged by the brief:
 - A calculator/comparison UI with no real calculation behind it.
 - Fabricated savings figures not backed by real data.
 - Averaging distinct references into one safe, generic "fintech template" look.
+
+## 21. Approved 3D Enhancement Direction — Preview Branch
+
+**Direction name:** *Calm Dimensional Finance.* The interface keeps its white and navy
+neobank foundation, but its high-value entry points gain the physical hierarchy of a
+well-made financial tool: product tiles rest on shallow plinths, hero imagery appears on
+a softly lit stage, and verified information panels lift with restrained depth.
+
+This is deliberately **not** a neon, glassmorphism, or gaming treatment. The existing
+Inter typeface, Bulgarian copy, blue action color, actual category links, affiliate paths,
+and light-mode policy are preserved. Depth is allowed only on the hero media, clickable
+category tiles, and honest data/guide panels. It must remain static on small screens and
+for people who prefer reduced motion. The copy layer stays flat and highly legible; 3D is
+used to establish navigational hierarchy, not to decorate text.

@@ -1,3 +1,4 @@
+// Modern 3D direction: trustworthy dimensional surfaces, preserved Inter typography, and unchanged affiliate destinations.
 import Link from "next/link";
 import HeroCarousel from "@/components/HeroCarousel";
 import CategoryCardGrid from "@/components/CategoryCardGrid";
@@ -7,7 +8,7 @@ import { heroPills } from "@/lib/categories";
 export default function Home() {
   return (
     <div>
-      <section className="hero-3d-bg overflow-hidden">
+      <section className="hero-3d-bg hero-stage overflow-hidden">
         <div className="mx-auto max-w-6xl px-6 pb-16 pt-8 sm:pb-20">
           <nav className="flex flex-wrap justify-center gap-2">
             {heroPills.map((category) => (
@@ -28,7 +29,7 @@ export default function Home() {
       <div className="mx-auto max-w-6xl px-6 py-14">
         <CategoryCardGrid />
 
-        <div className="premium-card mt-10 grid gap-6 rounded-lg p-6 sm:grid-cols-[1fr_auto] sm:items-center">
+        <div className="premium-card savings-plinth mt-10 grid gap-6 rounded-lg p-6 sm:grid-cols-[1fr_auto] sm:items-center">
           <div>
             <p className="text-sm font-medium text-ink-muted">
               Твоят потенциал за спестяване
@@ -54,7 +55,7 @@ export default function Home() {
 
         <Link
           href="/germaniya"
-          className="mt-6 flex flex-col gap-4 rounded-lg bg-brand-deep p-6 text-white shadow-sm transition hover:-translate-y-0.5 sm:flex-row sm:items-center sm:justify-between"
+          className="guide-shelf mt-6 flex flex-col gap-4 rounded-lg bg-brand-deep p-6 text-white transition sm:flex-row sm:items-center sm:justify-between"
         >
           <div className="flex items-start gap-4">
             <div className="rounded-md bg-white/10 p-3">

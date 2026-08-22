@@ -1,3 +1,4 @@
+// Modern 3D direction: category entry points read as light, elevated product tiles; their labels, font, and links stay unchanged.
 import Link from "next/link";
 import {
   Zap,
@@ -36,14 +37,14 @@ const CATEGORY_ICONS: Record<string, LucideIcon> = {
 
 export default function CategoryCardGrid() {
   return (
-    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+    <div className="category-3d-stage grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
       {homeCategories.map((category) => {
         const Icon = CATEGORY_ICONS[category.href] ?? Zap;
         return (
           <Link
             key={category.href}
             href={category.href}
-            className="group flex items-center gap-4 rounded-xl border border-line bg-white p-5 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-brand/30 hover:shadow-md"
+            className="category-lift-card group flex items-center gap-4 rounded-xl border border-line bg-white p-5"
           >
             <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-brand-tint text-brand">
               <Icon className="h-5 w-5" strokeWidth={1.75} />

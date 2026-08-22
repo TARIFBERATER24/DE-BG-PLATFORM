@@ -1,5 +1,7 @@
 "use client";
 
+// Modern 3D direction: the existing type, copy, imagery, and CTAs sit on a restrained physical stage rather than a decorative effect.
+
 import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
@@ -28,7 +30,7 @@ export default function HeroCarousel() {
 
   return (
     <div
-      className="relative mt-10"
+      className="hero-carousel-stage relative mt-10"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
@@ -53,7 +55,7 @@ export default function HeroCarousel() {
         aria-live="polite"
         className="grid min-h-[16rem] items-center gap-8 px-4 sm:px-20 lg:grid-cols-[1.05fr_1fr] lg:gap-10 lg:px-24"
       >
-        <div className="text-center lg:text-left">
+        <div className="hero-copy-layer text-center lg:text-left">
           <h1 className="text-3xl font-bold leading-[1.15] tracking-tight text-white sm:text-4xl">
             {slide.title}
           </h1>
@@ -68,7 +70,7 @@ export default function HeroCarousel() {
         </div>
 
         {slide.image ? (
-          <div className="relative hidden lg:block lg:-mr-24 xl:-mr-40">
+          <div className="hero-render-stage relative hidden lg:block lg:-mr-24 xl:-mr-40">
             <Image
               src={slide.image}
               alt={slide.imageAlt ?? ""}
