@@ -155,8 +155,8 @@ p { text-wrap: pretty; }
 /* --- 3D category showcase ------------------------------------------------ */
 
 .scene-3d {
-  perspective: 1500px;
-  perspective-origin: 50% 25%;
+  perspective: 1900px;
+  perspective-origin: 50% 8%;
 }
 
 .plane-3d {
@@ -166,7 +166,7 @@ p { text-wrap: pretty; }
 }
 
 .card-3d {
-  transform: translateZ(var(--z, 0px));
+  transform: translateZ(var(--z, 0px)) rotateZ(var(--rz, 0deg));
   transform-style: preserve-3d;
   transition:
     transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1),
@@ -175,7 +175,7 @@ p { text-wrap: pretty; }
 
 .card-3d:hover,
 .card-3d:focus-visible {
-  transform: translateZ(calc(var(--z, 0px) + 70px)) scale(1.03);
+  transform: translateZ(calc(var(--z, 0px) + 70px)) rotateZ(0deg) scale(1.03);
   box-shadow: 0 30px 60px rgba(16, 24, 40, 0.18);
   z-index: 1;
 }
@@ -208,12 +208,13 @@ p { text-wrap: pretty; }
   border: 1px solid var(--line);
   border-radius: 1.5rem;
   background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.92), rgba(232, 246, 251, 0.94) 48%, rgba(232, 239, 250, 0.96)),
+    radial-gradient(120% 90% at 15% -10%, rgba(125, 211, 252, 0.35), transparent 55%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.92), rgba(207, 236, 246, 0.92) 48%, rgba(219, 232, 250, 0.96)),
     var(--surface);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.95),
-    0 24px 70px rgba(24, 70, 128, 0.12);
-  padding: clamp(1.25rem, 4vw, 2.5rem);
+    0 24px 70px rgba(24, 70, 128, 0.14);
+  padding: clamp(1.25rem, 4vw, 2.5rem) clamp(1.25rem, 4vw, 2.5rem) clamp(2rem, 6vw, 4rem);
 }
 
 .service-dashboard::before {
@@ -230,18 +231,20 @@ p { text-wrap: pretty; }
 
 .service-board {
   position: relative;
-  overflow: hidden;
+  overflow: visible;
   border: 1px solid rgba(197, 206, 221, 0.95);
   border-radius: 1rem;
-  background: rgba(255, 255, 255, 0.84);
+  background: rgba(255, 255, 255, 0.9);
   box-shadow:
-    0 12px 0 rgba(117, 130, 151, 0.16),
-    0 24px 36px rgba(16, 24, 40, 0.11);
+    0 3px 0 rgba(255, 255, 255, 0.6) inset,
+    0 16px 0 -2px rgba(20, 45, 99, 0.16),
+    0 30px 44px -6px rgba(16, 24, 40, 0.22);
 }
 
 .service-board::after {
   position: absolute;
   inset: 0;
+  border-radius: inherit;
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.55), transparent 42%);
   content: "";
   pointer-events: none;
@@ -250,7 +253,7 @@ p { text-wrap: pretty; }
 .service-board__content {
   position: relative;
   z-index: 1;
-  padding: 1.25rem;
+  padding: 1.5rem 1.25rem 1.25rem;
 }
 
 .service-board__tab {
@@ -265,20 +268,72 @@ p { text-wrap: pretty; }
   font-size: 0.68rem;
   font-weight: 800;
   letter-spacing: 0.14em;
+  box-shadow: 0 6px 14px rgba(11, 31, 77, 0.35);
 }
 
 .service-board__icon {
   display: flex;
-  height: 2.75rem;
-  width: 2.75rem;
+  height: 3.25rem;
+  width: 3.25rem;
   flex: 0 0 auto;
   align-items: center;
   justify-content: center;
-  border: 1px solid rgba(29, 78, 216, 0.14);
-  border-radius: 0.75rem;
-  background: var(--brand-tint);
-  color: var(--brand);
+  border: 3px solid var(--surface);
+  border-radius: 999px;
+  background: var(--board-accent, var(--brand));
+  color: var(--on-brand);
+  box-shadow:
+    0 0 0 1px rgba(16, 24, 40, 0.08),
+    0 10px 18px -4px rgba(16, 24, 40, 0.35);
 }
+
+/* --- Per-board accent identity ------------------------------------------- */
+
+.service-board--energy {
+  --board-accent: #f59e0b;
+  border-color: rgba(11, 31, 77, 0.5);
+  background: linear-gradient(160deg, #0f1f45 0%, #0b1f4d 55%, #142b63 100%);
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.service-board--energy::after {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.14), transparent 46%);
+}
+
+.service-board--energy p {
+  color: rgba(255, 255, 255, 0.62);
+}
+
+.service-board--energy h3 {
+  color: #fff;
+}
+
+.service-board--energy .service-board__tab {
+  background: rgba(255, 255, 255, 0.14);
+  color: #fff;
+}
+
+.service-board--energy .service-tile {
+  border-color: rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.service-board--energy .service-tile__title {
+  color: #fff;
+}
+
+.service-board--energy .service-tile__description {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.service-board--energy .service-tile__icon {
+  background: rgba(255, 255, 255, 0.12);
+  color: #fbbf24;
+}
+
+.service-board--connectivity { --board-accent: #0ea5e9; }
+.service-board--finance { --board-accent: #15966a; }
+.service-board--insurance { --board-accent: #7c3aed; }
 
 .service-tile {
   position: relative;
@@ -309,9 +364,9 @@ p { text-wrap: pretty; }
   flex: 0 0 auto;
   align-items: center;
   justify-content: center;
-  border-radius: 0.65rem;
+  border-radius: 999px;
   background: var(--surface-strong);
-  color: var(--brand);
+  color: var(--board-accent, var(--brand));
   transition: background 0.2s ease;
 }
 

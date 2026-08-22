@@ -175,17 +175,19 @@ export default function CategoryCardGrid() {
         </div>
 
         <div
-          className="plane-3d mt-10 grid gap-6 lg:grid-cols-2"
-          style={{ "--rx": "7deg", "--ry": "-1deg" } as CSSProperties}
+          className="plane-3d mt-14 grid gap-x-6 gap-y-10 lg:grid-cols-2"
+          style={{ "--rx": "20deg", "--ry": "-5deg" } as CSSProperties}
         >
           {serviceBoards.map((board, index) => {
             const BoardIcon = board.Icon;
+            const depth = [64, 18, 34, 4][index % 4];
+            const tilt = [-1.4, 0.9, -0.6, 1.3][index % 4];
 
             return (
               <article
                 key={board.tab}
                 className={`service-board card-3d ${board.className}`}
-                style={{ "--z": `${index % 2 === 0 ? 8 : 0}px` } as CSSProperties}
+                style={{ "--z": `${depth}px`, "--rz": `${tilt}deg` } as CSSProperties}
               >
                 <div className="service-board__content">
                   <div className="service-board__tab">
