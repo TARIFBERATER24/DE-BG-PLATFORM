@@ -290,3 +290,9 @@ and light-mode policy are preserved. Depth is allowed only on the hero media, cl
 category tiles, and honest data/guide panels. It must remain static on small screens and
 for people who prefer reduced motion. The copy layer stays flat and highly legible; 3D is
 used to establish navigational hierarchy, not to decorate text.
+
+**Visibility rule:** depth must be immediately legible at rest in the desktop homepage
+preview, rather than appearing only after hover. The hero may use a blue perspective grid,
+two orbital lines, and a small number of purpose-led floating chips. Cards and data panels
+may retain a clear shallow base and neutral cast shadow. These elements must never obscure
+the copy or invent data, and the static mobile/reduced-motion fallback remains mandatory.

@@ -71,13 +71,20 @@ export default function HeroCarousel() {
 
         {slide.image ? (
           <div className="hero-render-stage relative hidden lg:block lg:-mr-24 xl:-mr-40">
+            <div className="hero-spatial-layer" aria-hidden="true">
+              <span className="hero-orbit hero-orbit--wide" />
+              <span className="hero-orbit hero-orbit--near" />
+              <span className="hero-float-chip hero-float-chip--top">На български</span>
+              <span className="hero-float-chip hero-float-chip--left">Сравни</span>
+              <span className="hero-float-chip hero-float-chip--right">Избери</span>
+            </div>
             <Image
               src={slide.image}
               alt={slide.imageAlt ?? ""}
               width={1195}
               height={724}
               priority={index === 0}
-              className="hero-render h-auto w-full scale-110"
+              className="hero-render relative z-10 h-auto w-full scale-110"
             />
           </div>
         ) : null}
