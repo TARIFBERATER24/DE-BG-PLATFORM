@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import CategoryComparisonPage from "@/components/CategoryComparisonPage";
+import DslIframeWidget from "@/components/DslIframeWidget";
 
 export const metadata: Metadata = {
   title: "Сравнение на интернет доставчици",
@@ -15,6 +16,7 @@ export default function InternetPage() {
       ctaLabel="Сравни оферти за интернет"
       network="check24"
       programSlug="internetvergleich"
+      widget={<DslIframeWidget />}
     />
   );
 }

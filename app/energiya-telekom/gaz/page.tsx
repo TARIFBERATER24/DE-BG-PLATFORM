@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import CategoryComparisonPage from "@/components/CategoryComparisonPage";
 import ConsultationOffer from "@/components/ConsultationOffer";
+import GasIframeWidget from "@/components/GasIframeWidget";
 
 export const metadata: Metadata = {
   title: "Сравнение на доставчици на газ",
@@ -16,6 +17,7 @@ export default function GazPage() {
       ctaLabel="Сравни оферти за газ"
       network="check24"
       programSlug="gasvergleich"
+      widget={<GasIframeWidget />}
     >
       <ConsultationOffer utility="газ" />
     </CategoryComparisonPage>
