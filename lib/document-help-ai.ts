@@ -91,9 +91,18 @@ const extractionSchema = {
 function getOutputText(body: unknown) {
   const raw = body && typeof body === "object" ? body as Record<string, unknown> : {};
   if (typeof raw.output_text === "string") return raw.output_text;
+  if (typeof raw.outputText === "string") return raw.outputText;
   if (Array.isArray(raw.outputs)) {
     const text = raw.outputs.find((item) => item && typeof item === "object" && (item as Record<string, unknown>).type === "text") as Record<string, unknown> | undefined;
     if (typeof text?.text === "string") return text.text;
+  }
+  const modelOutput = raw.model_output ?? raw.modelOutput;
+  if (modelOutput && typeof modelOutput === "object") {
+    const content = (modelOutput as Record<string, unknown>).content;
+    if (Array.isArray(content)) {
+      const text = content.find((item) => item && typeof item === "object" && (item as Record<string, unknown>).type === "text") as Record<string, unknown> | undefined;
+      if (typeof text?.text === "string") return text.text;
+    }
   }
   throw new Error("AI услугата не върна използваем резултат.");
 }
