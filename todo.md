@@ -50,3 +50,9 @@
 - [ ] Build the selected live AI platform assistant with a private server-side Groq request and a strict Bulgarian guidance-only system contract.
 - [ ] Add a no-store conversation API that accepts only short visitor messages, rejects sensitive payment credentials, and returns safe navigation cards.
 - [ ] Add the assistant to the public platform with clear entry points and service categories, while keeping all provider actions, submissions, and payments unavailable.
+- [ ] Redesign the public assistant as a premium avatar-led widget inspired by the supplied next-generation visual reference, without copying third-party branding or UI.
+- [ ] Add a distinct Sravni.de avatar mark, cinematic entry state, and expanded conversational stage while retaining keyboard accessibility and reduced-motion support.
+- [ ] Verify that the premium visual redesign does not alter the server-side safety contract or enable external actions.
+- [ ] Verify the selected external avatar service’s free tier in the authenticated browser; configure only free settings and retain the existing first-party Preview assistant as fallback.
+- [ ] Replace the external avatar-widget experiment with a first-party premium avatar experience using the generated Sravni AI visual assets and the existing safe server route.
+- [ ] Verify the first-party avatar interface works without an external subscription, embedded script, payment, or third-party conversation provider.

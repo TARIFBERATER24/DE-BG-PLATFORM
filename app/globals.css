@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+/* Style reminder: Sravni AI is a premium first-party avatar experience — cinematic navy, electric-blue guidance, warm human presence, and restrained motion. */
+
 :root {
   color-scheme: light;
 
@@ -198,3 +200,47 @@ p { text-wrap: pretty; }
 }
 
 * { touch-action: manipulation; }
+
+/* --- Sravni AI premium avatar widget ------------------------------------ */
+.assistant-chat-grid {
+  background:
+    radial-gradient(circle at 90% 2%, rgba(37, 99, 235, .08), transparent 32%),
+    linear-gradient(180deg, #f9fbff 0%, #f4f7fc 100%);
+}
+
+.assistant-avatar-frame {
+  animation: assistant-breathe 4.6s ease-in-out infinite;
+}
+
+.assistant-orbit {
+  animation: assistant-orbit 15s linear infinite;
+}
+
+.assistant-panel-rise {
+  animation: assistant-panel-rise .32s cubic-bezier(.23, 1, .32, 1) both;
+}
+
+@keyframes assistant-breathe {
+  0%, 100% { transform: translateY(0) scale(1); filter: saturate(1); }
+  50% { transform: translateY(-1px) scale(1.025); filter: saturate(1.08); }
+}
+
+@keyframes assistant-orbit {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes assistant-panel-rise {
+  from { opacity: 0; transform: translateY(18px) scale(.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .assistant-avatar-frame,
+  .assistant-orbit,
+  .assistant-panel-rise { animation: none; }
+}
+
+@media (max-width: 640px) {
+  .assistant-launcher { height: 4.25rem; padding-right: .75rem; }
+  .assistant-launcher > span:first-child { height: 3.25rem; width: 3.25rem; }
+}
