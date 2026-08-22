@@ -37,3 +37,16 @@
 - [ ] Resolve the `pdf-parse` server-runtime `DOMMatrix` failure without importing PDF rendering code into the operator page, then validate text extraction only with the non-personal fixture.
 - [ ] Implement only an explicit operator-triggered extraction draft, with no email, Telegram, n8n, provider, affiliate, or legal-advice action.
 - [ ] Verify extraction, restricted access, and retention behavior using non-personal test material before accepting customer documents.
+- [ ] Review personal case `7d74deb8` only in the protected operator context; do not expose its contents, contact the sender, or make a payment.
+- [ ] Identify the deadline, payment-reference, contact channel, and installment-policy gaps that require confirmation from the official sender.
+- [ ] Prepare an operator-reviewed German payment-installment inquiry draft, but do not send it without the user’s explicit confirmation in this conversation.
+- [ ] Design the customer-facing acknowledgement for Mahnung/payment-reminder inquiries without promising payment, legal advice, or direct provider action.
+- [ ] Add an operator workflow that distinguishes document facts, missing information, installment-request preparation, and explicitly approved outbound actions.
+- [ ] Define the future payment boundary: the platform never collects or transfers customer money; any payment is completed by the customer in the official provider channel after explicit confirmation.
+- [ ] Define the AI digital platform assistant’s supported topics, safe routing rules, and clear exclusions for legal advice, payment, contract conclusion, and external messaging.
+- [ ] Choose a Preview-only server-side assistant architecture that keeps prompts and model credentials private.
+- [ ] Add guided conversation cards for energy, internet, mobile, insurance, documents, and general Germany-in-Bulgarian orientation.
+- [ ] Validate that the assistant can only recommend a page or a next step and cannot submit forms, contact partners, or execute financial actions.
+- [ ] Build the selected live AI platform assistant with a private server-side Groq request and a strict Bulgarian guidance-only system contract.
+- [ ] Add a no-store conversation API that accepts only short visitor messages, rejects sensitive payment credentials, and returns safe navigation cards.
+- [ ] Add the assistant to the public platform with clear entry points and service categories, while keeping all provider actions, submissions, and payments unavailable.
