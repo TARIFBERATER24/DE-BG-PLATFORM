@@ -9,13 +9,13 @@ export default function MobileNav() {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="sm:hidden">
+    <div className="lg:hidden">
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
         aria-label={open ? "Затвори менюто" : "Отвори менюто"}
         aria-expanded={open}
-        className="rounded-md p-2 text-ink hover:bg-surface"
+        className="rounded-md p-2 text-white hover:bg-white/10"
       >
         {open ? <CloseIcon className="h-6 w-6" /> : <MenuIcon className="h-6 w-6" />}
       </button>
