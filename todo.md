@@ -56,3 +56,4 @@
 - [ ] Verify the selected external avatar service’s free tier in the authenticated browser; configure only free settings and retain the existing first-party Preview assistant as fallback.
 - [ ] Replace the external avatar-widget experiment with a first-party premium avatar experience using the generated Sravni AI visual assets and the existing safe server route.
 - [ ] Verify the first-party avatar interface works without an external subscription, embedded script, payment, or third-party conversation provider.
+- [x] Rename the premium user-facing avatar identity to Илия, preserving its existing guidance-only safety contract.

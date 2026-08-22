@@ -22,7 +22,7 @@ type AssistantMessage = {
 const welcomeMessage: AssistantMessage = {
   id: "welcome",
   role: "assistant",
-  content: "Здравейте — аз съм Сравни AI, Вашият дигитален гид за Германия. Кажете ми каква ситуация имате и ще Ви насоча към най-подходящата страница.",
+  content: "Здравейте — аз съм Илия, Вашият дигитален гид за Германия. Кажете ми каква ситуация имате и ще Ви насоча към най-подходящата страница.",
 };
 
 function makeId() {
@@ -104,7 +104,7 @@ export default function PlatformAssistant() {
                 </div>
                 <div>
                   <p className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[.19em] text-cyan-200"><Sparkles className="h-3 w-3" aria-hidden="true" />Дигитален гид</p>
-                  <h2 className="mt-0.5 text-lg font-semibold tracking-tight">Сравни AI</h2>
+                  <h2 className="mt-0.5 text-lg font-semibold tracking-tight">Илия</h2>
                   <p className="mt-0.5 text-xs leading-5 text-blue-100/80">Ориентация за живота в Германия — на български.</p>
                 </div>
               </div>
@@ -132,7 +132,7 @@ export default function PlatformAssistant() {
           <div className="border-t border-slate-200 bg-white p-3.5">
             {messages.length === 1 && <div className="mb-3 flex gap-2 overflow-x-auto pb-1">{PLATFORM_ASSISTANT_QUICK_PROMPTS.map((prompt) => <button key={prompt} type="button" onClick={() => void sendMessage(prompt)} disabled={pending} className="shrink-0 rounded-full border border-[#cfe0ff] bg-[#f5f8ff] px-3 py-2 text-left text-xs leading-4 text-[#315284] transition hover:border-[#2563eb] hover:bg-[#e7efff] hover:text-[#123b99] disabled:opacity-50">{prompt}</button>)}</div>}
             <form onSubmit={handleSubmit} className="flex items-center gap-2 rounded-2xl border border-slate-200 bg-[#f7f9fe] p-1.5 transition focus-within:border-[#2563eb] focus-within:ring-4 focus-within:ring-[#2563eb]/10">
-              <input ref={inputRef} value={draft} onChange={(event) => setDraft(event.target.value)} maxLength={600} disabled={pending} placeholder="Напишете какво Ви трябва…" className="h-10 min-w-0 flex-1 bg-transparent px-2.5 text-sm text-slate-800 outline-none placeholder:text-slate-400 disabled:opacity-60" aria-label="Вашият въпрос към Сравни AI" />
+              <input ref={inputRef} value={draft} onChange={(event) => setDraft(event.target.value)} maxLength={600} disabled={pending} placeholder="Напишете какво Ви трябва…" className="h-10 min-w-0 flex-1 bg-transparent px-2.5 text-sm text-slate-800 outline-none placeholder:text-slate-400 disabled:opacity-60" aria-label="Вашият въпрос към Илия" />
               <button type="submit" disabled={!draft.trim() || pending} className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#1455d9] text-white shadow-[0_7px_16px_rgba(20,85,217,.25)] transition hover:bg-[#0e42b4] active:scale-[.96] disabled:cursor-not-allowed disabled:opacity-45" aria-label="Изпрати"><Send className="h-4 w-4" aria-hidden="true" /></button>
             </form>
             <div className="mt-2.5 flex items-center justify-between gap-2 text-[11px] leading-4 text-slate-400"><span>Само навигация и обща ориентация.</span><button type="button" onClick={resetConversation} className="inline-flex items-center gap-1 font-medium transition hover:text-[#1455d9]"><RotateCcw className="h-3 w-3" aria-hidden="true" />Нова тема</button></div>
@@ -142,7 +142,7 @@ export default function PlatformAssistant() {
 
       <button type="button" onClick={() => setOpen((value) => !value)} className="assistant-launcher group relative flex h-[4.75rem] items-center gap-3 rounded-full border border-white/55 bg-[#061b45] py-2 pl-2 pr-5 text-left text-white shadow-[0_18px_48px_rgba(7,27,66,.38)] transition duration-200 hover:-translate-y-1 hover:shadow-[0_24px_60px_rgba(7,27,66,.46)] active:scale-[.98]" aria-expanded={open} aria-controls="platform-assistant-panel">
         <span className="relative grid h-14 w-14 shrink-0 place-items-center rounded-full bg-[#103c94] shadow-[0_0_0_6px_rgba(37,99,235,.22)]"><Image src={ORBIT_URL} alt="" width={84} height={84} unoptimized className="assistant-orbit absolute -inset-4 h-[5.25rem] w-[5.25rem] max-w-none opacity-75" /><Image src={AVATAR_URL} alt="" width={56} height={56} unoptimized className="relative h-full w-full rounded-full object-cover" /><span className="absolute bottom-0 right-0 h-3.5 w-3.5 rounded-full border-2 border-[#061b45] bg-emerald-400" /></span>
-        <span className="hidden min-w-0 sm:block"><span className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[.16em] text-cyan-200"><span className="h-1.5 w-1.5 rounded-full bg-cyan-300" />AI гид онлайн</span><span className="mt-0.5 block text-sm font-semibold">Попитайте Сравни AI</span></span>
+        <span className="hidden min-w-0 sm:block"><span className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[.16em] text-cyan-200"><span className="h-1.5 w-1.5 rounded-full bg-cyan-300" />Илия е онлайн</span><span className="mt-0.5 block text-sm font-semibold">Попитайте Илия</span></span>
         <span className="sm:hidden"><MessageCircle className="h-5 w-5" aria-hidden="true" /></span>
         <ChevronDown className={`ml-0.5 hidden h-4 w-4 text-blue-200 transition sm:block ${open ? "rotate-180" : ""}`} aria-hidden="true" />
       </button>
