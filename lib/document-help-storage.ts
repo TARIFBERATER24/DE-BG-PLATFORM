@@ -12,6 +12,7 @@ import {
 } from "@/lib/document-help-contract";
 
 const CASE_ROOT = "document-help/cases/";
+const RETENTION_DAYS = 7;
 const CASE_ID_PATTERN = /^[a-f0-9]{8}-[a-f0-9]{4}-[1-5][a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/i;
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -38,6 +39,7 @@ export type DocumentHelpCaseRecord = {
   status: DocumentHelpCaseStatus;
   createdAt: string;
   updatedAt: string;
+  expiresAt: string;
   documentType: DocumentHelpDocumentType;
   email: string;
   question: string;
@@ -55,8 +57,34 @@ export type DocumentHelpCaseRecord = {
   };
 };
 
+export type DocumentHelpAiDraft = {
+  extractedAt: string;
+  model: string;
+  summaryBg: string;
+  documentKind: string;
+  providerName: string | null;
+  serviceType: "electricity" | "gas" | "internet" | "mobile" | "insurance" | "other" | "unknown";
+  amounts: Array<{ label: string; value: string; currency: string }>;
+  dates: Array<{ label: string; date: string }>;
+  urgency: "none" | "review-soon" | "urgent-human-review";
+  riskFlags: Array<"mahnung" | "kuendigung" | "vollstreckung" | "court-letter" | "police" | "short-deadline">;
+  uncertainties: string[];
+};
+
+export type DocumentHelpCaseWithAnalysis = DocumentHelpCaseRecord & {
+  analysis: DocumentHelpAiDraft | null;
+};
+
 function caseManifestPath(caseId: string) {
   return `${CASE_ROOT}${caseId}/case.json`;
+}
+
+function caseAnalysisPath(caseId: string) {
+  return `${CASE_ROOT}${caseId}/analysis.json`;
+}
+
+export function isDocumentHelpCaseExpired(record: Pick<DocumentHelpCaseRecord, "expiresAt">, now = new Date()) {
+  return Number.isFinite(Date.parse(record.expiresAt)) && Date.parse(record.expiresAt) <= now.getTime();
 }
 
 function isString(value: unknown): value is string {
@@ -131,11 +159,13 @@ export async function saveUploadedDocumentCase(blob: PutBlobResult, rawPayload: 
   if (!auth) throw new Error("Съхранението на demo документи не е конфигурирано.");
   const payload = validateDocumentHelpUpload(blob.pathname, rawPayload);
   const now = new Date().toISOString();
+  const expiresAt = new Date(Date.now() + RETENTION_DAYS * 24 * 60 * 60 * 1000).toISOString();
   const record: DocumentHelpCaseRecord = {
     caseId: payload.caseId,
     status: "waiting-review",
     createdAt: now,
     updatedAt: now,
+    expiresAt,
     documentType: payload.documentType,
     email: payload.email,
     question: payload.question,
@@ -199,6 +229,43 @@ export async function listDocumentHelpCases() {
     .sort((a, b) => b.createdAt.localeCompare(a.createdAt));
 }
 
+export async function getDocumentHelpCaseAnalysis(caseId: string): Promise<DocumentHelpAiDraft | null> {
+  if (!isCaseId(caseId)) return null;
+  const auth = blobAuthOptions();
+  if (!auth) return null;
+  const result = await get(caseAnalysisPath(caseId), { access: "private", useCache: false, ...auth });
+  if (!result || result.statusCode !== 200) return null;
+
+  try {
+    const parsed = JSON.parse(await new Response(result.stream).text()) as DocumentHelpAiDraft;
+    return typeof parsed.summaryBg === "string" && typeof parsed.extractedAt === "string" ? parsed : null;
+  } catch {
+    return null;
+  }
+}
+
+export async function listDocumentHelpCasesWithAnalysis(): Promise<DocumentHelpCaseWithAnalysis[]> {
+  const cases = await listDocumentHelpCases();
+  return Promise.all(cases.map(async (record) => ({
+    ...record,
+    analysis: await getDocumentHelpCaseAnalysis(record.caseId),
+  })));
+}
+
+export async function saveDocumentHelpCaseAnalysis(caseId: string, analysis: DocumentHelpAiDraft) {
+  if (!isCaseId(caseId)) throw new Error("Невалиден номер на заявка.");
+  const auth = blobAuthOptions();
+  if (!auth) throw new Error("Съхранението на demo документи не е конфигурирано.");
+  await put(caseAnalysisPath(caseId), JSON.stringify(analysis), {
+    access: "private",
+    addRandomSuffix: false,
+    allowOverwrite: true,
+    contentType: "application/json",
+    cacheControlMaxAge: 60,
+    ...auth,
+  });
+}
+
 export async function getDocumentHelpCase(caseId: string) {
   if (!isDocumentHelpStorageConfigured()) return null;
   return readPrivateCase(caseId);
@@ -209,7 +276,10 @@ export async function deleteDocumentHelpCase(caseId: string) {
   if (!record) return false;
   const auth = blobAuthOptions();
   if (!auth) return false;
-  await del([record.document.url, caseManifestPath(caseId)], auth);
+  const analysis = await getDocumentHelpCaseAnalysis(caseId);
+  const paths = [record.document.url, caseManifestPath(caseId)];
+  if (analysis) paths.push(caseAnalysisPath(caseId));
+  await del(paths, auth);
   return true;
 }
 

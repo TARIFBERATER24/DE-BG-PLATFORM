@@ -2,7 +2,7 @@
 import { get } from "@vercel/blob";
 import { NextResponse } from "next/server";
 import { hasOperatorSession } from "@/lib/document-help-auth";
-import { getDocumentHelpCase, getDocumentHelpStorageAuthOptions } from "@/lib/document-help-storage";
+import { getDocumentHelpCase, getDocumentHelpStorageAuthOptions, isDocumentHelpCaseExpired } from "@/lib/document-help-storage";
 
 export async function GET(request: Request) {
   if (!(await hasOperatorSession())) return new NextResponse("Unauthorized", { status: 401 });
@@ -10,6 +10,7 @@ export async function GET(request: Request) {
   const caseId = new URL(request.url).searchParams.get("case") ?? "";
   const record = await getDocumentHelpCase(caseId);
   if (!record) return new NextResponse("Not found", { status: 404 });
+  if (isDocumentHelpCaseExpired(record)) return new NextResponse("Retention period expired", { status: 410 });
 
   const auth = getDocumentHelpStorageAuthOptions();
   if (!auth) return new NextResponse("Storage unavailable", { status: 503 });

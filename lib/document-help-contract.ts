@@ -16,7 +16,7 @@ export const documentHelpDocumentTypes = [
 ] as const;
 
 export type DocumentHelpDocumentType = (typeof documentHelpDocumentTypes)[number];
-export type DocumentHelpCaseStatus = "received" | "waiting-review";
+export type DocumentHelpCaseStatus = "received" | "waiting-review" | "expired";
 
 export type DocumentHelpUploadPayload = {
   caseId: string;
@@ -30,4 +30,5 @@ export type DocumentHelpUploadPayload = {
 export const documentHelpStatusLabels: Record<DocumentHelpCaseStatus, string> = {
   received: "Получен документ",
   "waiting-review": "Чака човешки преглед",
+  expired: "Изтекъл срок за изтриване",
 };
