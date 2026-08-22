@@ -36,7 +36,7 @@ export default function HeroCarousel() {
         type="button"
         onClick={() => go(-1)}
         aria-label="Предишна оферта"
-        className="absolute left-0 top-1/2 hidden -translate-y-1/2 rounded-full p-3 text-2xl text-white/60 transition-colors hover:text-white sm:block"
+        className="absolute left-0 top-1/2 hidden -translate-y-1/2 rounded-full p-4 text-[2rem] text-white/60 transition-colors hover:text-white sm:block"
       >
         &#10094;
       </button>
@@ -44,14 +44,14 @@ export default function HeroCarousel() {
         type="button"
         onClick={() => go(1)}
         aria-label="Следваща оферта"
-        className="absolute right-0 top-1/2 hidden -translate-y-1/2 rounded-full p-3 text-2xl text-white/60 transition-colors hover:text-white sm:block"
+        className="absolute right-0 top-1/2 hidden -translate-y-1/2 rounded-full p-4 text-[2rem] text-white/60 transition-colors hover:text-white sm:block"
       >
         &#10095;
       </button>
 
       <div
         aria-live="polite"
-        className="grid min-h-[16rem] items-center gap-8 px-4 sm:px-14 lg:grid-cols-[1.05fr_1fr] lg:gap-10"
+        className="grid min-h-[16rem] items-center gap-8 px-4 sm:px-20 lg:grid-cols-[1.05fr_1fr] lg:gap-10 lg:px-24"
       >
         <div className="text-center lg:text-left">
           <h1 className="text-3xl font-bold leading-[1.15] tracking-tight text-white sm:text-4xl">

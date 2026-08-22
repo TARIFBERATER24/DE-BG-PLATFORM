@@ -35,6 +35,8 @@ export const heroSlides: HeroSlide[] = [
       "DSL, кабел и оптика — вижте какво реално е налично на вашия адрес.",
     ctaLabel: "Сравни интернет",
     href: "/energiya-telekom/internet",
+    image: "/hero/internet.png",
+    imageAlt: "Рутер, скоростомер на 928 Mbps и оптичен кабел до карти за DSL, кабел и оптика с надпис Наличност",
   },
   {
     id: "avto",
