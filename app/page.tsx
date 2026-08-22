@@ -1,6 +1,6 @@
 import Link from "next/link";
 import HeroCarousel from "@/components/HeroCarousel";
-import CategoryShowcase3D from "@/components/CategoryShowcase3D";
+import CategoryCardGrid from "@/components/CategoryCardGrid";
 import { CompassIcon } from "@/components/icons";
 import { heroPills } from "@/lib/categories";
 
@@ -26,7 +26,7 @@ export default function Home() {
       </section>
 
       <div className="mx-auto max-w-6xl px-6 py-14">
-        <CategoryShowcase3D />
+        <CategoryCardGrid />
 
         <div className="premium-card mt-10 grid gap-6 rounded-lg p-6 sm:grid-cols-[1fr_auto] sm:items-center">
           <div>
