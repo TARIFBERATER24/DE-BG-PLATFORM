@@ -33,7 +33,9 @@ export async function createOperatorSession() {
     httpOnly: true,
     sameSite: "strict",
     secure: process.env.NODE_ENV === "production",
-    path: "/demo/pomosh-s-dokumenti",
+    // The protected review page lives under /demo, but its download and deletion
+    // actions live under /api. Keep the httpOnly session available to both routes.
+    path: "/",
     maxAge: SESSION_TTL_SECONDS,
   });
 }
