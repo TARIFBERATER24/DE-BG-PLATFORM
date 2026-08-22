@@ -59,3 +59,4 @@
 - [x] Rename the premium user-facing avatar identity to Илия, preserving its existing guidance-only safety contract.
 - [x] Replace the generic avatar asset with the user-supplied Илия brand image in the premium Preview widget.
 - [x] Present the supplied Илия image as a clear half-body portrait on the right side of the open chat header while preserving header text readability.
+- [x] Replace the unavailable relative image path with the direct CDN URL so the supplied Илия artwork actually renders in Preview.

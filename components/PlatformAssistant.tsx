@@ -7,7 +7,7 @@ import { FormEvent, useEffect, useRef, useState } from "react";
 import { ArrowUpRight, ChevronDown, LoaderCircle, LockKeyhole, MessageCircle, RotateCcw, Send, ShieldAlert, ShieldCheck, Sparkles, X } from "lucide-react";
 import { PLATFORM_ASSISTANT_QUICK_PROMPTS, type PlatformAssistantRouteKey } from "@/lib/platform-assistant";
 
-const ILIYA_BRAND_IMAGE_URL = "/manus-storage/iliya-brand-avatar_6d5f9387.png";
+const ILIYA_BRAND_IMAGE_URL = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663828601266/aAoMFzBOIIuieUOH.png";
 const ORBIT_URL = "/manus-storage/sravni-ai-orbit_f92a47b7.png";
 
 type AssistantMessage = {
