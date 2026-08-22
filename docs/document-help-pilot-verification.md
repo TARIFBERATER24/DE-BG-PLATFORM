@@ -18,3 +18,7 @@ On 22 August 2026, the protected Preview operator desk completed the explicit, o
 ## Safeguards confirmed
 
 The desk showed a seven-day case expiry, the three completed internal stages, and an explicit statement that n8n and CRM are not configured. The pipeline remains operator-triggered and private. The fixture must be explicitly deleted from the operator desk before personal documents are accepted.
+
+## Final Preview surface check
+
+The public intake page discloses that the file remains private, that an operator may explicitly create an internal AI draft, and that there is no automatic external send. The protected desk shows a mandatory human-approval stage followed by separate disabled destinations for n8n webhook, HubSpot, Pipedrive, Salesforce, and Airtable. Each destination states that no record or external request has been sent.
