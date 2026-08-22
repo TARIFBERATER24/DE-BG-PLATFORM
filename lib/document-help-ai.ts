@@ -2,7 +2,7 @@
 import "server-only";
 
 import { get } from "@vercel/blob";
-import { PDFParse } from "pdf-parse";
+import * as pdfjs from "pdfjs-dist/legacy/build/pdf.js";
 import { isDocumentHelpAIConfigured } from "@/lib/document-help-ai-config";
 import {
   getDocumentHelpCase,
@@ -104,16 +104,25 @@ function getGroqOutputText(body: unknown) {
 }
 
 async function extractPdfText(bytes: Buffer) {
-  const parser = new PDFParse({ data: bytes });
+  const document = await pdfjs.getDocument({ data: new Uint8Array(bytes) }).promise;
   try {
-    const result = await parser.getText();
-    const normalized = result.text.replace(/\s+/g, " ").trim();
+    const pages: string[] = [];
+    for (let pageNumber = 1; pageNumber <= document.numPages; pageNumber += 1) {
+      const page = await document.getPage(pageNumber);
+      const content = await page.getTextContent();
+      const pageText = content.items
+        .map((item) => "str" in item ? item.str : "")
+        .join(" ");
+      pages.push(pageText);
+    }
+
+    const normalized = pages.join(" ").replace(/\s+/g, " ").trim();
     if (!normalized) {
       throw new Error("Този PDF няма извличаем текст. Прегледайте го ръчно; OCR не е активиран.");
     }
     return normalized.slice(0, MAXIMUM_GROQ_INPUT_CHARACTERS);
   } finally {
-    await parser.destroy();
+    await document.destroy();
   }
 }
 
