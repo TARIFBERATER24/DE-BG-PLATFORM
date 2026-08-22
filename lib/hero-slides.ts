@@ -41,8 +41,10 @@ export const heroSlides: HeroSlide[] = [
     title: "Автозастраховка, обяснена на български",
     subtitle:
       "Haftpflicht, Teilkasko и Vollkasko — какво покрива всяко и кое ви трябва.",
-    ctaLabel: "Виж автозастраховки",
-    href: "/zastrahovki/avto",
+    ctaLabel: "Изчисли ориентировъчна цена",
+    href: "/zastrahovki/avto#kfz-estimator",
+    image: "/hero/avtozastrahovka.png",
+    imageAlt: "Автомобил до светещ щит с отметка и застрахователна полица, с етикети Haftpflicht, Teilkasko и Vollkasko",
   },
   {
     id: "girokonto",

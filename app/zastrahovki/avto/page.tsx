@@ -38,7 +38,7 @@ export default function AvtoPage() {
         </p>
       </div>
 
-      <div className="mt-10">
+      <div id="kfz-estimator" className="mt-10 scroll-mt-20">
         <h2 className="text-xl font-semibold text-ink">
           Ориентировъчен калкулатор
         </h2>
