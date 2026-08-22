@@ -1,14 +1,10 @@
 // Style reminder: this route only issues constrained private-upload tokens and persists an operator review record; no AI or delivery action is allowed here.
-import { handleUpload, type HandleUploadBody } from "@vercel/blob/client";
+import { handleUploadPresigned, type HandleUploadPresignedBody } from "@vercel/blob/client";
 import { NextResponse } from "next/server";
 import {
-  DOCUMENT_HELP_ALLOWED_CONTENT_TYPES,
-  DOCUMENT_HELP_MAX_SIZE_BYTES,
-} from "@/lib/document-help-contract";
-import {
+  issueDocumentHelpUploadToken,
   isDocumentHelpStorageConfigured,
   saveUploadedDocumentCase,
-  validateDocumentHelpUpload,
 } from "@/lib/document-help-storage";
 
 export async function POST(request: Request) {
@@ -20,19 +16,22 @@ export async function POST(request: Request) {
   }
 
   try {
-    const body = (await request.json()) as HandleUploadBody;
-    const response = await handleUpload({
+    const body = (await request.json()) as HandleUploadPresignedBody;
+    const response = await handleUploadPresigned({
       body,
       request,
-      onBeforeGenerateToken: async (pathname, clientPayload) => {
-        validateDocumentHelpUpload(pathname, clientPayload);
+      getSignedToken: async (pathname, clientPayload) => {
+        const token = await issueDocumentHelpUploadToken(pathname, clientPayload);
         return {
-          allowedContentTypes: [...DOCUMENT_HELP_ALLOWED_CONTENT_TYPES],
-          maximumSizeInBytes: DOCUMENT_HELP_MAX_SIZE_BYTES,
-          addRandomSuffix: false,
-          allowOverwrite: false,
-          validUntil: Date.now() + 10 * 60 * 1000,
-          tokenPayload: clientPayload,
+          token,
+          urlOptions: {
+            allowedContentTypes: ["application/pdf", "image/jpeg", "image/png"],
+            maximumSizeInBytes: 10 * 1024 * 1024,
+            addRandomSuffix: false,
+            allowOverwrite: false,
+            validUntil: Date.now() + 10 * 60 * 1000,
+            tokenPayload: clientPayload,
+          },
         };
       },
       onUploadCompleted: async ({ blob, tokenPayload }) => {

@@ -1,7 +1,7 @@
 // Style reminder: Сравни.де makes German bureaucracy simple in Bulgarian—calm, credible, light, and never salesy.
 "use client";
 
-import { upload } from "@vercel/blob/client";
+import { uploadPresigned } from "@vercel/blob/client";
 import { useRef, useState, type ChangeEvent, type FormEvent } from "react";
 import Link from "next/link";
 import {
@@ -98,7 +98,7 @@ export default function DocumentHelpDemo() {
     setIsUploading(true);
     setUploadProgress(0);
     try {
-      await upload(`document-help/cases/${payload.caseId}/document.${extensionFor(selectedFile)}`, selectedFile, {
+      await uploadPresigned(`document-help/cases/${payload.caseId}/document.${extensionFor(selectedFile)}`, selectedFile, {
         access: "private",
         contentType: selectedFile.type,
         handleUploadUrl: "/api/demo/document-help/upload",

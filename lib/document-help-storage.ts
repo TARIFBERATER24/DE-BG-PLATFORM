@@ -1,8 +1,10 @@
 // Style reminder: private, minimal, operator-only storage; never expose document URLs or trigger AI/external delivery from this layer.
 import "server-only";
 
-import { del, get, list, put, type PutBlobResult } from "@vercel/blob";
+import { del, get, issueSignedToken, list, put, type PutBlobResult } from "@vercel/blob";
 import {
+  DOCUMENT_HELP_ALLOWED_CONTENT_TYPES,
+  DOCUMENT_HELP_MAX_SIZE_BYTES,
   documentHelpDocumentTypes,
   type DocumentHelpCaseStatus,
   type DocumentHelpDocumentType,
@@ -12,6 +14,25 @@ import {
 const CASE_ROOT = "document-help/cases/";
 const CASE_ID_PATTERN = /^[a-f0-9]{8}-[a-f0-9]{4}-[1-5][a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/i;
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+function blobAuthOptions() {
+  if (process.env.BLOB_READ_WRITE_TOKEN) {
+    return { token: process.env.BLOB_READ_WRITE_TOKEN };
+  }
+
+  if (process.env.BLOB_STORE_ID && process.env.VERCEL_OIDC_TOKEN) {
+    return {
+      storeId: process.env.BLOB_STORE_ID,
+      oidcToken: process.env.VERCEL_OIDC_TOKEN,
+    };
+  }
+
+  return null;
+}
+
+export function getDocumentHelpStorageAuthOptions() {
+  return blobAuthOptions();
+}
 
 export type DocumentHelpCaseRecord = {
   caseId: string;
@@ -94,7 +115,7 @@ function normalizePayload(rawPayload: string | null): DocumentHelpUploadPayload 
 }
 
 export function isDocumentHelpStorageConfigured() {
-  return Boolean(process.env.BLOB_READ_WRITE_TOKEN);
+  return Boolean(blobAuthOptions());
 }
 
 export function validateDocumentHelpUpload(pathname: string, rawPayload: string | null) {
@@ -107,6 +128,8 @@ export function validateDocumentHelpUpload(pathname: string, rawPayload: string 
 }
 
 export async function saveUploadedDocumentCase(blob: PutBlobResult, rawPayload: string | null) {
+  const auth = blobAuthOptions();
+  if (!auth) throw new Error("Съхранението на demo документи не е конфигурирано.");
   const payload = validateDocumentHelpUpload(blob.pathname, rawPayload);
   const now = new Date().toISOString();
   const record: DocumentHelpCaseRecord = {
@@ -137,6 +160,7 @@ export async function saveUploadedDocumentCase(blob: PutBlobResult, rawPayload: 
     allowOverwrite: true,
     contentType: "application/json",
     cacheControlMaxAge: 60,
+    ...auth,
   });
 
   return record;
@@ -144,7 +168,9 @@ export async function saveUploadedDocumentCase(blob: PutBlobResult, rawPayload: 
 
 async function readPrivateCase(caseId: string): Promise<DocumentHelpCaseRecord | null> {
   if (!isCaseId(caseId)) return null;
-  const result = await get(caseManifestPath(caseId), { access: "private", useCache: false });
+  const auth = blobAuthOptions();
+  if (!auth) return null;
+  const result = await get(caseManifestPath(caseId), { access: "private", useCache: false, ...auth });
   if (!result || result.statusCode !== 200) return null;
 
   try {
@@ -158,7 +184,9 @@ async function readPrivateCase(caseId: string): Promise<DocumentHelpCaseRecord |
 
 export async function listDocumentHelpCases() {
   if (!isDocumentHelpStorageConfigured()) return [];
-  const { blobs } = await list({ prefix: CASE_ROOT });
+  const auth = blobAuthOptions();
+  if (!auth) return [];
+  const { blobs } = await list({ prefix: CASE_ROOT, ...auth });
   const manifests = blobs.filter((blob) => blob.pathname.endsWith("/case.json"));
   const cases = await Promise.all(
     manifests.map((blob) => {
@@ -180,6 +208,23 @@ export async function getDocumentHelpCase(caseId: string) {
 export async function deleteDocumentHelpCase(caseId: string) {
   const record = await getDocumentHelpCase(caseId);
   if (!record) return false;
-  await del([record.document.url, caseManifestPath(caseId)]);
+  const auth = blobAuthOptions();
+  if (!auth) return false;
+  await del([record.document.url, caseManifestPath(caseId)], auth);
   return true;
+}
+
+export async function issueDocumentHelpUploadToken(pathname: string, rawPayload: string | null) {
+  const auth = blobAuthOptions();
+  if (!auth) throw new Error("Съхранението на demo документи не е конфигурирано.");
+
+  validateDocumentHelpUpload(pathname, rawPayload);
+  return issueSignedToken({
+    pathname,
+    operations: ["put"],
+    allowedContentTypes: [...DOCUMENT_HELP_ALLOWED_CONTENT_TYPES],
+    maximumSizeInBytes: DOCUMENT_HELP_MAX_SIZE_BYTES,
+    validUntil: Date.now() + 10 * 60 * 1000,
+    ...auth,
+  });
 }
