@@ -135,7 +135,16 @@ async function requestGroq(model: string, system: string, user: unknown, schema:
     body: JSON.stringify({ model, messages: [{ role: "system", content: system }, { role: "user", content: user }], response_format: { type: "json_schema", json_schema: { name: schemaName, strict: true, schema } } }), cache: "no-store",
   });
   if (!response.ok) {
-    console.error("Document-help Groq request failed", { status: response.status, model });
+    const responseText = await response.text();
+    let providerMessage = "";
+    try {
+      const providerError = JSON.parse(responseText) as { error?: { message?: unknown; code?: unknown; type?: unknown } };
+      const error = providerError.error;
+      providerMessage = [error?.type, error?.code, typeof error?.message === "string" ? error.message.slice(0, 240) : ""].filter(Boolean).join(" | ");
+    } catch {
+      providerMessage = responseText.slice(0, 240);
+    }
+    console.error("Document-help Groq request failed", { status: response.status, model, providerMessage });
     throw new Error("Groq анализът не е наличен. Проверете отделния Preview ключ.");
   }
   return JSON.parse(outputText(await response.json())) as unknown;
