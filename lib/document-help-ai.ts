@@ -137,7 +137,8 @@ export async function createDocumentHelpAIDraft(caseId: string) {
   });
 
   if (!response.ok) {
-    console.error("Document-help AI request failed", { status: response.status, caseId });
+    const providerMessage = (await response.text()).slice(0, 600);
+    console.error("Document-help AI request failed", { status: response.status, caseId, providerMessage });
     throw new Error("AI анализът не е наличен. Опитайте по-късно.");
   }
 
