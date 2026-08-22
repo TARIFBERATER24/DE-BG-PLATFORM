@@ -129,10 +129,13 @@ function outputText(body: unknown) {
   return message.content;
 }
 
-async function requestGroq(model: string, system: string, user: unknown, schema: object, schemaName: string) {
+async function requestGroq(model: string, system: string, user: unknown, schema: object, schemaName: string, outputMode: "json-object" | "strict-schema" = "strict-schema") {
+  const responseFormat = outputMode === "json-object"
+    ? { type: "json_object" }
+    : { type: "json_schema", json_schema: { name: schemaName, strict: true, schema } };
   const response = await fetch(GROQ_CHAT_COMPLETIONS_URL, {
     method: "POST", headers: { "Content-Type": "application/json", Authorization: `Bearer ${process.env.GROQ_API_KEY!}` },
-    body: JSON.stringify({ model, messages: [{ role: "system", content: system }, { role: "user", content: user }], response_format: { type: "json_schema", json_schema: { name: schemaName, strict: true, schema } } }), cache: "no-store",
+    body: JSON.stringify({ model, messages: [{ role: "system", content: system }, { role: "user", content: user }], response_format: responseFormat }), cache: "no-store",
   });
   if (!response.ok) {
     const responseText = await response.text();
@@ -185,7 +188,7 @@ export async function runDocumentHelpPilotPipeline(caseId: string) {
     : [{ type: "text", text: "Извлечи факти само от изображението." }, { type: "image_url", image_url: { url: `data:${record.document.contentType};base64,${bytes.toString("base64")}` } }];
   const extractionRaw = await requestGroq(qwenModel, extractionPrompt(), record.document.contentType === "application/pdf"
     ? `${documentContent}\n\nВъпрос на клиента:\n${record.question}`
-    : [{ type: "text", text: `Въпрос на клиента:\n${record.question}` }, ...documentContent], extractionSchema, "qwen_first_contact_extraction");
+    : [{ type: "text", text: `Въпрос на клиента:\n${record.question}` }, ...documentContent], extractionSchema, "qwen_first_contact_extraction", "json-object");
   const extraction = normalizeExtraction(extractionRaw, qwenModel);
   const reviewRaw = await requestGroq(reviewModel, reviewPrompt(), JSON.stringify({ customerQuestion: record.question, qwenExtraction: extraction }), reviewSchema, "gpt_oss_review");
   const review = normalizeReview(reviewRaw, reviewModel);
