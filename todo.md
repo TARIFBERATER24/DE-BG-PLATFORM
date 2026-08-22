@@ -19,6 +19,18 @@
 - [ ] Configure `GROQ_API_KEY` as a Sensitive Preview-only variable for `demo/document-help-intake`; never expose it in browser code, source code, or chat.
 - [ ] Replace the rejected Preview `GROQ_API_KEY` with a valid active Groq API key and validate it using only the non-personal fixture; the current key returns HTTP 401.
 - [ ] Trigger a fresh `demo/document-help-intake` Preview build after the key is saved; never use a Production redeploy to load the Groq credential.
+- [ ] Complete one final Groq extraction test using only the existing non-personal PDF after the pending Preview build becomes ready.
+- [ ] Confirm that the user-approved cancellation of the redundant Production redeploy leaves the previously live main deployment serving unchanged.
+- [ ] Verify exact Qwen3.6-27B availability, capabilities, and Groq model identifier before proposing any OpenClaw fallback change.
+- [ ] Design the Qwen3.6-27B first-contact pilot to receive only an operator-confirmed document and inquiry text, then return a factual private draft for human review.
+- [ ] Keep automated replies, n8n, Telegram, email, providers, affiliate platforms, contract submissions, and legal advice disabled throughout the Qwen pilot.
+- [ ] Define case schemas for Qwen extraction, GPT OSS 120B review/classification, GPT OSS 20B tool decision, and a human approval gate.
+- [ ] Add an operator-visible pipeline timeline with disabled n8n and CRM delivery cards for HubSpot, Pipedrive, Salesforce, and Airtable.
+- [ ] Validate only with non-personal cases and prove that no email, WhatsApp, n8n, CRM, or provider action is executed.
+- [ ] Confirm a valid Preview-only Groq API key for Qwen3.6-27B and GPT OSS model calls; do not reuse or expose OpenClaw credentials.
+- [ ] Inspect available user connectors for n8n and CRM platforms, then use only approval-gated test destinations in the pilot.
+- [ ] Implement structured records for extraction, review, decision, approval, and handoff attempts without automatic external sends.
+- [ ] Complete a non-personal end-to-end test before accepting a personal document in the pilot.
 - [ ] Use `groq/openai/gpt-oss-120b` only through a server-side OpenAI-compatible request and retain no document content in application logs.
 - [x] Enable Groq Zero Data Retention in the Groq organization Data Controls before the Preview workflow is used with customer document text.
 - [x] Define the direct Groq document-text-only, seven-day Preview contract and prohibit image/scanned-PDF routing until a separately approved OCR design exists.

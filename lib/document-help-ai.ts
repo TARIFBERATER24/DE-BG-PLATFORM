@@ -1,21 +1,17 @@
-// Style reminder: Groq receives only bounded PDF text for a private, operator-only factual draft; it never gives legal advice or triggers external actions.
+// Style reminder: an explicit, server-side Qwen → GPT OSS operator pipeline; no automatic message, CRM write, legal advice, or external delivery.
 import "server-only";
 
 import { get } from "@vercel/blob";
 import * as pdfjs from "pdfjs-dist/legacy/build/pdf.js";
 import { isDocumentHelpAIConfigured } from "@/lib/document-help-ai-config";
-import {
-  getDocumentHelpCase,
-  getDocumentHelpStorageAuthOptions,
-  isDocumentHelpCaseExpired,
-  saveDocumentHelpCaseAnalysis,
-  type DocumentHelpAiDraft,
-} from "@/lib/document-help-storage";
+import { getDocumentHelpCase, getDocumentHelpStorageAuthOptions, isDocumentHelpCaseExpired, saveDocumentHelpCaseAnalysis, type DocumentHelpAiDraft } from "@/lib/document-help-storage";
+import { saveDocumentHelpPilotPipeline, type DocumentHelpPilotPipeline, type PilotDecision, type PilotReview } from "@/lib/document-help-pipeline";
 
 const GROQ_CHAT_COMPLETIONS_URL = "https://api.groq.com/openai/v1/chat/completions";
-const FALLBACK_MODEL = "openai/gpt-oss-120b";
-const MAXIMUM_GROQ_INPUT_CHARACTERS = 28_000;
-
+const QWEN_MODEL = "qwen/qwen3.6-27b";
+const REVIEW_MODEL = "openai/gpt-oss-120b";
+const DECISION_MODEL = "openai/gpt-oss-20b";
+const MAXIMUM_DOCUMENT_TEXT = 28_000;
 const RISK_FLAGS = ["mahnung", "kuendigung", "vollstreckung", "court-letter", "police", "short-deadline"] as const;
 const SERVICE_TYPES = ["electricity", "gas", "internet", "mobile", "insurance", "other", "unknown"] as const;
 const URGENCY_LEVELS = ["none", "review-soon", "urgent-human-review"] as const;
@@ -28,18 +24,15 @@ function enumValue<T extends readonly string[]>(value: unknown, allowed: T, fall
   return typeof value === "string" && allowed.includes(value) ? value as T[number] : fallback;
 }
 
-function arrayOfStrings(value: unknown, maximumItems: number, maximumText: number) {
-  return Array.isArray(value)
-    ? value.map((item) => limitedText(item, maximumText)).filter(Boolean).slice(0, maximumItems)
-    : [];
+function strings(value: unknown, maximumItems: number, maximumLength: number) {
+  return Array.isArray(value) ? value.map((item) => limitedText(item, maximumLength)).filter(Boolean).slice(0, maximumItems) : [];
 }
 
-function normalizeDraft(value: unknown, model: string): DocumentHelpAiDraft {
+function normalizeExtraction(value: unknown, model: string): DocumentHelpAiDraft {
   const raw = value && typeof value === "object" ? value as Record<string, unknown> : {};
   const rawAmounts = Array.isArray(raw.amounts) ? raw.amounts : [];
   const rawDates = Array.isArray(raw.dates) ? raw.dates : [];
   const rawFlags = Array.isArray(raw.riskFlags) ? raw.riskFlags : [];
-
   return {
     extractedAt: new Date().toISOString(),
     model,
@@ -49,58 +42,103 @@ function normalizeDraft(value: unknown, model: string): DocumentHelpAiDraft {
     serviceType: enumValue(raw.serviceType, SERVICE_TYPES, "unknown"),
     amounts: rawAmounts.map((item) => {
       const amount = item && typeof item === "object" ? item as Record<string, unknown> : {};
-      return {
-        label: limitedText(amount.label, 80),
-        value: limitedText(amount.value, 80),
-        currency: limitedText(amount.currency, 8),
-      };
-    }).filter((item) => item.label && item.value).slice(0, 3),
+      return { label: limitedText(amount.label, 80), value: limitedText(amount.value, 80), currency: limitedText(amount.currency, 8) };
+    }).filter((item) => item.label && item.value).slice(0, 4),
     dates: rawDates.map((item) => {
       const date = item && typeof item === "object" ? item as Record<string, unknown> : {};
-      return {
-        label: limitedText(date.label, 80),
-        date: limitedText(date.date, 10),
-      };
-    }).filter((item) => item.label && /^\d{4}-\d{2}-\d{2}$/.test(item.date)).slice(0, 3),
+      return { label: limitedText(date.label, 80), date: limitedText(date.date, 10) };
+    }).filter((item) => item.label && /^\d{4}-\d{2}-\d{2}$/.test(item.date)).slice(0, 4),
     urgency: enumValue(raw.urgency, URGENCY_LEVELS, "review-soon"),
     riskFlags: rawFlags.filter((item): item is (typeof RISK_FLAGS)[number] => typeof item === "string" && RISK_FLAGS.includes(item as (typeof RISK_FLAGS)[number])).slice(0, 6),
-    uncertainties: arrayOfStrings(raw.uncertainties, 6, 220),
+    uncertainties: strings(raw.uncertainties, 6, 220),
   };
 }
 
-function promptForExtraction() {
-  return `Ти подпомагаш само вътрешен оператор на българска платформа в Германия. Анализирай документа като фактическа чернова на български.
-Не давай правен, финансов или договорен съвет. Не препоръчвай плащане, подписване, прекратяване или външно действие. Не измисляй липсващи данни. Не включвай име на клиент, адрес, банкова сметка, личен номер или пълен текст на документа.
-При Mahnung, Kündigung, Vollstreckung, съдебно писмо, полиция или кратък срок маркирай riskFlags и urgency, но не давай инструкции.
-Върни само JSON по предоставената схема. Използвай YYYY-MM-DD само когато датата е ясна.`;
+function normalizeReview(value: unknown, model: string): PilotReview {
+  const raw = value && typeof value === "object" ? value as Record<string, unknown> : {};
+  return {
+    reviewedAt: new Date().toISOString(),
+    model,
+    classification: enumValue(raw.classification, ["human-review", "missing-information", "urgent-review", "manual-routing"] as const, "human-review"),
+    confidence: enumValue(raw.confidence, ["low", "medium", "high"] as const, "low"),
+    checks: strings(raw.checks, 6, 180),
+    conflicts: strings(raw.conflicts, 5, 180),
+    missingInformation: strings(raw.missingInformation, 5, 180),
+  };
+}
+
+function normalizeDecision(value: unknown, model: string): PilotDecision {
+  const raw = value && typeof value === "object" ? value as Record<string, unknown> : {};
+  const allowedTools = Array.isArray(raw.allowedTools)
+    ? raw.allowedTools.filter((tool): tool is "n8n-webhook" | "crm-record" => tool === "n8n-webhook" || tool === "crm-record").slice(0, 2)
+    : [];
+  return {
+    decidedAt: new Date().toISOString(),
+    model,
+    decision: enumValue(raw.decision, ["operator-review", "ask-for-information", "approval-gated-handoff"] as const, "operator-review"),
+    allowedTools,
+    requiresHumanApproval: true,
+    rationale: limitedText(raw.rationale, 320) || "Изисква се човешки преглед преди следваща стъпка.",
+  };
 }
 
 const extractionSchema = {
-  type: "object",
-  properties: {
-    summaryBg: { type: "string" },
-    documentKind: { type: "string" },
-    providerName: { type: "string" },
+  type: "object", properties: {
+    summaryBg: { type: "string" }, documentKind: { type: "string" }, providerName: { type: "string" },
     serviceType: { type: "string", enum: [...SERVICE_TYPES] },
     amounts: { type: "array", items: { type: "object", properties: { label: { type: "string" }, value: { type: "string" }, currency: { type: "string" } }, required: ["label", "value", "currency"], additionalProperties: false } },
     dates: { type: "array", items: { type: "object", properties: { label: { type: "string" }, date: { type: "string" } }, required: ["label", "date"], additionalProperties: false } },
-    urgency: { type: "string", enum: [...URGENCY_LEVELS] },
-    riskFlags: { type: "array", items: { type: "string", enum: [...RISK_FLAGS] } },
-    uncertainties: { type: "array", items: { type: "string" } },
+    urgency: { type: "string", enum: [...URGENCY_LEVELS] }, riskFlags: { type: "array", items: { type: "string", enum: [...RISK_FLAGS] } }, uncertainties: { type: "array", items: { type: "string" } },
   },
-  required: ["summaryBg", "documentKind", "providerName", "serviceType", "amounts", "dates", "urgency", "riskFlags", "uncertainties"],
-  additionalProperties: false,
+  required: ["summaryBg", "documentKind", "providerName", "serviceType", "amounts", "dates", "urgency", "riskFlags", "uncertainties"], additionalProperties: false,
 } as const;
 
-function getGroqOutputText(body: unknown) {
+const reviewSchema = {
+  type: "object", properties: {
+    classification: { type: "string", enum: ["human-review", "missing-information", "urgent-review", "manual-routing"] },
+    confidence: { type: "string", enum: ["low", "medium", "high"] }, checks: { type: "array", items: { type: "string" } }, conflicts: { type: "array", items: { type: "string" } }, missingInformation: { type: "array", items: { type: "string" } },
+  }, required: ["classification", "confidence", "checks", "conflicts", "missingInformation"], additionalProperties: false,
+} as const;
+
+const decisionSchema = {
+  type: "object", properties: {
+    decision: { type: "string", enum: ["operator-review", "ask-for-information", "approval-gated-handoff"] },
+    allowedTools: { type: "array", items: { type: "string", enum: ["n8n-webhook", "crm-record"] } },
+    rationale: { type: "string" },
+  }, required: ["decision", "allowedTools", "rationale"], additionalProperties: false,
+} as const;
+
+function extractionPrompt() {
+  return "Ти си Qwen в частен операторски пилот за българска платформа в Германия. Извлечи само проверими факти от документа и въпроса на клиента. Пиши на български. Не давай правен, финансов, договорен или потребителски съвет; не препоръчвай действие; не измисляй данни; не повтаряй имена, email, адреси, банкови данни или целия документ. Маркирай рискови думи и неясноти. Върни единствено JSON по схемата.";
+}
+
+function reviewPrompt() {
+  return "Ти си GPT OSS 120B за вътрешна проверка на структурирани факти. Сравни Qwen извличането с въпроса на клиента. Класифицирай само нуждата от човешки преглед, липсваща информация, спешност или ръчно насочване. Не давай правен съвет, отговор до клиент, препоръка или външно действие. Върни единствено JSON.";
+}
+
+function decisionPrompt() {
+  return "Ти си GPT OSS 20B за решение за инструмент в безопасен вътрешен pipeline. Разрешени са само операторски преглед, заявка за допълнителна информация или handoff, който задължително чака човек. Никога не изпращай нищо и никога не активирай n8n или CRM самостоятелно. Върни единствено JSON.";
+}
+
+function outputText(body: unknown) {
   const raw = body && typeof body === "object" ? body as Record<string, unknown> : {};
   const choices = Array.isArray(raw.choices) ? raw.choices : [];
-  const firstChoice = choices[0] && typeof choices[0] === "object" ? choices[0] as Record<string, unknown> : {};
-  const message = firstChoice.message && typeof firstChoice.message === "object" ? firstChoice.message as Record<string, unknown> : {};
-  if (typeof message.content !== "string" || !message.content.trim()) {
-    throw new Error("Groq не върна използваема чернова.");
-  }
+  const choice = choices[0] && typeof choices[0] === "object" ? choices[0] as Record<string, unknown> : {};
+  const message = choice.message && typeof choice.message === "object" ? choice.message as Record<string, unknown> : {};
+  if (typeof message.content !== "string" || !message.content.trim()) throw new Error("Groq не върна структурирани данни.");
   return message.content;
+}
+
+async function requestGroq(model: string, system: string, user: unknown, schema: object, schemaName: string) {
+  const response = await fetch(GROQ_CHAT_COMPLETIONS_URL, {
+    method: "POST", headers: { "Content-Type": "application/json", Authorization: `Bearer ${process.env.GROQ_API_KEY!}` },
+    body: JSON.stringify({ model, messages: [{ role: "system", content: system }, { role: "user", content: user }], response_format: { type: "json_schema", json_schema: { name: schemaName, strict: true, schema } } }), cache: "no-store",
+  });
+  if (!response.ok) {
+    console.error("Document-help Groq request failed", { status: response.status, model });
+    throw new Error("Groq анализът не е наличен. Проверете отделния Preview ключ.");
+  }
+  return JSON.parse(outputText(await response.json())) as unknown;
 }
 
 async function extractPdfText(bytes: Buffer) {
@@ -110,78 +148,49 @@ async function extractPdfText(bytes: Buffer) {
     for (let pageNumber = 1; pageNumber <= document.numPages; pageNumber += 1) {
       const page = await document.getPage(pageNumber);
       const content = await page.getTextContent();
-      const pageText = content.items
-        .map((item) => "str" in item ? item.str : "")
-        .join(" ");
-      pages.push(pageText);
+      pages.push(content.items.map((item) => "str" in item ? item.str : "").join(" "));
     }
-
-    const normalized = pages.join(" ").replace(/\s+/g, " ").trim();
-    if (!normalized) {
-      throw new Error("Този PDF няма извличаем текст. Прегледайте го ръчно; OCR не е активиран.");
-    }
-    return normalized.slice(0, MAXIMUM_GROQ_INPUT_CHARACTERS);
-  } finally {
-    await document.destroy();
-  }
+    const text = pages.join(" ").replace(/\s+/g, " ").trim();
+    if (!text) throw new Error("Този PDF няма извличаем текст. Сканиран PDF се обработва след отделен vision тест.");
+    return text.slice(0, MAXIMUM_DOCUMENT_TEXT);
+  } finally { await document.destroy(); }
 }
 
-export async function createDocumentHelpAIDraft(caseId: string) {
+export async function runDocumentHelpPilotPipeline(caseId: string) {
   if (!isDocumentHelpAIConfigured()) throw new Error("Groq анализът не е конфигуриран за Preview.");
   const record = await getDocumentHelpCase(caseId);
   if (!record) throw new Error("Заявката не е намерена.");
   if (isDocumentHelpCaseExpired(record)) throw new Error("Срокът за съхранение е изтекъл. Изтрийте заявката.");
-  if (record.document.contentType !== "application/pdf") {
-    throw new Error("Groq Preview поддържа само PDF с извличаем текст. Снимките и сканираните файлове остават за ръчен преглед.");
-  }
-
   const auth = getDocumentHelpStorageAuthOptions();
   if (!auth) throw new Error("Частното хранилище не е налично.");
   const stored = await get(record.document.pathname, { access: "private", useCache: false, ...auth });
   if (!stored || stored.statusCode !== 200) throw new Error("Документът не е намерен.");
-
   const bytes = Buffer.from(await new Response(stored.stream).arrayBuffer());
   if (bytes.length === 0 || bytes.length > 10 * 1024 * 1024) throw new Error("Невалиден размер на документ за анализ.");
 
-  const extractedText = await extractPdfText(bytes);
-  const model = process.env.DOCUMENT_HELP_AI_MODEL?.trim() || FALLBACK_MODEL;
-  const response = await fetch(GROQ_CHAT_COMPLETIONS_URL, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${process.env.GROQ_API_KEY!}`,
-    },
-    body: JSON.stringify({
-      model,
-      messages: [
-        { role: "system", content: promptForExtraction() },
-        { role: "user", content: `Текст от документа за фактическа чернова:\n\n${extractedText}` },
-      ],
-      response_format: {
-        type: "json_schema",
-        json_schema: {
-          name: "document_help_operator_draft",
-          strict: true,
-          schema: extractionSchema,
-        },
-      },
-    }),
-    cache: "no-store",
-  });
+  const qwenModel = process.env.DOCUMENT_HELP_QWEN_MODEL?.trim() || QWEN_MODEL;
+  const reviewModel = process.env.DOCUMENT_HELP_REVIEW_MODEL?.trim() || REVIEW_MODEL;
+  const decisionModel = process.env.DOCUMENT_HELP_DECISION_MODEL?.trim() || DECISION_MODEL;
+  const documentContent = record.document.contentType === "application/pdf"
+    ? `Текст от документа:\n${await extractPdfText(bytes)}`
+    : [{ type: "text", text: "Извлечи факти само от изображението." }, { type: "image_url", image_url: { url: `data:${record.document.contentType};base64,${bytes.toString("base64")}` } }];
+  const extractionRaw = await requestGroq(qwenModel, extractionPrompt(), record.document.contentType === "application/pdf"
+    ? `${documentContent}\n\nВъпрос на клиента:\n${record.question}`
+    : [{ type: "text", text: `Въпрос на клиента:\n${record.question}` }, ...documentContent], extractionSchema, "qwen_first_contact_extraction");
+  const extraction = normalizeExtraction(extractionRaw, qwenModel);
+  const reviewRaw = await requestGroq(reviewModel, reviewPrompt(), JSON.stringify({ customerQuestion: record.question, qwenExtraction: extraction }), reviewSchema, "gpt_oss_review");
+  const review = normalizeReview(reviewRaw, reviewModel);
+  const decisionRaw = await requestGroq(decisionModel, decisionPrompt(), JSON.stringify({ qwenExtraction: extraction, review }), decisionSchema, "gpt_oss_tool_decision");
+  const decision = normalizeDecision(decisionRaw, decisionModel);
+  const pipeline: DocumentHelpPilotPipeline = {
+    caseId, updatedAt: new Date().toISOString(), qwenState: "completed", reviewState: "completed", decisionState: "completed", review, decision,
+    handoff: { state: process.env.N8N_PILOT_WEBHOOK_URL ? "awaiting-human-approval" : "not-configured", externalDeliveryEnabled: false, note: process.env.N8N_PILOT_WEBHOOK_URL ? "Handoff е наличен само след отделно човешко потвърждение." : "n8n/CRM не са конфигурирани; не се изпращат данни." },
+  };
+  await saveDocumentHelpCaseAnalysis(caseId, extraction);
+  await saveDocumentHelpPilotPipeline(caseId, pipeline);
+  return { extraction, pipeline };
+}
 
-  if (!response.ok) {
-    console.error("Document-help Groq request failed", { status: response.status, caseId });
-    throw new Error("Groq анализът не е наличен. Опитайте по-късно.");
-  }
-
-  let parsed: unknown;
-  try {
-    parsed = JSON.parse(getGroqOutputText(await response.json()));
-  } catch {
-    throw new Error("Groq анализът върна невалидна чернова. Опитайте отново.");
-  }
-
-  const draft = normalizeDraft(parsed, model);
-  await saveDocumentHelpCaseAnalysis(caseId, draft);
-  return draft;
+export async function createDocumentHelpAIDraft(caseId: string) {
+  return (await runDocumentHelpPilotPipeline(caseId)).extraction;
 }

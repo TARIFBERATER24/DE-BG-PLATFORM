@@ -1,7 +1,7 @@
 // Style reminder: this route creates only a private operator draft and never triggers advice, messages, or external delivery.
 import { NextResponse } from "next/server";
 import { hasOperatorSession } from "@/lib/document-help-auth";
-import { createDocumentHelpAIDraft } from "@/lib/document-help-ai";
+import { runDocumentHelpPilotPipeline } from "@/lib/document-help-ai";
 import { isDocumentHelpAIConfigured } from "@/lib/document-help-ai-config";
 
 export async function POST(request: Request) {
@@ -12,8 +12,8 @@ export async function POST(request: Request) {
   if (!body || typeof body.caseId !== "string") return new NextResponse("Invalid case", { status: 400 });
 
   try {
-    const analysis = await createDocumentHelpAIDraft(body.caseId);
-    return NextResponse.json({ analysis });
+    const result = await runDocumentHelpPilotPipeline(body.caseId);
+    return NextResponse.json(result);
   } catch (error) {
     const message = error instanceof Error ? error.message : "AI анализът не е наличен.";
     const expired = message.includes("Срокът за съхранение е изтекъл");

@@ -1,7 +1,8 @@
 // Style reminder: an operator-only factual desk with explicit, reviewable AI drafts and no automated advice or external delivery.
 import Link from "next/link";
-import { Clock3, Download, FileText, LockKeyhole, ShieldCheck, Sparkles, TriangleAlert } from "lucide-react";
+import { Clock3, Download, FileText, LockKeyhole, ShieldCheck, Sparkles, TriangleAlert, Workflow } from "lucide-react";
 import { isDocumentHelpCaseExpired, type DocumentHelpCaseWithAnalysis } from "@/lib/document-help-storage";
+import type { DocumentHelpPilotPipeline } from "@/lib/document-help-pipeline";
 import { documentHelpStatusLabels } from "@/lib/document-help-contract";
 import DocumentHelpCaseAnalyzeButton from "@/components/DocumentHelpCaseAnalyzeButton";
 import DocumentHelpCaseDeleteButton from "@/components/DocumentHelpCaseDeleteButton";
@@ -20,7 +21,9 @@ function urgencyLabel(value: "none" | "review-soon" | "urgent-human-review") {
   return "Няма разпозната спешност";
 }
 
-export default function DocumentHelpCaseDesk({ cases, aiConfigured }: { cases: DocumentHelpCaseWithAnalysis[]; aiConfigured: boolean }) {
+type DeskCase = DocumentHelpCaseWithAnalysis & { pipeline: DocumentHelpPilotPipeline | null };
+
+export default function DocumentHelpCaseDesk({ cases, aiConfigured }: { cases: DeskCase[]; aiConfigured: boolean }) {
   return (
     <div className="mx-auto max-w-5xl px-6 py-10 sm:py-14">
       <div className="flex flex-wrap items-start justify-between gap-4 border-b border-line pb-7">
@@ -28,7 +31,7 @@ export default function DocumentHelpCaseDesk({ cases, aiConfigured }: { cases: D
           <p className="text-xs font-medium tracking-[0.12em] text-brand">ОПЕРАТОРСКИ ПРЕГЛЕД</p>
           <h1 className="mt-2 text-3xl font-semibold tracking-tight text-ink">Demo заявки с документи</h1>
           <p className="mt-2 max-w-2xl text-sm leading-6 text-ink-muted">
-            Файловете са в частно хранилище. AI чернова се създава само по изрично действие на оператора; n8n и външното изпращане са изключени.
+            Частен pilot: Qwen извличане → GPT OSS проверка → GPT OSS решение. Външният handoff изисква отделно одобрение; n8n и CRM са изключени, докато не бъдат конфигурирани.
           </p>
         </div>
         <Link href="/demo/pomosh-s-dokumenti" className="rounded-md border border-brand px-4 py-2.5 text-sm font-medium text-brand transition-colors hover:bg-brand-tint">
@@ -88,6 +91,17 @@ export default function DocumentHelpCaseDesk({ cases, aiConfigured }: { cases: D
                   {(item.analysis.riskFlags.length > 0 || item.analysis.uncertainties.length > 0) && <div className="mt-3 flex gap-2 rounded border border-alert-line bg-alert-bg p-3 text-xs leading-5 text-alert-ink"><TriangleAlert className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" /><p>Не е правен съвет. Потърсете квалифициран специалист или официалния подател възможно най-скоро. {item.analysis.uncertainties.join(" ")}</p></div>}
                 </section>
               )}
+
+              <section className="mt-5 rounded-md border border-line bg-surface-alt p-4" aria-label="Pilot pipeline">
+                <div className="flex items-center gap-2 text-sm font-semibold text-ink"><Workflow className="h-4 w-4 text-brand" aria-hidden="true" />Pilot pipeline</div>
+                <div className="mt-3 grid gap-2 text-xs sm:grid-cols-4">
+                  <div className={`rounded border p-3 ${item.analysis ? "border-brand/30 bg-brand-tint" : "border-line"}`}><p className="font-medium text-ink">1. Qwen 3.6 27B</p><p className="mt-1 text-ink-muted">OCR / extraction</p></div>
+                  <div className={`rounded border p-3 ${item.pipeline ? "border-brand/30 bg-brand-tint" : "border-line"}`}><p className="font-medium text-ink">2. GPT OSS 120B</p><p className="mt-1 text-ink-muted">Проверка / класификация</p></div>
+                  <div className={`rounded border p-3 ${item.pipeline ? "border-brand/30 bg-brand-tint" : "border-line"}`}><p className="font-medium text-ink">3. GPT OSS 20B</p><p className="mt-1 text-ink-muted">Tool decision</p></div>
+                  <div className="rounded border border-dashed border-line p-3"><p className="font-medium text-ink">4. n8n → CRM</p><p className="mt-1 text-ink-muted">{item.pipeline?.handoff.note ?? "Изключено до човек + настройка"}</p></div>
+                </div>
+                {item.pipeline && <div className="mt-3 grid gap-2 text-xs text-ink-muted sm:grid-cols-3"><p><span className="font-medium text-ink">Класификация:</span> {item.pipeline.review.classification}</p><p><span className="font-medium text-ink">Увереност:</span> {item.pipeline.review.confidence}</p><p><span className="font-medium text-ink">Решение:</span> {item.pipeline.decision.decision}</p></div>}
+              </section>
 
               <div className="mt-5 flex flex-wrap items-center justify-between gap-3 border-t border-line pt-5">
                 <p className="max-w-2xl text-xs leading-5 text-ink-subtle">{expired ? "Срокът за съхранение е изтекъл. Изтрийте заявката; сваляне и AI чернова са блокирани." : item.processing.note}</p>

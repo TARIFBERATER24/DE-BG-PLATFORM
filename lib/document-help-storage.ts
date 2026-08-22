@@ -277,7 +277,7 @@ export async function deleteDocumentHelpCase(caseId: string) {
   const auth = blobAuthOptions();
   if (!auth) return false;
   const analysis = await getDocumentHelpCaseAnalysis(caseId);
-  const paths = [record.document.url, caseManifestPath(caseId)];
+  const paths = [record.document.url, caseManifestPath(caseId), `${CASE_ROOT}${caseId}/pipeline.json`];
   if (analysis) paths.push(caseAnalysisPath(caseId));
   await del(paths, auth);
   return true;
