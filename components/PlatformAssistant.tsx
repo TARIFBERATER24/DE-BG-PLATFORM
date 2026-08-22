@@ -4,7 +4,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { FormEvent, useEffect, useRef, useState } from "react";
-import { ArrowUpRight, ChevronDown, LoaderCircle, LockKeyhole, MessageCircle, RotateCcw, Send, ShieldAlert, ShieldCheck, Sparkles, X } from "lucide-react";
+import { ArrowUpRight, ChevronDown, LoaderCircle, LockKeyhole, MessageCircle, RotateCcw, Send, ShieldAlert, X } from "lucide-react";
 import { PLATFORM_ASSISTANT_QUICK_PROMPTS, type PlatformAssistantRouteKey } from "@/lib/platform-assistant";
 
 const ILIYA_BRAND_IMAGE_URL = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663828601266/aAoMFzBOIIuieUOH.png";
@@ -91,30 +91,13 @@ export default function PlatformAssistant() {
       {open && (
         <section id="platform-assistant-panel" aria-label="Сравни AI асистент" className="assistant-panel-rise mb-4 flex h-[min(43rem,calc(100dvh-6.5rem))] w-[min(27.5rem,calc(100vw-1.5rem))] flex-col overflow-hidden rounded-[1.7rem] border border-white/20 bg-[#f7f9fe] shadow-[0_36px_100px_rgba(3,12,34,0.38)] sm:w-[27.5rem]">
           <header className="relative isolate min-h-52 overflow-hidden bg-[#071b42] px-5 pb-5 pt-4 text-white">
-            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_76%_20%,rgba(41,114,255,.55),transparent_42%),linear-gradient(105deg,#030e29_0%,#071b42_58%,#0c3b91_100%)]" />
-            <div className="pointer-events-none absolute inset-y-0 right-0 w-[46%] overflow-hidden sm:w-[48%]">
-              <Image src={ILIYA_BRAND_IMAGE_URL} alt="" width={250} height={250} unoptimized className="absolute left-0 top-0 h-[15.625rem] w-[15.625rem] max-w-none object-contain object-left-top opacity-95" />
-              <div className="absolute inset-0 bg-gradient-to-r from-[#071b42] via-[#071b42]/25 to-transparent" />
-              <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-[#071b42] to-transparent" />
+            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_72%_35%,rgba(41,114,255,.6),transparent_44%),linear-gradient(105deg,#030e29_0%,#071b42_58%,#0c3b91_100%)]" />
+            <div className="pointer-events-none absolute inset-y-0 left-0 w-[62%] overflow-hidden sm:w-[60%]">
+              <Image src={ILIYA_BRAND_IMAGE_URL} alt="Портрет на Илия" width={250} height={250} unoptimized className="absolute -left-4 top-0 h-[15.625rem] w-[15.625rem] max-w-none object-contain object-left-top opacity-100" />
+              <div className="absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-[#071b42] to-transparent" />
+              <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-[#071b42] to-transparent" />
             </div>
-            <div className="relative z-10 flex items-start justify-between gap-4">
-              <div className="flex max-w-[64%] items-center gap-3">
-                <div className="relative h-14 w-14 shrink-0">
-                  <Image src={ORBIT_URL} alt="" width={88} height={88} unoptimized className="assistant-orbit absolute -inset-4 h-[5.5rem] w-[5.5rem] max-w-none opacity-90" />
-                  <div className="assistant-avatar-frame relative grid h-14 w-14 place-items-center overflow-hidden rounded-full border border-white/50 bg-[#103c94] shadow-[0_0_0_5px_rgba(37,99,235,.25)]">
-                    <Image src={ILIYA_BRAND_IMAGE_URL} alt="Портрет на Илия" width={185} height={185} unoptimized className="absolute -left-8 -top-5 h-44 w-44 max-w-none object-contain" />
-                  </div>
-                  <span className="absolute bottom-0 right-0 h-3.5 w-3.5 rounded-full border-2 border-[#071b42] bg-emerald-400 shadow-[0_0_16px_rgba(52,211,153,.95)]" aria-label="Онлайн" />
-                </div>
-                <div>
-                  <p className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[.19em] text-cyan-200"><Sparkles className="h-3 w-3" aria-hidden="true" />Дигитален гид</p>
-                  <h2 className="mt-0.5 text-lg font-semibold tracking-tight">Илия</h2>
-                  <p className="mt-0.5 text-xs leading-5 text-blue-100/80">Ориентация за живота в Германия — на български.</p>
-                </div>
-              </div>
-              <button type="button" onClick={() => setOpen(false)} className="relative z-20 rounded-xl border border-white/10 bg-[#071b42]/55 p-2 text-white/85 backdrop-blur-sm transition hover:bg-white/20 hover:text-white" aria-label="Затвори асистента"><X className="h-4 w-4" aria-hidden="true" /></button>
-            </div>
-            <div className="relative mt-4 flex items-center gap-2 border-t border-white/10 pt-3 text-xs text-blue-100/85"><ShieldCheck className="h-3.5 w-3.5 text-cyan-300" aria-hidden="true" /><span>Насочва Ви, но не извършва действия вместо Вас.</span></div>
+            <button type="button" onClick={() => setOpen(false)} className="absolute right-4 top-4 z-20 rounded-xl border border-white/10 bg-[#071b42]/55 p-2 text-white/85 backdrop-blur-sm transition hover:bg-white/20 hover:text-white" aria-label="Затвори асистента"><X className="h-4 w-4" aria-hidden="true" /></button>
           </header>
 
           <div className="flex items-center gap-2 border-b border-amber-200 bg-[#fff8e5] px-4 py-2.5 text-[11px] leading-4 text-[#714900]"><LockKeyhole className="h-3.5 w-3.5 shrink-0" aria-hidden="true" /><span>Не изпращайте IBAN, карта, PIN, TAN или парола. Разговорът не се записва в профил.</span></div>
