@@ -1,7 +1,8 @@
 // Style reminder: this route creates only a private operator draft and never triggers advice, messages, or external delivery.
 import { NextResponse } from "next/server";
 import { hasOperatorSession } from "@/lib/document-help-auth";
-import { createDocumentHelpAIDraft, isDocumentHelpAIConfigured } from "@/lib/document-help-ai";
+import { createDocumentHelpAIDraft } from "@/lib/document-help-ai";
+import { isDocumentHelpAIConfigured } from "@/lib/document-help-ai-config";
 
 export async function POST(request: Request) {
   if (!(await hasOperatorSession())) return new NextResponse("Unauthorized", { status: 401 });

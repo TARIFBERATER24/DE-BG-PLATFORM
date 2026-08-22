@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import DocumentHelpCaseDesk from "@/components/DocumentHelpCaseDesk";
 import DocumentHelpOperatorLogin from "@/components/DocumentHelpOperatorLogin";
 import { hasOperatorSession, isOperatorAccessConfigured } from "@/lib/document-help-auth";
-import { isDocumentHelpAIConfigured } from "@/lib/document-help-ai";
+import { isDocumentHelpAIConfigured } from "@/lib/document-help-ai-config";
 import { isDocumentHelpStorageConfigured, listDocumentHelpCasesWithAnalysis } from "@/lib/document-help-storage";
 
 export const metadata: Metadata = {

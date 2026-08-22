@@ -19,5 +19,6 @@
 - [ ] Use `groq/openai/gpt-oss-120b` only through a server-side OpenAI-compatible request and retain no document content in application logs.
 - [x] Enable Groq Zero Data Retention in the Groq organization Data Controls before the Preview workflow is used with customer document text.
 - [x] Define the direct Groq document-text-only, seven-day Preview contract and prohibit image/scanned-PDF routing until a separately approved OCR design exists.
+- [ ] Resolve the `pdf-parse` server-runtime `DOMMatrix` failure without importing PDF rendering code into the operator page, then validate text extraction only with the non-personal fixture.
 - [ ] Implement only an explicit operator-triggered extraction draft, with no email, Telegram, n8n, provider, affiliate, or legal-advice action.
 - [ ] Verify extraction, restricted access, and retention behavior using non-personal test material before accepting customer documents.

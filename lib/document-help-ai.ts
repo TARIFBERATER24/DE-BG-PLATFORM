@@ -3,6 +3,7 @@ import "server-only";
 
 import { get } from "@vercel/blob";
 import { PDFParse } from "pdf-parse";
+import { isDocumentHelpAIConfigured } from "@/lib/document-help-ai-config";
 import {
   getDocumentHelpCase,
   getDocumentHelpStorageAuthOptions,
@@ -114,10 +115,6 @@ async function extractPdfText(bytes: Buffer) {
   } finally {
     await parser.destroy();
   }
-}
-
-export function isDocumentHelpAIConfigured() {
-  return Boolean(process.env.GROQ_API_KEY);
 }
 
 export async function createDocumentHelpAIDraft(caseId: string) {
