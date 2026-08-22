@@ -11,5 +11,13 @@
 - [ ] Configure a dedicated AI provider API key as a Sensitive, Preview-only Vercel environment variable; never place it in source code, client code, or chat.
 - [ ] Replace the rejected Preview AI provider key with a valid Gemini API key and rerun the non-personal extraction test; the current key returns `API_KEY_INVALID`.
 - [ ] Verify that the accidental Production redeploy used the unchanged `main` commit and did not include any document-help code, Blob credentials, operator secrets, or Gemini configuration.
+- [ ] Retire the Gemini route from the active Preview demo path; do not use the `GEMINI_API_KEY` for document analysis.
+- [ ] Inspect the existing OpenClaw Groq model interface and define an authenticated, server-to-server transport that never makes the Gateway publicly reachable.
+- [ ] Add Preview-only secrets for the protected OpenClaw integration only after the transport and least-privilege request contract are confirmed.
+- [ ] Route only an operator-confirmed, non-expired document to the Groq model for a private factual draft; keep n8n, Telegram, email, providers, affiliates, and all automatic actions disabled.
+- [ ] Configure `GROQ_API_KEY` as a Sensitive Preview-only variable for `demo/document-help-intake`; never expose it in browser code, source code, or chat.
+- [ ] Use `groq/openai/gpt-oss-120b` only through a server-side OpenAI-compatible request and retain no document content in application logs.
+- [x] Enable Groq Zero Data Retention in the Groq organization Data Controls before the Preview workflow is used with customer document text.
+- [x] Define the direct Groq document-text-only, seven-day Preview contract and prohibit image/scanned-PDF routing until a separately approved OCR design exists.
 - [ ] Implement only an explicit operator-triggered extraction draft, with no email, Telegram, n8n, provider, affiliate, or legal-advice action.
 - [ ] Verify extraction, restricted access, and retention behavior using non-personal test material before accepting customer documents.

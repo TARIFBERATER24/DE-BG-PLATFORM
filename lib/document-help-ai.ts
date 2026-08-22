@@ -1,7 +1,8 @@
-// Style reminder: AI creates a private, operator-only factual draft; it never gives legal advice or triggers external actions.
+// Style reminder: Groq receives only bounded PDF text for a private, operator-only factual draft; it never gives legal advice or triggers external actions.
 import "server-only";
 
 import { get } from "@vercel/blob";
+import { PDFParse } from "pdf-parse";
 import {
   getDocumentHelpCase,
   getDocumentHelpStorageAuthOptions,
@@ -10,8 +11,9 @@ import {
   type DocumentHelpAiDraft,
 } from "@/lib/document-help-storage";
 
-const GEMINI_INTERACTIONS_URL = "https://generativelanguage.googleapis.com/v1beta/interactions";
-const FALLBACK_MODEL = "gemini-3.7-flash";
+const GROQ_CHAT_COMPLETIONS_URL = "https://api.groq.com/openai/v1/chat/completions";
+const FALLBACK_MODEL = "openai/gpt-oss-120b";
+const MAXIMUM_GROQ_INPUT_CHARACTERS = 28_000;
 
 const RISK_FLAGS = ["mahnung", "kuendigung", "vollstreckung", "court-letter", "police", "short-deadline"] as const;
 const SERVICE_TYPES = ["electricity", "gas", "internet", "mobile", "insurance", "other", "unknown"] as const;
@@ -77,45 +79,55 @@ const extractionSchema = {
   properties: {
     summaryBg: { type: "string" },
     documentKind: { type: "string" },
-    providerName: { type: ["string", "null"] },
+    providerName: { type: "string" },
     serviceType: { type: "string", enum: [...SERVICE_TYPES] },
-    amounts: { type: "array", items: { type: "object", properties: { label: { type: "string" }, value: { type: "string" }, currency: { type: "string" } }, required: ["label", "value", "currency"] } },
-    dates: { type: "array", items: { type: "object", properties: { label: { type: "string" }, date: { type: "string" } }, required: ["label", "date"] } },
+    amounts: { type: "array", items: { type: "object", properties: { label: { type: "string" }, value: { type: "string" }, currency: { type: "string" } }, required: ["label", "value", "currency"], additionalProperties: false } },
+    dates: { type: "array", items: { type: "object", properties: { label: { type: "string" }, date: { type: "string" } }, required: ["label", "date"], additionalProperties: false } },
     urgency: { type: "string", enum: [...URGENCY_LEVELS] },
     riskFlags: { type: "array", items: { type: "string", enum: [...RISK_FLAGS] } },
     uncertainties: { type: "array", items: { type: "string" } },
   },
   required: ["summaryBg", "documentKind", "providerName", "serviceType", "amounts", "dates", "urgency", "riskFlags", "uncertainties"],
+  additionalProperties: false,
 } as const;
 
-function getOutputText(body: unknown) {
+function getGroqOutputText(body: unknown) {
   const raw = body && typeof body === "object" ? body as Record<string, unknown> : {};
-  if (typeof raw.output_text === "string") return raw.output_text;
-  if (typeof raw.outputText === "string") return raw.outputText;
-  if (Array.isArray(raw.outputs)) {
-    const text = raw.outputs.find((item) => item && typeof item === "object" && (item as Record<string, unknown>).type === "text") as Record<string, unknown> | undefined;
-    if (typeof text?.text === "string") return text.text;
+  const choices = Array.isArray(raw.choices) ? raw.choices : [];
+  const firstChoice = choices[0] && typeof choices[0] === "object" ? choices[0] as Record<string, unknown> : {};
+  const message = firstChoice.message && typeof firstChoice.message === "object" ? firstChoice.message as Record<string, unknown> : {};
+  if (typeof message.content !== "string" || !message.content.trim()) {
+    throw new Error("Groq не върна използваема чернова.");
   }
-  const modelOutput = raw.model_output ?? raw.modelOutput;
-  if (modelOutput && typeof modelOutput === "object") {
-    const content = (modelOutput as Record<string, unknown>).content;
-    if (Array.isArray(content)) {
-      const text = content.find((item) => item && typeof item === "object" && (item as Record<string, unknown>).type === "text") as Record<string, unknown> | undefined;
-      if (typeof text?.text === "string") return text.text;
+  return message.content;
+}
+
+async function extractPdfText(bytes: Buffer) {
+  const parser = new PDFParse({ data: bytes });
+  try {
+    const result = await parser.getText();
+    const normalized = result.text.replace(/\s+/g, " ").trim();
+    if (!normalized) {
+      throw new Error("Този PDF няма извличаем текст. Прегледайте го ръчно; OCR не е активиран.");
     }
+    return normalized.slice(0, MAXIMUM_GROQ_INPUT_CHARACTERS);
+  } finally {
+    await parser.destroy();
   }
-  throw new Error("AI услугата не върна използваем резултат.");
 }
 
 export function isDocumentHelpAIConfigured() {
-  return Boolean(process.env.GEMINI_API_KEY);
+  return Boolean(process.env.GROQ_API_KEY);
 }
 
 export async function createDocumentHelpAIDraft(caseId: string) {
-  if (!isDocumentHelpAIConfigured()) throw new Error("AI анализът не е конфигуриран за Preview.");
+  if (!isDocumentHelpAIConfigured()) throw new Error("Groq анализът не е конфигуриран за Preview.");
   const record = await getDocumentHelpCase(caseId);
   if (!record) throw new Error("Заявката не е намерена.");
   if (isDocumentHelpCaseExpired(record)) throw new Error("Срокът за съхранение е изтекъл. Изтрийте заявката.");
+  if (record.document.contentType !== "application/pdf") {
+    throw new Error("Groq Preview поддържа само PDF с извличаем текст. Снимките и сканираните файлове остават за ръчен преглед.");
+  }
 
   const auth = getDocumentHelpStorageAuthOptions();
   if (!auth) throw new Error("Частното хранилище не е налично.");
@@ -125,37 +137,42 @@ export async function createDocumentHelpAIDraft(caseId: string) {
   const bytes = Buffer.from(await new Response(stored.stream).arrayBuffer());
   if (bytes.length === 0 || bytes.length > 10 * 1024 * 1024) throw new Error("Невалиден размер на документ за анализ.");
 
+  const extractedText = await extractPdfText(bytes);
   const model = process.env.DOCUMENT_HELP_AI_MODEL?.trim() || FALLBACK_MODEL;
-  const mediaType = record.document.contentType === "application/pdf" ? "document" : "image";
-  const response = await fetch(GEMINI_INTERACTIONS_URL, {
+  const response = await fetch(GROQ_CHAT_COMPLETIONS_URL, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "x-goog-api-key": process.env.GEMINI_API_KEY!,
+      Authorization: `Bearer ${process.env.GROQ_API_KEY!}`,
     },
     body: JSON.stringify({
       model,
-      store: false,
-      input: [
-        { type: "text", text: promptForExtraction() },
-        { type: mediaType, data: bytes.toString("base64"), mime_type: record.document.contentType },
+      messages: [
+        { role: "system", content: promptForExtraction() },
+        { role: "user", content: `Текст от документа за фактическа чернова:\n\n${extractedText}` },
       ],
-      response_format: { type: "text", mime_type: "application/json", schema: extractionSchema },
+      response_format: {
+        type: "json_schema",
+        json_schema: {
+          name: "document_help_operator_draft",
+          strict: true,
+          schema: extractionSchema,
+        },
+      },
     }),
     cache: "no-store",
   });
 
   if (!response.ok) {
-    const providerMessage = (await response.text()).slice(0, 600);
-    console.error("Document-help AI request failed", { status: response.status, caseId, providerMessage });
-    throw new Error("AI анализът не е наличен. Опитайте по-късно.");
+    console.error("Document-help Groq request failed", { status: response.status, caseId });
+    throw new Error("Groq анализът не е наличен. Опитайте по-късно.");
   }
 
   let parsed: unknown;
   try {
-    parsed = JSON.parse(getOutputText(await response.json()));
+    parsed = JSON.parse(getGroqOutputText(await response.json()));
   } catch {
-    throw new Error("AI анализът върна невалидна чернова. Опитайте отново.");
+    throw new Error("Groq анализът върна невалидна чернова. Опитайте отново.");
   }
 
   const draft = normalizeDraft(parsed, model);
