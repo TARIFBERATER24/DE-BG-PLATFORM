@@ -7,9 +7,8 @@ import { FormEvent, useEffect, useRef, useState } from "react";
 import { ArrowUpRight, ChevronDown, LoaderCircle, LockKeyhole, MessageCircle, RotateCcw, Send, ShieldAlert, ShieldCheck, Sparkles, X } from "lucide-react";
 import { PLATFORM_ASSISTANT_QUICK_PROMPTS, type PlatformAssistantRouteKey } from "@/lib/platform-assistant";
 
-const AVATAR_URL = "/manus-storage/sravni-ai-avatar_b1659fff.png";
+const ILIYA_BRAND_IMAGE_URL = "/manus-storage/iliya-brand-avatar_6d5f9387.png";
 const ORBIT_URL = "/manus-storage/sravni-ai-orbit_f92a47b7.png";
-const PANEL_TEXTURE_URL = "/manus-storage/sravni-ai-panel-texture_2005483a.png";
 
 type AssistantMessage = {
   id: string;
@@ -91,14 +90,14 @@ export default function PlatformAssistant() {
     <div className="fixed bottom-4 right-3 z-50 sm:bottom-6 sm:right-6">
       {open && (
         <section id="platform-assistant-panel" aria-label="Сравни AI асистент" className="assistant-panel-rise mb-4 flex h-[min(43rem,calc(100dvh-6.5rem))] w-[min(27.5rem,calc(100vw-1.5rem))] flex-col overflow-hidden rounded-[1.7rem] border border-white/20 bg-[#f7f9fe] shadow-[0_36px_100px_rgba(3,12,34,0.38)] sm:w-[27.5rem]">
-          <header className="relative isolate min-h-44 overflow-hidden bg-[#071b42] px-5 pb-5 pt-4 text-white" style={{ backgroundImage: `linear-gradient(105deg, rgba(6,21,54,.98) 0%, rgba(7,27,66,.9) 60%, rgba(12,41,98,.66)), url(${PANEL_TEXTURE_URL})`, backgroundSize: "cover", backgroundPosition: "center" }}>
+          <header className="relative isolate min-h-44 overflow-hidden bg-[#071b42] px-5 pb-5 pt-4 text-white" style={{ backgroundImage: `linear-gradient(100deg, rgba(3,15,43,.98) 0%, rgba(5,25,65,.92) 48%, rgba(4,24,68,.3) 100%), url(${ILIYA_BRAND_IMAGE_URL})`, backgroundSize: "cover", backgroundPosition: "center" }}>
             <div className="pointer-events-none absolute -right-10 -top-14 h-60 w-60 rounded-full bg-[#2563eb]/35 blur-3xl" />
             <div className="relative flex items-start justify-between gap-4">
               <div className="flex items-center gap-3">
                 <div className="relative h-14 w-14 shrink-0">
                   <Image src={ORBIT_URL} alt="" width={88} height={88} unoptimized className="assistant-orbit absolute -inset-4 h-[5.5rem] w-[5.5rem] max-w-none opacity-90" />
                   <div className="assistant-avatar-frame relative grid h-14 w-14 place-items-center overflow-hidden rounded-full border border-white/50 bg-[#103c94] shadow-[0_0_0_5px_rgba(37,99,235,.25)]">
-                    <Image src={AVATAR_URL} alt="Аватар на Сравни AI" width={56} height={56} unoptimized className="h-full w-full object-cover" />
+                    <Image src={ILIYA_BRAND_IMAGE_URL} alt="Портрет на Илия" width={56} height={56} unoptimized className="absolute h-28 w-28 max-w-none translate-x-[11%] translate-y-[4%] scale-[1.72] object-cover" />
                   </div>
                   <span className="absolute bottom-0 right-0 h-3.5 w-3.5 rounded-full border-2 border-[#071b42] bg-emerald-400 shadow-[0_0_16px_rgba(52,211,153,.95)]" aria-label="Онлайн" />
                 </div>
@@ -141,7 +140,7 @@ export default function PlatformAssistant() {
       )}
 
       <button type="button" onClick={() => setOpen((value) => !value)} className="assistant-launcher group relative flex h-[4.75rem] items-center gap-3 rounded-full border border-white/55 bg-[#061b45] py-2 pl-2 pr-5 text-left text-white shadow-[0_18px_48px_rgba(7,27,66,.38)] transition duration-200 hover:-translate-y-1 hover:shadow-[0_24px_60px_rgba(7,27,66,.46)] active:scale-[.98]" aria-expanded={open} aria-controls="platform-assistant-panel">
-        <span className="relative grid h-14 w-14 shrink-0 place-items-center rounded-full bg-[#103c94] shadow-[0_0_0_6px_rgba(37,99,235,.22)]"><Image src={ORBIT_URL} alt="" width={84} height={84} unoptimized className="assistant-orbit absolute -inset-4 h-[5.25rem] w-[5.25rem] max-w-none opacity-75" /><Image src={AVATAR_URL} alt="" width={56} height={56} unoptimized className="relative h-full w-full rounded-full object-cover" /><span className="absolute bottom-0 right-0 h-3.5 w-3.5 rounded-full border-2 border-[#061b45] bg-emerald-400" /></span>
+        <span className="relative grid h-14 w-14 shrink-0 overflow-hidden rounded-full bg-[#103c94] shadow-[0_0_0_6px_rgba(37,99,235,.22)]"><Image src={ORBIT_URL} alt="" width={84} height={84} unoptimized className="assistant-orbit pointer-events-none absolute -inset-4 h-[5.25rem] w-[5.25rem] max-w-none opacity-75" /><Image src={ILIYA_BRAND_IMAGE_URL} alt="" width={56} height={56} unoptimized className="relative h-28 w-28 max-w-none translate-x-[11%] translate-y-[4%] scale-[1.72] object-cover" /><span className="absolute bottom-0 right-0 h-3.5 w-3.5 rounded-full border-2 border-[#061b45] bg-emerald-400" /></span>
         <span className="hidden min-w-0 sm:block"><span className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[.16em] text-cyan-200"><span className="h-1.5 w-1.5 rounded-full bg-cyan-300" />Илия е онлайн</span><span className="mt-0.5 block text-sm font-semibold">Попитайте Илия</span></span>
         <span className="sm:hidden"><MessageCircle className="h-5 w-5" aria-hidden="true" /></span>
         <ChevronDown className={`ml-0.5 hidden h-4 w-4 text-blue-200 transition sm:block ${open ? "rotate-180" : ""}`} aria-hidden="true" />
