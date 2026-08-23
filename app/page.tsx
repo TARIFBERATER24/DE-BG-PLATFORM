@@ -1,71 +1,30 @@
-import Link from "next/link";
-import HeroCarousel from "@/components/HeroCarousel";
-import CategoryCardGrid from "@/components/CategoryCardGrid";
-import { CompassIcon } from "@/components/icons";
+import type { Metadata } from "next";
+import HomeHero from "@/components/home/HomeHero";
+import ActionCards from "@/components/home/ActionCards";
+import MeinDeutschlandPreview from "@/components/home/MeinDeutschlandPreview";
+import ProductsPreview from "@/components/home/ProductsPreview";
+import AssistantConcept from "@/components/home/AssistantConcept";
+import HelpSection from "@/components/home/HelpSection";
+import TrustSection from "@/components/home/TrustSection";
+
+export const metadata: Metadata = {
+  title: "Сравни.де — Германия е сложна. Ние я правим по-лесна.",
+  description:
+    "Документи, договори, разходи и ежедневни въпроси в Германия — разбираемо на български и събрани на едно място.",
+};
 
 export default function Home() {
   return (
     <div>
-      <section className="hero-3d-bg overflow-hidden">
-        <div className="mx-auto max-w-6xl px-6 pb-16 pt-8 sm:pb-20">
-          <HeroCarousel />
-        </div>
-      </section>
+      <HomeHero />
 
-      <div className="mx-auto max-w-6xl px-6 py-14">
-        <CategoryCardGrid />
-
-        <div className="premium-card mt-10 grid gap-6 rounded-lg p-6 sm:grid-cols-[1fr_auto] sm:items-center">
-          <div>
-            <p className="text-sm font-medium text-ink-muted">
-              Твоят потенциал за спестяване
-            </p>
-            <p className="financial-number mt-1 text-4xl text-positive">
-              420 € <span className="text-base font-normal text-ink-subtle">/ година</span>
-            </p>
-            <p className="mt-2 text-xs text-ink-subtle">
-              Илюстративен пример. Реалните резултати зависят от доставчик, адрес и потребление.
-            </p>
-          </div>
-          <div className="grid grid-cols-2 gap-3 sm:w-64">
-            <div className="rounded-md bg-surface-strong p-3">
-              <p className="text-xs font-semibold uppercase tracking-wide text-ink-subtle">Сега</p>
-              <p className="financial-number mt-1 text-lg text-ink">118 €</p>
-            </div>
-            <div className="rounded-md bg-positive-bg p-3">
-              <p className="text-xs font-semibold uppercase tracking-wide text-positive">Нова</p>
-              <p className="financial-number mt-1 text-lg text-positive">83 €</p>
-            </div>
-          </div>
-        </div>
-
-        <Link
-          href="/germaniya"
-          className="mt-6 flex flex-col gap-4 rounded-lg bg-brand-deep p-6 text-white shadow-sm transition hover:-translate-y-0.5 sm:flex-row sm:items-center sm:justify-between"
-        >
-          <div className="flex items-start gap-4">
-            <div className="rounded-md bg-white/10 p-3">
-              <CompassIcon className="h-6 w-6 text-white" />
-            </div>
-            <div>
-              <h2 className="text-lg font-bold">Германия от А до Я</h2>
-              <p className="mt-1 max-w-xl text-sm text-white/65">
-                Anmeldung, SCHUFA, банкова сметка — първите стъпки.
-              </p>
-            </div>
-          </div>
-          <span className="shrink-0 rounded-md bg-white px-4 py-2.5 text-sm font-bold text-brand-deep">
-            Отвори водача →
-          </span>
-        </Link>
-
-        <section className="mt-10 rounded-lg border border-line bg-white p-6">
-          <h2 className="font-bold text-ink">Прозрачен модел</h2>
-          <p className="mt-2 max-w-3xl text-sm leading-6 text-ink-muted">
-            При определени партньорски предложения получаваме комисионна, когато
-            сключиш договор през наш линк. Това не променя цената за теб.
-          </p>
-        </section>
+      <div className="mx-auto max-w-6xl space-y-14 px-6 py-14 sm:space-y-16 sm:py-16">
+        <ActionCards />
+        <MeinDeutschlandPreview />
+        <ProductsPreview />
+        <AssistantConcept />
+        <HelpSection />
+        <TrustSection />
       </div>
     </div>
   );

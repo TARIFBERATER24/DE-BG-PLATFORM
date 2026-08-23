@@ -1,0 +1,88 @@
+import Link from "next/link";
+import type { Metadata } from "next";
+import HeroCarousel from "@/components/HeroCarousel";
+import CategoryCardGrid from "@/components/CategoryCardGrid";
+import { CompassIcon } from "@/components/icons";
+
+export const metadata: Metadata = {
+  title: "Сравнения и спестявания",
+  description:
+    "Сравнете ток, газ, интернет, мобилни планове, банкови продукти и застраховки в Германия — на български.",
+};
+
+/**
+ * The former homepage, preserved in full. When the site was repositioned around the
+ * platform (documents, contracts, deadlines, AI assistance) this comparison/savings
+ * hub kept every piece of working commercial functionality -- hero carousel, the
+ * service dashboard with all 12 categories, the savings illustration, the Germany
+ * guide entry point and the affiliate transparency statement -- and simply moved to
+ * its own route. Nothing here was rebuilt or duplicated; both routes render the same
+ * components.
+ */
+export default function ProduktePage() {
+  return (
+    <div>
+      <section className="hero-3d-bg overflow-hidden">
+        <div className="mx-auto max-w-6xl px-6 pb-16 pt-8 sm:pb-20">
+          <HeroCarousel />
+        </div>
+      </section>
+
+      <div className="mx-auto max-w-6xl px-6 py-14">
+        <CategoryCardGrid />
+
+        <div className="premium-card mt-10 grid gap-6 rounded-lg p-6 sm:grid-cols-[1fr_auto] sm:items-center">
+          <div>
+            <p className="text-sm font-medium text-ink-muted">
+              Твоят потенциал за спестяване
+            </p>
+            <p className="financial-number mt-1 text-4xl text-positive">
+              420 € <span className="text-base font-normal text-ink-subtle">/ година</span>
+            </p>
+            <p className="mt-2 text-xs text-ink-subtle">
+              Илюстративен пример. Реалните резултати зависят от доставчик, адрес и потребление.
+            </p>
+          </div>
+          <div className="grid grid-cols-2 gap-3 sm:w-64">
+            <div className="rounded-md bg-surface-strong p-3">
+              <p className="text-xs font-semibold uppercase tracking-wide text-ink-subtle">Сега</p>
+              <p className="financial-number mt-1 text-lg text-ink">118 €</p>
+            </div>
+            <div className="rounded-md bg-positive-bg p-3">
+              <p className="text-xs font-semibold uppercase tracking-wide text-positive">Нова</p>
+              <p className="financial-number mt-1 text-lg text-positive">83 €</p>
+            </div>
+          </div>
+        </div>
+
+        <Link
+          href="/germaniya"
+          className="mt-6 flex flex-col gap-4 rounded-lg bg-brand-deep p-6 text-white shadow-sm transition hover:-translate-y-0.5 sm:flex-row sm:items-center sm:justify-between"
+        >
+          <div className="flex items-start gap-4">
+            <div className="rounded-md bg-white/10 p-3">
+              <CompassIcon className="h-6 w-6 text-white" />
+            </div>
+            <div>
+              <h2 className="text-lg font-bold">Германия от А до Я</h2>
+              <p className="mt-1 max-w-xl text-sm text-white/65">
+                Anmeldung, SCHUFA, банкова сметка — първите стъпки.
+              </p>
+            </div>
+          </div>
+          <span className="shrink-0 rounded-md bg-white px-4 py-2.5 text-sm font-bold text-brand-deep">
+            Отвори водача →
+          </span>
+        </Link>
+
+        <section className="mt-10 rounded-lg border border-line bg-white p-6">
+          <h2 className="font-bold text-ink">Прозрачен модел</h2>
+          <p className="mt-2 max-w-3xl text-sm leading-6 text-ink-muted">
+            При определени партньорски предложения получаваме комисионна, когато
+            сключиш договор през наш линк. Това не променя цената за теб.
+          </p>
+        </section>
+      </div>
+    </div>
+  );
+}

@@ -5,6 +5,8 @@ import Link from "next/link";
 import { verticals } from "@/lib/verticals";
 
 const EXTRA_LINKS = [
+  { href: "/produkte", title: "Сравни" },
+  { href: "/mein-deutschland", title: "Mein Deutschland" },
   { href: "/germaniya", title: "Германия от А до Я" },
   { href: "/uslugi", title: "Услуги" },
 ];
