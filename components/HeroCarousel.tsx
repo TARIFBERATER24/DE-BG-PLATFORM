@@ -57,6 +57,11 @@ export default function HeroCarousel() {
           <h1 className="text-3xl font-bold leading-[1.15] tracking-tight text-white sm:text-4xl">
             {slide.title}
           </h1>
+
+          {slide.tagline ? (
+            <p className="mt-2 text-sm font-medium text-white sm:text-base">{slide.tagline}</p>
+          ) : null}
+
           <Link
             href={slide.href}
             className="mt-6 inline-flex items-center gap-2 rounded-full bg-brand px-7 py-3 text-sm font-bold text-on-brand transition-colors hover:bg-brand-hover"

@@ -4,6 +4,8 @@ export type HeroSlide = {
   subtitle: string;
   ctaLabel: string;
   href: string;
+  /** Short white caption line shown directly under the title. */
+  tagline?: string;
   /** Optional 3D render shown beside the copy. Lives in public/hero/. */
   image?: string;
   imageAlt?: string;
@@ -20,7 +22,8 @@ export type HeroSlide = {
 export const heroSlides: HeroSlide[] = [
   {
     id: "tok-gaz",
-    title: "Тук можете да намалите годишните си разходи за ТОК/ГАЗ/ПАРНО",
+    title: "Намалете годишните си разходи",
+    tagline: "ТОК* ГАЗ* ОТОПЛЕНИЕ",
     subtitle:
       "Често с около 30%, а дори и повече ако имате Базова тарифа.",
     ctaLabel: "Сравни тарифите",
