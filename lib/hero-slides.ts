@@ -20,9 +20,9 @@ export type HeroSlide = {
 export const heroSlides: HeroSlide[] = [
   {
     id: "tok-gaz",
-    title: "Обновете старата и скъпа тарифа и намалете годишните си разходи с около 30%!",
+    title: "Тук можете да намалите годишните си разходи за ТОК/ГАЗ/ПАРНО",
     subtitle:
-      "Направете го сега и намалете годишните си разходи с до 30%.",
+      "Често с около 30%, а дори и повече ако имате Базова тарифа.",
     ctaLabel: "Сравни тарифите",
     href: "/energiya-telekom/tok#power-iframe-widget",
     image: "/hero/tok-gaz.png",

@@ -64,6 +64,10 @@ export default function HeroCarousel() {
             {slide.ctaLabel}
             <span aria-hidden="true">&rarr;</span>
           </Link>
+
+          {slide.subtitle ? (
+            <p className="mt-3 text-xs text-white/50 sm:text-sm">{slide.subtitle}</p>
+          ) : null}
         </div>
 
         {slide.image ? (
