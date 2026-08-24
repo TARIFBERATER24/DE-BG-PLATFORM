@@ -12,6 +12,8 @@ export type SearchEntry = {
  */
 export const searchIndex: SearchEntry[] = [
   ...homeCategories,
+  { href: "/produkte", title: "Сравнения и спестявания" },
+  { href: "/mein-deutschland", title: "Mein Deutschland" },
   { href: "/germaniya", title: "Германия от А до Я" },
   { href: "/germaniya/anmeldung", title: "Anmeldung — адресна регистрация" },
   { href: "/germaniya/schufa", title: "SCHUFA — кредитен рейтинг" },

@@ -5,6 +5,8 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://example.com";
 
 const routes = [
   "",
+  "/produkte",
+  "/mein-deutschland",
   "/energiya-telekom",
   "/energiya-telekom/tok",
   "/energiya-telekom/gaz",

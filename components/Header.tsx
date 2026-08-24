@@ -23,6 +23,18 @@ export default function Header() {
         </div>
 
         <div className="ml-auto hidden items-center gap-1 lg:flex">
+          <Link
+            href="/mein-deutschland"
+            className="whitespace-nowrap rounded-lg px-3 py-2 text-sm font-medium text-white/85 transition hover:bg-white/10"
+          >
+            Mein Deutschland
+          </Link>
+          <Link
+            href="/produkte"
+            className="whitespace-nowrap rounded-lg px-3 py-2 text-sm font-medium text-white/85 transition hover:bg-white/10"
+          >
+            Сравни
+          </Link>
           <a
             href={WHATSAPP_URL}
             target="_blank"
