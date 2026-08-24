@@ -2,6 +2,58 @@
 
 **Mandatory reading before implementing any feature in this repository.**
 
+---
+
+## DE-BG PLATFORM BUILDER SKILL
+
+The binding constraint set for this platform. It overrides convenience, habit and any
+default the model would otherwise reach for.
+
+### TECH STACK
+
+- Next.js
+- TypeScript
+- Supabase
+- Vercel
+
+### DESIGN
+
+- existing platform design system
+- Bulgarian user-facing language
+- German terminology where appropriate
+
+### RULES
+
+- Never break existing functionality.
+- Never replace existing auth.
+- Reuse existing components.
+- Every feature must be modular.
+- Mobile first.
+- GDPR by design.
+- Use existing Supabase project.
+- Do not create duplicate tables without necessity.
+- Do not hardcode secrets.
+
+### How these rules resolve against today's repository
+
+Three of the rules above point at infrastructure that **does not exist in this repo yet**
+(verified, not assumed — see the stack table further down):
+
+| Rule | Current reality | Correct action |
+|---|---|---|
+| Never replace existing auth | There is no auth | Do not invent one silently. The first feature that truly needs it introduces it **once, centrally**, with the owner's approval. Every later feature reuses that. |
+| Use existing Supabase project | There is no Supabase project, only commented placeholders in `.env.example` | Ask for the project URL/keys before writing any data layer. Never scaffold a second project or a local stand-in database. |
+| Do not create duplicate tables | There is no schema | Inspect the live schema first once Supabase is connected; design tables against what is actually there. |
+
+"Reuse existing" never means "fabricate something to reuse". When the thing to reuse is
+missing, that is a decision point for the owner, not a gap to fill quietly.
+
+GDPR by design is not deferrable to a later hardening pass: EU region, user-scoped access,
+explicit consent before any third-party sharing, and export/delete capability must be part
+of the first schema and the first query, not retrofitted.
+
+---
+
 ## Purpose
 
 This repository contains a modular platform for Bulgarians living in Germany.
@@ -63,6 +115,8 @@ Before implementing any feature:
 | Database / Supabase | **Does not exist yet** — placeholders only in `.env.example` |
 | Analytics provider | **Does not exist yet** — see `lib/analytics.ts` for the neutral event layer |
 | API routes | `app/go/[network]/[slug]/route.ts` (affiliate redirect) only |
+| Hosting | Vercel — `main` auto-deploys to production (`de-bg-platform-live.vercel.app`) |
+| Repository | `github.com/TARIFBERATER24/DE-BG-PLATFORM`, feature branches per `MASTER_ARCHITECTURE.md` |
 
 When a rule above refers to "existing authentication" or "existing database", and the
 table says it does not exist, the correct action is to **ask before introducing one** —
