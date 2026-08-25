@@ -102,6 +102,7 @@ alter table public.documents enable row level security;
 alter table public.deadlines enable row level security;
 alter table public.notifications enable row level security;
 alter table public.tariff_consultations enable row level security;
+alter table public.affiliate_offers enable row level security;
 
 create policy "profiles own row" on public.profiles for all using (auth.uid() = id) with check (auth.uid() = id);
 create policy "contracts own rows" on public.contracts for all using (auth.uid() = user_id) with check (auth.uid() = user_id);
