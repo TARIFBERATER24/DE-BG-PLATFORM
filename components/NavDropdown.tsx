@@ -2,13 +2,11 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { verticals } from "@/lib/verticals";
 
 const EXTRA_LINKS = [
   { href: "/produkte", title: "Сравни" },
   { href: "/mein-deutschland", title: "Mein Deutschland" },
   { href: "/germaniya", title: "Германия от А до Я" },
-  { href: "/uslugi", title: "Услуги" },
 ];
 
 export default function NavDropdown() {
@@ -48,17 +46,6 @@ export default function NavDropdown() {
 
       {open && (
         <div className="absolute left-0 top-full mt-2 w-64 rounded-lg border border-line bg-white p-2 text-sm font-medium text-ink shadow-lg">
-          {verticals.map((vertical) => (
-            <Link
-              key={vertical.slug}
-              href={`/${vertical.slug}`}
-              onClick={() => setOpen(false)}
-              className="block rounded-md px-3 py-2 transition hover:bg-brand-tint hover:text-brand"
-            >
-              {vertical.title}
-            </Link>
-          ))}
-          <div className="my-1 border-t border-line" />
           {EXTRA_LINKS.map((link) => (
             <Link
               key={link.href}
@@ -69,8 +56,19 @@ export default function NavDropdown() {
               {link.title}
             </Link>
           ))}
+          <div className="my-1 border-t border-line" />
+          <a
+            href="https://danachen-analiz.vercel.app/analiz"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => setOpen(false)}
+            className="block rounded-md px-3 py-2 transition hover:bg-brand-tint hover:text-brand"
+          >
+            Данъчен анализ
+          </a>
         </div>
       )}
     </div>
   );
 }
+
