@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { verticals } from "@/lib/verticals";
 import { MenuIcon, CloseIcon } from "@/components/icons";
+import HeaderTools from "@/components/HeaderTools";
 
 const PRIMARY_LINKS = [
   { href: "/", title: "Начало" },
@@ -30,6 +31,8 @@ export default function MobileNav() {
 
       {open && (
         <nav className="absolute inset-x-0 top-full flex flex-col gap-1 border-b border-line bg-canvas px-6 py-4 text-sm font-medium text-ink shadow-sm">
+          <HeaderTools mobile onNavigate={() => setOpen(false)} />
+
           {PRIMARY_LINKS.map((link) => (
             <Link
               key={link.href}
@@ -59,3 +62,4 @@ export default function MobileNav() {
     </div>
   );
 }
+
