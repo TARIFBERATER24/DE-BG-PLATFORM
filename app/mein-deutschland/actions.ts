@@ -52,12 +52,12 @@ async function passwordResetRedirectUrl() {
   const requestHost = requestHeaders.get("x-forwarded-host") || requestHeaders.get("host");
   const requestProtocol = requestHeaders.get("x-forwarded-proto") || (process.env.NODE_ENV === "production" ? "https" : "http");
   const requestUrl = requestHost ? `${requestProtocol}://${requestHost}` : null;
-  const vercelHost = process.env.NEXT_PUBLIC_VERCEL_URL || process.env.VERCEL_URL;
+  const vercelHost = process.env.VERCEL_URL || process.env.NEXT_PUBLIC_VERCEL_URL;
   const deploymentUrl = vercelHost ? `https://${vercelHost}` : null;
   const configuredSiteUrl = process.env.NEXT_PUBLIC_SITE_URL || null;
   const baseUrl = process.env.VERCEL_ENV === "production"
-    ? configuredSiteUrl || requestUrl || deploymentUrl || "http://localhost:3000"
-    : requestUrl || deploymentUrl || configuredSiteUrl || "http://localhost:3000";
+    ? configuredSiteUrl || deploymentUrl || requestUrl || "http://localhost:3000"
+    : deploymentUrl || requestUrl || configuredSiteUrl || "http://localhost:3000";
   return `${baseUrl.replace(/\/$/, "")}/mein-deutschland/reset-password`;
 }
 
