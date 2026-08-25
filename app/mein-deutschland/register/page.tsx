@@ -5,17 +5,19 @@ const messages: Record<string, string> = {
   invalid: "Попълни всички задължителни полета. Паролата трябва да е поне 8 символа.",
   password: "Паролите не съвпадат.",
   terms: "Трябва да приемеш условията и политиката за поверителност.",
-  signup: "Регистрацията не беше успешна. Възможно е имейлът вече да е използван.",
+  signup: "Регистрацията не беше успешна.",
 };
 
-export default async function RegisterPage({ searchParams }: { searchParams: Promise<{ error?: string }> }) {
-  const { error } = await searchParams;
+export default async function RegisterPage({ searchParams }: { searchParams: Promise<{ error?: string; detail?: string }> }) {
+  const { error, detail } = await searchParams;
+  const errorText = error ? (detail || messages[error] || messages.signup) : null;
+
   return (
     <div className="mx-auto max-w-lg px-6 py-14">
       <p className="text-xs font-bold uppercase tracking-[0.2em] text-brand">Mein Deutschland</p>
       <h1 className="mt-3 text-3xl font-bold tracking-tight text-ink">Създай своя личен профил</h1>
       <p className="mt-2 text-sm leading-6 text-ink-muted">Безплатен достъп до AI Тарифен Консултант, договори, документи и важни срокове.</p>
-      {error ? <p className="mt-5 rounded-xl border border-red-200 bg-red-50 p-3 text-sm text-red-700">{messages[error] || messages.signup}</p> : null}
+      {errorText ? <p className="mt-5 rounded-xl border border-red-200 bg-red-50 p-3 text-sm text-red-700">{errorText}</p> : null}
       <form action={registerAction} className="mt-7 space-y-4 rounded-2xl border border-line bg-white p-6 shadow-sm">
         <div className="grid gap-4 sm:grid-cols-2">
           <label className="text-sm font-medium text-ink">Име<input name="first_name" required autoComplete="given-name" className="mt-1.5 w-full rounded-xl border border-line px-3.5 py-2.5 outline-none focus:border-brand" /></label>
