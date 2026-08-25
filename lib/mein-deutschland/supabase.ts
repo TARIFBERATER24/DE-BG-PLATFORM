@@ -62,6 +62,33 @@ export async function signIn(email: string, password: string) {
   return data.user as MdUser;
 }
 
+export async function requestPasswordReset(email: string, redirectTo: string) {
+  const { url, key } = config();
+  const res = await fetch(`${url}/auth/v1/recover`, {
+    method: "POST",
+    headers: { apikey: key, "Content-Type": "application/json" },
+    body: JSON.stringify({ email, redirect_to: redirectTo }),
+    cache: "no-store",
+  });
+  const data = await res.json().catch(() => null);
+  if (!res.ok) throw new Error(data?.error_description || data?.msg || data?.message || "Имейлът за възстановяване не беше изпратен.");
+}
+
+export async function updatePassword(password: string) {
+  const token = await accessToken();
+  if (!token) throw new Error("Линкът за възстановяване е невалиден или е изтекъл.");
+  const { url, key } = config();
+  const res = await fetch(`${url}/auth/v1/user`, {
+    method: "PUT",
+    headers: { apikey: key, Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+    body: JSON.stringify({ password }),
+    cache: "no-store",
+  });
+  const data = await res.json().catch(() => null);
+  if (!res.ok) throw new Error(data?.error_description || data?.msg || data?.message || "Новата парола не беше запазена.");
+  return data as MdUser;
+}
+
 export async function currentUser(): Promise<MdUser | null> {
   const token = await accessToken();
   if (!token) return null;

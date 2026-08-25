@@ -7,9 +7,11 @@ import {
   currentUser,
   deleteRows,
   insertRow,
+  requestPasswordReset,
   signIn,
   signUp,
   selectRows,
+  updatePassword,
   updateRows,
   uploadPrivateDocument,
 } from "@/lib/mein-deutschland/supabase";
@@ -42,6 +44,45 @@ export async function registerAction(form: FormData) {
   }
 
   redirect(data.access_token ? "/mein-deutschland/onboarding" : `/mein-deutschland/verify?email=${encodeURIComponent(email)}`);
+}
+
+function passwordResetRedirectUrl() {
+  const vercelHost = process.env.NEXT_PUBLIC_VERCEL_URL || process.env.VERCEL_URL;
+  const previewUrl = vercelHost ? `https://${vercelHost}` : null;
+  const baseUrl = process.env.VERCEL_ENV === "preview" && previewUrl ? previewUrl : process.env.NEXT_PUBLIC_SITE_URL || previewUrl || "http://localhost:3000";
+  return `${baseUrl.replace(/\/$/, "")}/mein-deutschland/reset-password`;
+}
+
+export async function requestPasswordResetAction(form: FormData) {
+  const email = text(form, "email");
+  if (!email) redirect("/mein-deutschland/forgot-password?error=invalid");
+
+  try {
+    await requestPasswordReset(email, passwordResetRedirectUrl());
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "Имейлът за възстановяване не беше изпратен.";
+    redirect(`/mein-deutschland/forgot-password?error=request&detail=${encodeURIComponent(message)}`);
+  }
+
+  redirect("/mein-deutschland/forgot-password?sent=1");
+}
+
+export async function updatePasswordAction(form: FormData) {
+  const password = text(form, "password");
+  const confirm = text(form, "confirm_password");
+  if (password.length < 8) redirect("/mein-deutschland/reset-password?error=invalid");
+  if (password !== confirm) redirect("/mein-deutschland/reset-password?error=password");
+
+  let updateError: string | null = null;
+  try {
+    await updatePassword(password);
+  } catch (error) {
+    updateError = error instanceof Error ? error.message : "Новата парола не беше запазена.";
+  }
+  if (updateError) redirect(`/mein-deutschland/reset-password?error=update&detail=${encodeURIComponent(updateError)}`);
+
+  await clearSession();
+  redirect("/mein-deutschland/login?reset=success");
 }
 
 export async function loginAction(form: FormData) {
