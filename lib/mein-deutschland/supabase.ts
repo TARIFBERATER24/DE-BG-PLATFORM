@@ -64,10 +64,11 @@ export async function signIn(email: string, password: string) {
 
 export async function requestPasswordReset(email: string, redirectTo: string) {
   const { url, key } = config();
-  const res = await fetch(`${url}/auth/v1/recover`, {
+  const redirectQuery = new URLSearchParams({ redirect_to: redirectTo }).toString();
+  const res = await fetch(`${url}/auth/v1/recover?${redirectQuery}`, {
     method: "POST",
     headers: { apikey: key, "Content-Type": "application/json" },
-    body: JSON.stringify({ email, redirect_to: redirectTo }),
+    body: JSON.stringify({ email }),
     cache: "no-store",
   });
   const data = await res.json().catch(() => null);
