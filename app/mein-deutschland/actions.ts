@@ -1,6 +1,7 @@
 "use server";
 
 import { redirect } from "next/navigation";
+import { headers } from "next/headers";
 import { revalidatePath } from "next/cache";
 import {
   clearSession,
@@ -46,10 +47,17 @@ export async function registerAction(form: FormData) {
   redirect(data.access_token ? "/mein-deutschland/onboarding" : `/mein-deutschland/verify?email=${encodeURIComponent(email)}`);
 }
 
-function passwordResetRedirectUrl() {
+async function passwordResetRedirectUrl() {
+  const requestHeaders = await headers();
+  const requestHost = requestHeaders.get("x-forwarded-host") || requestHeaders.get("host");
+  const requestProtocol = requestHeaders.get("x-forwarded-proto") || (process.env.NODE_ENV === "production" ? "https" : "http");
+  const requestUrl = requestHost ? `${requestProtocol}://${requestHost}` : null;
   const vercelHost = process.env.NEXT_PUBLIC_VERCEL_URL || process.env.VERCEL_URL;
-  const previewUrl = vercelHost ? `https://${vercelHost}` : null;
-  const baseUrl = process.env.VERCEL_ENV === "preview" && previewUrl ? previewUrl : process.env.NEXT_PUBLIC_SITE_URL || previewUrl || "http://localhost:3000";
+  const deploymentUrl = vercelHost ? `https://${vercelHost}` : null;
+  const configuredSiteUrl = process.env.NEXT_PUBLIC_SITE_URL || null;
+  const baseUrl = process.env.VERCEL_ENV === "production"
+    ? configuredSiteUrl || requestUrl || deploymentUrl || "http://localhost:3000"
+    : requestUrl || deploymentUrl || configuredSiteUrl || "http://localhost:3000";
   return `${baseUrl.replace(/\/$/, "")}/mein-deutschland/reset-password`;
 }
 
@@ -58,7 +66,7 @@ export async function requestPasswordResetAction(form: FormData) {
   if (!email) redirect("/mein-deutschland/forgot-password?error=invalid");
 
   try {
-    await requestPasswordReset(email, passwordResetRedirectUrl());
+    await requestPasswordReset(email, await passwordResetRedirectUrl());
   } catch (error) {
     const message = error instanceof Error ? error.message : "Имейлът за възстановяване не беше изпратен.";
     redirect(`/mein-deutschland/forgot-password?error=request&detail=${encodeURIComponent(message)}`);
