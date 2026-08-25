@@ -164,6 +164,34 @@ export function ChatIcon({ className }: IconProps) {
   );
 }
 
+export function UserIcon({ className }: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden="true">
+      <circle cx="12" cy="8" r="3.5" stroke="currentColor" strokeWidth="1.6" />
+      <path
+        d="M5 20c.7-3.4 3.1-5.2 7-5.2s6.3 1.8 7 5.2"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+
+export function LanguagesIcon({ className }: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden="true">
+      <path
+        d="M4 5.5h8M8 3.5v2c0 3.2-1.5 6-4 7.7M5.5 9.5c1.2 1.5 2.6 2.5 4.5 3.1M14 14h6M17 11.5l-3.5 9M15.5 17.5h5"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
 export function PiggyIcon({ className }: IconProps) {
   return (
     <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden="true">
@@ -203,3 +231,4 @@ export function CloseIcon({ className }: IconProps) {
     </svg>
   );
 }
+
