@@ -71,7 +71,11 @@ export async function requestPasswordReset(email: string, redirectTo: string) {
     cache: "no-store",
   });
   const data = await res.json().catch(() => null);
-  if (!res.ok) throw new Error(data?.error_description || data?.msg || data?.message || "Имейлът за възстановяване не беше изпратен.");
+  const errorMessage = data?.error_description || data?.msg || data?.message;
+  if (!res.ok) {
+    if (errorMessage === "email rate limit exceeded") throw new Error("Лимитът за имейли е достигнат. Опитай отново по-късно.");
+    throw new Error(errorMessage || "Имейлът за възстановяване не беше изпратен.");
+  }
 }
 
 export async function updatePassword(password: string) {
