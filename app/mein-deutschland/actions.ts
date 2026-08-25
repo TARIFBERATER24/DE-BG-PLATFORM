@@ -31,21 +31,27 @@ export async function registerAction(form: FormData) {
   if (!firstName || !lastName || !email || password.length < 8) redirect("/mein-deutschland/register?error=invalid");
   if (password !== confirm) redirect("/mein-deutschland/register?error=password");
   if (form.get("terms") !== "on") redirect("/mein-deutschland/register?error=terms");
+
+  let data;
   try {
-    const data = await signUp(email, password, firstName, lastName);
-    redirect(data.access_token ? "/mein-deutschland/onboarding" : `/mein-deutschland/verify?email=${encodeURIComponent(email)}`);
-  } catch {
-    redirect("/mein-deutschland/register?error=signup");
+    data = await signUp(email, password, firstName, lastName);
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "Регистрацията не беше успешна.";
+    redirect(`/mein-deutschland/register?error=signup&detail=${encodeURIComponent(message)}`);
   }
+
+  redirect(data.access_token ? "/mein-deutschland/onboarding" : `/mein-deutschland/verify?email=${encodeURIComponent(email)}`);
 }
 
 export async function loginAction(form: FormData) {
   try {
     await signIn(text(form, "email"), text(form, "password"));
-    redirect("/mein-deutschland/dashboard");
-  } catch {
-    redirect("/mein-deutschland/login?error=login");
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "Грешен имейл или парола.";
+    redirect(`/mein-deutschland/login?error=login&detail=${encodeURIComponent(message)}`);
   }
+
+  redirect("/mein-deutschland/dashboard");
 }
 
 export async function logoutAction() {
