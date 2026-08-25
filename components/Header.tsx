@@ -2,7 +2,6 @@ import Link from "next/link";
 import NavDropdown from "@/components/NavDropdown";
 import SearchBar from "@/components/SearchBar";
 import MobileNav from "@/components/MobileNav";
-import HeaderTools from "@/components/HeaderTools";
 import { WhatsAppIcon } from "@/components/icons";
 
 const WHATSAPP_URL = "https://wa.me/message/JXXTA3JHKDX3L1";
@@ -45,7 +44,6 @@ export default function Header() {
             <WhatsAppIcon className="h-5 w-5" />
             Помощ
           </a>
-          <HeaderTools />
           <NavDropdown />
         </div>
 
