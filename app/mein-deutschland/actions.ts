@@ -9,6 +9,7 @@ import {
   insertRow,
   signIn,
   signUp,
+  selectRows,
   updateRows,
   uploadPrivateDocument,
 } from "@/lib/mein-deutschland/supabase";
@@ -44,14 +45,23 @@ export async function registerAction(form: FormData) {
 }
 
 export async function loginAction(form: FormData) {
+  let user: Awaited<ReturnType<typeof signIn>> | null = null;
   try {
-    await signIn(text(form, "email"), text(form, "password"));
+    user = await signIn(text(form, "email"), text(form, "password"));
   } catch (error) {
     const message = error instanceof Error ? error.message : "Грешен имейл или парола.";
     redirect(`/mein-deutschland/login?error=login&detail=${encodeURIComponent(message)}`);
   }
 
-  redirect("/mein-deutschland/dashboard");
+  let onboardingCompleted = false;
+  try {
+    const profiles = await selectRows<{ onboarding_completed?: boolean }>("profiles", `select=onboarding_completed&id=eq.${user.id}&limit=1`);
+    onboardingCompleted = profiles[0]?.onboarding_completed === true;
+  } catch {
+    onboardingCompleted = false;
+  }
+
+  redirect(onboardingCompleted ? "/mein-deutschland/dashboard" : "/mein-deutschland/onboarding");
 }
 
 export async function logoutAction() {
